@@ -1,56 +1,72 @@
-var gulp = require('gulp');
-var jshint = require('gulp-jshint');
-var jshintReporter = require('jshint-stylish');
-var watch = require('gulp-watch');
-var shell = require('gulp-shell')
+require('dotenv').config();
 
-var sass = require('gulp-sass');
+const gulp = require('gulp');
+const gutil = require('gulp-util');
+const rename = require('gulp-rename');
+const sass = require('gulp-sass');
+const eslint = require('gulp-eslint');
+
+const browserSync = require('browser-sync');
+const nodemon = require('gulp-nodemon');
 
 
-var paths = {
-	'src':['./models/**/*.js','./routes/**/*.js', 'keystone.js', 'package.json']
-
-,
-	'style': {
-		all: './public/styles/**/*.scss',
-		output: './public/styles/'
-	}
-
-};
-
-// gulp lint
-gulp.task('lint', function(){
-	gulp.src(paths.src)
-		.pipe(jshint())
-		.pipe(jshint.reporter(jshintReporter));
+gulp.task('css', function() {
+  gulp.src('./src/_main.scss')
+    .pipe(rename('style.css'))
+    .pipe(sass())
+    .on('error', gutil.log)
+    .pipe(gulp.dest('./dist'))
+    .pipe(browserSync.stream());
 });
 
-// gulp watcher for lint
-gulp.task('watch:lint', function () {
-	gulp.src(paths.src)
-		.pipe(watch())
-		.pipe(jshint())
-		.pipe(jshint.reporter(jshintReporter));
+gulp.task('fonts', function() {
+  return gulp.src('./src/icons/fonts/**')
+    .pipe(gulp.dest('./dist/fonts'))
+    .pipe(browserSync.stream());
 });
 
+gulp.task('lint', function() {
 
-gulp.task('watch:sass', function () {
-	gulp.watch(paths.style.all, ['sass']);
+  return gulp.src(['**/*.js','!node_modules/**', '!dist/**/*.js'])
+    // eslint() attaches the lint output to the "eslint" property
+    // of the file object so it can be used by other modules.
+    .pipe(eslint())
+    // eslint.format() outputs the lint results to the console.
+    // Alternatively use eslint.formatEach() (see Docs).
+    .pipe(eslint.format());
+
 });
 
-gulp.task('sass', function(){
-	gulp.src(paths.style.all)
-		.pipe(sass().on('error', sass.logError))
-		.pipe(gulp.dest(paths.style.output));
+gulp.task('js', function () {
+
 });
 
 
-gulp.task('runKeystone', shell.task('node keystone.js'));
-gulp.task('watch', [
+gulp.task('watch', function () {
 
-  'watch:sass',
+  gulp.watch(['src/**/*.scss'], ['css']);
+  // watch CLIENT SIDE JS
+  gulp.watch(['src/**/*.js'], ['js']);
+  // trigger browserSync reload when HBS files change
+  gulp.watch(['**/*.hbs'], browserSync.reload);
 
-  'watch:lint'
-]);
+  return nodemon({
 
-gulp.task('default', ['watch', 'runKeystone']);
+    script: 'bin/www',
+
+    // watch SERVER SIDE files
+    // note we are NOT watching components even though most of these render
+    // server-side as well.
+    watch: ['app.js', 'routes/**/*.js', 'models/**/*.js']
+
+  })
+  .once('start', function() {
+    browserSync.init({
+      proxy: 'http://localhost:' + process.env.PORT,
+      port: (parseInt(process.env.PORT, 10) + 1)
+    });
+  }).on('restart', browserSync.reload);
+
+});
+
+gulp.task('default', ['css', 'fonts', 'lint', 'js']);

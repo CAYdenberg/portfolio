@@ -52,7 +52,7 @@ gulp.task('watch', function () {
 
   return nodemon({
 
-    script: 'bin/www',
+    script: 'keystone.js',
 
     // watch SERVER SIDE files
     // note we are NOT watching components even though most of these render

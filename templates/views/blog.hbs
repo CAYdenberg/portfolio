@@ -8,7 +8,7 @@
 				{{# each data.posts.results}}
 				<div data-ks-editable="{{#if ../user}}{{adminEditableUrl ../../user _id}}{{/if}}" class="post">
 					<h2><a href="{{postUrl slug}}">{{{title}}}</a></h2>
-					<p>{{{content.extended}}}</p>
+					<p>{{{content.brief}}}</p>
 					<p class="read-more"><a href="{{postUrl slug}}">Read more...</a></p>
 				</div>
 				{{/each}}

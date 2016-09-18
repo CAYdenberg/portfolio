@@ -100,6 +100,11 @@ module.exports = function() {
 	 *
 	 */
 
+	_helpers.encode = function (string, options) {
+    var uri = string || options;
+    return new hbs.SafeString(encodeURIComponent(uri));
+	};
+
 	/**
 	 * KeystoneJS specific helpers
 	 * ===========================
@@ -177,6 +182,9 @@ module.exports = function() {
 
 	// Direct url link to a specific post
 	_helpers.postUrl = function(postSlug, options) {
+		if (options.hash.absolute) {
+			return keystone.get('url') + '/blog/' + postSlug;
+		}
 		return ('/blog/' + postSlug);
 	};
 

@@ -13,6 +13,7 @@ var handlebars = require('express-handlebars');
 keystone.init({
 
 	'mongo': process.env.MONGO_URI,
+	'url': '//localhost:8000',
 
 	'name': 'Casey A. Ydenberg',
 	'brand': 'Casey A. Ydenberg',

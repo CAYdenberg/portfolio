@@ -15,11 +15,12 @@ const JS_BUILD = [
   './src/js/jquery.js',
   './node_modules/foundation-sites/dist/foundation.js',
   './node_modules/foundation-sites/js/dist/plugins/foundation.offcanvas.js',
-  './src/js/prism.js'
+  './src/js/highlight.pack.js',
+  './src/js/script.js'
 ];
 
 gulp.task('css', function() {
-  gulp.src('./src/_main.scss')
+  gulp.src('./src/scss/_main.scss')
     .pipe(rename('style.css'))
     .pipe(sass())
     .on('error', gutil.log)

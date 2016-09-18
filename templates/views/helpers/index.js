@@ -311,12 +311,13 @@ module.exports = function() {
 		return obj._[underscoreMethod].format();
 	}
 
-
 	/**
 	 * My helpers
 	 * ===========================
 	 */
-
+	_helpers.htmlTitle = function(pageTitle) {
+		return pageTitle + ' | ' + keystone.get('name');
+	}
 
 
 	return _helpers;

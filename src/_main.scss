@@ -10,6 +10,19 @@
 a {
   transition: ease-in-out 0.1s;
 }
+code {
+  border-radius: 5px;
+}
+pre code {
+  display: block;
+  margin-bottom: $global-margin;
+  overflow-x: scroll;
+}
+article {
+  h2, h3, h4, h5, h6 {
+    margin-top: ($global-margin * 2);
+  }
+}
 .natural {
   color: inherit;
   &:hover {

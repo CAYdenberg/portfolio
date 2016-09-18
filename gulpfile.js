@@ -6,10 +6,17 @@ const rename = require('gulp-rename');
 const sass = require('gulp-sass');
 const eslint = require('gulp-eslint');
 const imagemin = require('gulp-imagemin');
+const concat = require('gulp-concat');
 
 const browserSync = require('browser-sync');
 const nodemon = require('gulp-nodemon');
 
+const JS_BUILD = [
+  './src/js/jquery.js',
+  './node_modules/foundation-sites/dist/foundation.js',
+  './node_modules/foundation-sites/js/dist/plugins/foundation.offcanvas.js',
+  './src/js/prism.js'
+];
 
 gulp.task('css', function() {
   gulp.src('./src/_main.scss')
@@ -44,7 +51,9 @@ gulp.task('lint', function() {
 });
 
 gulp.task('js', function () {
-
+  return gulp.src(JS_BUILD)
+    .pipe(concat('main.js'))
+    .pipe(gulp.dest('./dist'));
 });
 
 

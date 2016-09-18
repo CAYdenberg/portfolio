@@ -9,6 +9,7 @@
     "express-handlebars": "^1.1.0",
     "foundation-sites": "^6.2.3",
     "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
     "gulp-eslint": "^3.0.1",
     "gulp-imagemin": "^3.0.3",
     "gulp-rename": "^1.2.2",

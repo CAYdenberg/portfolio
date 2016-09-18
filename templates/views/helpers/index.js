@@ -216,9 +216,7 @@ module.exports = function() {
 			// create ref to page, so that '...' is displayed as text even though int value is required
 			var pageText = page,
 			// create boolean flag state if currentPage
-			isActivePage = ((page === currentPage)? true:false),
-			// need an active class indicator
-			liClass = ((isActivePage)? ' class="active"':'');
+			isActivePage = ((page === currentPage)? true:false);
 
 			// if '...' is sent from keystone then we need to override the url
 			if(page === '...'){
@@ -228,29 +226,36 @@ module.exports = function() {
 
 			// get the pageUrl using the integer value
 			var pageUrl = _helpers.pageUrl(page);
+
+			console.log(pageUrl);
+
 			// wrapup the html
-			html += '<li'+liClass+'>'+ linkTemplate({url:pageUrl,text:pageText})+'</li>\n';
+			if (isActivePage) {
+				html += '<li class="current">'+pageText+'</li>';
+			} else {
+				html += '<li><a href="'+pageUrl+'" aria-label="Page '+pageText+'">'+pageText+'</a></li>';
+			}
 		});
 		return html;
 	};
 
-        // special helper to ensure that we always have a valid page url set even if
-        // the link is disabled, will default to page 1
-        _helpers.paginationPreviousUrl = function(previousPage, totalPages){
-            if(previousPage === false){
-                previousPage = 1;
-            }
-            return _helpers.pageUrl(previousPage);
-        };
+  // special helper to ensure that we always have a valid page url set even if
+  // the link is disabled, will default to page 1
+  _helpers.paginationPreviousUrl = function(previousPage, totalPages){
+      if(previousPage === false){
+          previousPage = 1;
+      }
+      return _helpers.pageUrl(previousPage);
+  };
 
-        // special helper to ensure that we always have a valid next page url set
-        // even if the link is disabled, will default to totalPages
-        _helpers.paginationNextUrl = function(nextPage, totalPages){
-            if(nextPage === false){
-                nextPage = totalPages;
-            }
-            return _helpers.pageUrl(nextPage);
-        };
+  // special helper to ensure that we always have a valid next page url set
+  // even if the link is disabled, will default to totalPages
+  _helpers.paginationNextUrl = function(nextPage, totalPages){
+      if(nextPage === false){
+          nextPage = totalPages;
+      }
+      return _helpers.pageUrl(nextPage);
+  };
 
 
 	//  ### Flash Message Helper
@@ -305,6 +310,14 @@ module.exports = function() {
 	_helpers.underscoreFormat = function (obj, underscoreMethod) {
 		return obj._[underscoreMethod].format();
 	}
+
+
+	/**
+	 * My helpers
+	 * ===========================
+	 */
+
+
 
 	return _helpers;
 };

@@ -1,19 +1,21 @@
-<div class="container">
-	<h1>Blog</h1>
-</div>
-<div class="container">
-	<div class="row">
-		<div class="col-sm-8 col-md-9">
-			<div class="blog">
-				{{# each data.posts.results}}
-				<div data-ks-editable="{{#if ../user}}{{adminEditableUrl ../../user _id}}{{/if}}" class="post">
-					<h2><a href="{{postUrl slug}}">{{{title}}}</a></h2>
-					<p>{{{content.brief}}}</p>
-					<p class="read-more"><a href="{{postUrl slug}}">Read more...</a></p>
-				</div>
-				{{/each}}
-			</div>
-		</div>
-	</div>
-	{{>pagination}}
-</div>
+<main class="main-content">
+	<header class="main-content__header">
+		<h1>Blog</h1>
+	</header>
+
+	<section class="main-content__body blog-listing">
+		{{# each data.posts.results}}
+			<article data-ks-editable="{{#if ../user}}{{adminEditableUrl ../../user _id}}{{/if}}" class="blog-listing__post">
+				<h2><a href="{{postUrl slug}}" class="natural--secondary">{{{title}}}</a></h2>
+				<div class="blog-listing__post-content">{{{content.brief}}}</div>
+				<p class="blog-listing__read-more"><a href="{{postUrl slug}}">Read more &gt;&gt;</a></p>
+				<hr />
+			</article>
+		{{/each}}
+	</section>
+
+	<footer class="main-content__footer">
+		{{>pagination}}
+	</footer>
+
+</main>

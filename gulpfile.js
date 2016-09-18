@@ -5,6 +5,7 @@ const gutil = require('gulp-util');
 const rename = require('gulp-rename');
 const sass = require('gulp-sass');
 const eslint = require('gulp-eslint');
+const imagemin = require('gulp-imagemin');
 
 const browserSync = require('browser-sync');
 const nodemon = require('gulp-nodemon');
@@ -21,8 +22,13 @@ gulp.task('css', function() {
 
 gulp.task('fonts', function() {
   return gulp.src('./src/icons/fonts/**')
-    .pipe(gulp.dest('./dist/fonts'))
-    .pipe(browserSync.stream());
+    .pipe(gulp.dest('./dist/fonts'));
+});
+
+gulp.task('images', function() {
+  return gulp.src('src/img/**')
+    .pipe(imagemin())
+    .pipe(gulp.dest('dist/images'));
 });
 
 gulp.task('lint', function() {

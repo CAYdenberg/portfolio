@@ -235,8 +235,6 @@ module.exports = function() {
 			// get the pageUrl using the integer value
 			var pageUrl = _helpers.pageUrl(page);
 
-			console.log(pageUrl);
-
 			// wrapup the html
 			if (isActivePage) {
 				html += '<li class="current">'+pageText+'</li>';

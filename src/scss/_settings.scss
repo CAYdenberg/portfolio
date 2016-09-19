@@ -3,17 +3,17 @@
 //
 //  Table of Contents:
 //
-//   1. Global
-//   2. Breakpoints
+//   1. Global *
+//   2. Breakpoints *
 //   3. The Grid
-//   4. Base Typography
+//   4. Base Typography *
 //   5. Typography Helpers
 //   6. Abide
 //   7. Accordion
 //   8. Accordion Menu
 //   9. Badge
 //  10. Breadcrumbs
-//  11. Button
+//  11. Button *
 //  12. Button Group
 //  13. Callout
 //  14. Close Button
@@ -21,14 +21,14 @@
 //  16. Dropdown
 //  17. Dropdown Menu
 //  18. Flex Video
-//  19. Forms
+//  19. Forms *
 //  20. Label
 //  21. Media Object
 //  22. Menu
 //  23. Meter
-//  24. Off-canvas
+//  24. Off-canvas *
 //  25. Orbit
-//  26. Pagination
+//  26. Pagination *
 //  27. Progress Bar
 //  28. Reveal
 //  29. Slider
@@ -68,7 +68,7 @@ $global-margin: 1rem;
 $global-padding: 1rem;
 $global-weight-normal: normal;
 $global-weight-bold: bold;
-$global-radius: 0;
+$global-radius: 5px;
 $global-text-direction: ltr;
 $global-flexbox: false;
 $print-transparent-backgrounds: true;
@@ -334,9 +334,9 @@ $input-prefix-color: $black;
 $input-prefix-background: $light-gray;
 $input-prefix-border: 1px solid $medium-gray;
 $input-prefix-padding: 1rem;
-$form-label-color: $black;
-$form-label-font-size: rem-calc(14);
-$form-label-font-weight: $global-weight-normal;
+$form-label-color: $dark-gray;
+$form-label-font-size: rem-calc(24);
+$form-label-font-weight: 400;
 $form-label-line-height: 1.8;
 $select-background: $white;
 $select-triangle-color: $dark-gray;
@@ -349,9 +349,9 @@ $input-background: $white;
 $input-background-focus: $white;
 $input-background-disabled: $light-gray;
 $input-border: 1px solid $medium-gray;
-$input-border-focus: 1px solid $dark-gray;
+$input-border-focus: 1px solid map-get($foundation-palette, primary);
 $input-shadow: inset 0 1px 2px rgba($black, 0.1);
-$input-shadow-focus: 0 0 5px $medium-gray;
+$input-shadow-focus: 0 0 5px $input-border-focus;
 $input-cursor-disabled: not-allowed;
 $input-transition: box-shadow 0.5s, border-color 0.25s ease-in-out;
 $input-number-spinners: true;

@@ -38,6 +38,12 @@ article {
     color: map-get($foundation-palette, secondary);
   }
 }
+.button.secondary {
+  color: white;
+  &:hover {
+    color: $light-gray;
+  }
+}
 
 
 /**
@@ -109,9 +115,21 @@ article {
 }
 
 
+/**
+* BLOG
+*/
 
 .blog-listing__post-content {
   p:last-child::after {
     content: ' ...';
   }
+}
+
+
+/**
+* FORMS AND BUTTONS
+*/
+
+.has-error {
+  background: rgba(255, 0, 0, 0.3);
 }

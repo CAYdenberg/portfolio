@@ -1,44 +1,29 @@
-<div class="container">
-	<h1>Contact Us</h1>
-</div>
-<div class="container">
-	<div class="row">
-		<div class="col-sm-8 col-md-6">
-			{{#if enquirySubmitted}}
-			<h3>Thanks for getting in touch.</h3>
-			{{else}}
-			<form method="post">
+<main class="main-content">
+	<header class="main-content__header">
+		<h1>{{pageTitle}}</h1>
+	</header>
+
+	<section class="main-content__body">
+		{{#if enquirySubmitted}}
+			<h2>Thanks for getting in touch.</h2>
+		{{else}}
+			<form method="post" action=".">
 				<input type="hidden" name="action" value="contact">
-				<div class="form-group {{#if validationErrors.name}}has-error{{/if}}">
-					<label>Name</label>
-					<input type="text" name="name.full"  class="form-control" value="{{formData.[name.full]}}">
-				</div>
-				<div class="form-group {{#if validationErrors.email}}has-error{{/if}}">
-					<label>Email</label>
-					<input type="email" name="email" class="form-control" value="{{formData.email}}">
-				</div>
-				<div class="form-group">
-					<label>Phone</label>
-					<input type="text" name="phone" placeholder="(optional)" class="form-control" value="{{formData.phone}}">
-				</div>
-				<div class="form-group {{#if validationErrors.enquiryType}}has-error{{/if}}">
-					<label>What are you contacting us about?</label>
-					<select name="enquiryType" class="form-control">
-						<option value="">(select one)</option>
-						{{#each enquiryTypes}}
-						<option value="{{value}}">{{label}}</option>
-						{{/each}}
-					</select>
-				</div>
-				<div class="form-group {{#if validationErrors.message}}has-error{{/if}} ">
-					<label>Message</label>
-					<textarea name="message" placeholder="Leave us a message..." rows="4" class="form-control">{{formData.message}}</textarea>
-				</div>
-				<div class="form-actions">
-					<button type="submit" class="btn btn-primary">Send</button>
-				</div>
+				<label>
+					Name *
+					<input type="text" name="name.full" aria-required="true" value="{{formData.[name.full]}}" {{#if validationErrors.name}}class="has-error"{{/if}}>
+				</label>
+				<label>
+					Email *
+					<input type="email" name="email.full" aria-required="true" value="{{formData.[email.full]}}" {{#if validationErrors.email}}class="has-error"{{/if}}>
+				</label>
+				<label>
+					Message
+					<textarea name="message" rows="4" aria-required="true" {{#if validationErrors.message}}class="has-error"{{/if}}>{{formData.message}}</textarea>
+				</label>
+				<button type="submit" class="secondary button">Send</button>
 			</form>
-			{{/if}}
-		</div>
-	</div>
-</div>
+		{{/if}}
+	</section>
+
+</main>

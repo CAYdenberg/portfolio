@@ -50,9 +50,16 @@ article {
 * SIDEBAR/NAVIGATION
 */
 
+.menu-toggle-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
 .sidebar-wrapper {
   height: 100vh;
   height: 100%;
+  overflow: visible;
   background-image: url(./img/cover.jpg);
   background-size: cover;
   background-position: middle top;
@@ -105,7 +112,7 @@ article {
 .main-content {
   max-width: 800px;
   margin: 50px;
-  @include breakpoint(large) {
+  @include breakpoint(xlarge) {
     margin: 50px 128px;
   }
 }

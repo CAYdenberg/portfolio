@@ -398,7 +398,7 @@ $meter-fill-bad: $alert-color;
 
 $offcanvas-size: 370px;
 $offcanvas-background: $light-gray;
-$offcanvas-zindex: -1;
+$offcanvas-zindex: 0;
 $offcanvas-transition-length: 0.5s;
 $offcanvas-transition-timing: ease;
 $offcanvas-fixed-reveal: true;

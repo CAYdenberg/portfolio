@@ -52,17 +52,27 @@ article {
 
 .menu-toggle-wrapper {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 2px;
+  left: 2px;
   z-index: 1;
+  @include breakpoint(large) {
+    display: none;
+  }
+}
+.menu-toggle {
+  border-radius: 0;
+  font-size: 20px;
+  padding: 0.5em;
 }
 .sidebar-wrapper {
   height: 100vh;
   height: 100%;
   overflow: visible;
-  background-image: url(./img/cover.jpg);
-  background-size: cover;
-  background-position: middle top;
+  @include breakpoint(large) {
+    background-image: url(./img/cover.jpg);
+    background-size: cover;
+    background-position: middle top;
+  }
 }
 .sidebar-filter {
   height: 100%;

@@ -13,8 +13,11 @@ const nodemon = require('gulp-nodemon');
 
 const JS_BUILD = [
   './src/js/jquery.js',
-  './node_modules/foundation-sites/dist/foundation.js',
-  './node_modules/foundation-sites/js/dist/plugins/foundation.offcanvas.js',
+  './node_modules/foundation-sites/dist/plugins/foundation.core.js',
+  './node_modules/foundation-sites/dist/plugins/foundation.util.mediaQuery.js',
+  './node_modules/foundation-sites/dist/plugins/foundation.util.triggers.js',
+  './node_modules/foundation-sites/dist/plugins/foundation.util.motion.js',
+  './node_modules/foundation-sites/dist/plugins/foundation.offcanvas.js',
   './src/js/highlight.pack.js',
   './src/js/script.js'
 ];
@@ -85,4 +88,4 @@ gulp.task('watch', function () {
 
 });
 
-gulp.task('default', ['css', 'fonts', 'lint', 'js']);
+gulp.task('default', ['css', 'fonts', 'images', 'lint', 'js']);

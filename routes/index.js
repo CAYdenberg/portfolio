@@ -45,7 +45,7 @@ exports = module.exports = function(app) {
 
   // the generic 404 response
   app.use(function(req, res, next) {
-    return res.status(404).send(keystone.wrapHTMLError('Sorry, no page could be found at this address (404)'));
+    return res.status(404).render('404');
   });
 
 };

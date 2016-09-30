@@ -63,6 +63,7 @@ keystone.set('routes', require('./routes'));
 
 keystone.set('nav', {
 	'posts': ['posts'],
+  'portfolio': ['Project', 'Tech'],
 	'enquiries': 'enquiries',
 	'users': 'users'
 });

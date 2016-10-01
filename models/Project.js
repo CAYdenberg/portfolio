@@ -18,12 +18,10 @@ Project.add({
   tech: { type: Types.Relationship, ref: 'Tech', index: true, many: true },
 	publishedDate: { type: Types.Date, index: true, dependsOn: { state: 'published' } },
 	image: { type: Types.CloudinaryImage },
-	content: {
-		brief: { type: Types.Html, wysiwyg: true, height: 150 },
-		problem: { type: Types.Html, wysiwyg: true, height: 400 },
-    myRole: { type: Types.Html, wysiwyg: true, height: 400 },
-    status: { type: Types.Html, wsiwyg: true, height: 400 }
-	},
+  brief: { type: Types.Textarea, height: 150 },
+  problem: { type: Types.Markdown, height: 400 },
+  myRole: { type: Types.Markdown, height: 400 },
+  status: { type: Types.Markdown, height: 400 },
   links: {
     code: { type: Types.Url },
     site: { type: Types.Url }

@@ -17,7 +17,8 @@ exports = module.exports = function(req, res) {
 
 		var q = keystone.list('Project').model
 			.find()
-			.where('state', 'published');
+			.where('state', 'published')
+			.populate('author');
 
 		q.exec(function(err, results) {
 			console.log(results);

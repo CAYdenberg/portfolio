@@ -166,15 +166,25 @@ article {
     margin: 0 0 ($global-margin / 2);
   }
 }
-.portfolio-listing__links {
+.portfolio-listing__author {
+  font-style: italic;
+  font-size: 0.8em;
+}
+
+.portfolio-links {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
-.portfolio-listing__link {
+.portfolio-links__item {
   display: inline;
   font-size: 1.4em;
   padding: 0 0.1em;
+}
+
+.portfolio-links--large {
+  @extend .portfolio-links;
+  font-size: rem-calc(30);
 }
 
 /**

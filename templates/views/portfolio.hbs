@@ -8,28 +8,31 @@
 		{{# each data.projects}}
 			<article class="portfolio-listing__project">
 				<h2><a href="{{projectUrl slug}}" class="natural--secondary">{{{title}}}</a></h2>
+				<p class="portfolio-listing__author">{{author.displayName}}</p>
 				<p class="portfolio-listing__brief">{{brief}}</p>
-				<ul class="portfolio-listing__links">
+
+				<ul class="portfolio-links">
 					{{#if links.site}}
-						<li class="portfolio-listing__link">
+						<li class="portfolio-links__item">
 							<a href="{{links.site}}" title="Link to the site" target="_blank">
 								<i class="icon-demo"></i>
 							</a>
 						</li>
 					{{/if}}
 					{{#if links.code}}
-						<li class="portfolio-listing__link">
+						<li class="portfolio-links__item">
 							<a href="{{links.code}}" title="Link to the code" target="_blank">
 								<i class="icon-github"></i>
 							</a>
 						</li>
 					{{/if}}
-					<li class="portfolio-listing__link">
+					<li class="portfolio-links__item">
 						<a href="{{projectUrl slug}}" title="About">
 							<i class="icon-angle-right"></i>
 						</a>
 					</li>
 				</ul>
+
 			</article>
 		{{/each}}
 	</section>

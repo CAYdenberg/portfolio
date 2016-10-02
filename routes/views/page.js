@@ -6,9 +6,9 @@ exports = module.exports = function(req, res) {
 	var locals = res.locals;
 
 	// Set locals
-	locals.section = 'blog';
+	locals.section = 'page';
 	locals.filters = {
-		post: req.params.post
+		slug: req.params.page
 	};
 	locals.data = {
 		posts: []
@@ -17,21 +17,21 @@ exports = module.exports = function(req, res) {
 	// Load the current post
 	view.on('init', function(next) {
 
-		var q = keystone.list('Post').model.findOne({
+		var q = keystone.list('Page').model.findOne({
 			state: 'published',
-			slug: locals.filters.post
+			slug: locals.filters.slug
 		}).exec(function(err, result) {
       if (!result) {
         return res.status(404).render('404');
       }
-			locals.data.post = result;
-			locals.pageTitle = locals.data.post.title;
+			locals.data.page = result;
+			locals.pageTitle = locals.data.page.title;
       next(err);
 		});
 
 	});
 
 	// Render the view
-	view.render('post');
+	view.render('page');
 
 };

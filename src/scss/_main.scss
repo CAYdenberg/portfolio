@@ -128,7 +128,11 @@ article {
 }
 
 .main-content__header {
-  margin-bottom: 50px;
+  margin-bottom: ($global-margin * 2);
+}
+
+.lede {
+  font-style: italic;
 }
 
 
@@ -142,6 +146,36 @@ article {
   }
 }
 
+
+/**
+* PORTFOLIO
+*/
+
+.portfolio-listing {
+  @include breakpoint(medium) {
+    columns: 2;
+  }
+}
+.portfolio-listing__project {
+  display: inline-block;
+  width: 100%;
+  border: 1px solid $medium-gray;
+  padding: $global-margin;
+  margin-bottom: 25px;
+  h2 {
+    margin: 0 0 ($global-margin / 2);
+  }
+}
+.portfolio-listing__links {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.portfolio-listing__link {
+  display: inline;
+  font-size: 1.4em;
+  padding: 0 0.1em;
+}
 
 /**
 * FORMS AND BUTTONS

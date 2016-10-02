@@ -188,6 +188,13 @@ module.exports = function() {
 		return ('/blog/' + postSlug);
 	};
 
+	_helpers.projectUrl = function(slug, options) {
+		if (options.hash.absolute) {
+			return keystone.get('url') + '/portfolio/' + slug;
+		}
+		return ('/portfolio/' + slug);
+	}
+
 	// might be a ghost helper
 	// used for pagination urls on blog
 	_helpers.pageUrl = function(pageNumber, options) {

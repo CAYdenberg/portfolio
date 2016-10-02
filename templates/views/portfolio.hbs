@@ -1,0 +1,37 @@
+<main class="main-content">
+	<header class="main-content__header">
+		<h1>{{pageTitle}}</h1>
+		<p class="lede">This is a sample of my personal and professional work. For open-source projects, links to the code are provided.</p>
+	</header>
+
+	<section class="main-content__body portfolio-listing">
+		{{# each data.projects}}
+			<article class="portfolio-listing__project">
+				<h2><a href="{{projectUrl slug}}" class="natural--secondary">{{{title}}}</a></h2>
+				<p class="portfolio-listing__brief">{{brief}}</p>
+				<ul class="portfolio-listing__links">
+					{{#if links.site}}
+						<li class="portfolio-listing__link">
+							<a href="{{links.site}}" title="Link to the site" target="_blank">
+								<i class="icon-demo"></i>
+							</a>
+						</li>
+					{{/if}}
+					{{#if links.code}}
+						<li class="portfolio-listing__link">
+							<a href="{{links.code}}" title="Link to the code" target="_blank">
+								<i class="icon-github"></i>
+							</a>
+						</li>
+					{{/if}}
+					<li class="portfolio-listing__link">
+						<a href="{{projectUrl slug}}" title="About">
+							<i class="icon-angle-right"></i>
+						</a>
+					</li>
+				</ul>
+			</article>
+		{{/each}}
+	</section>
+
+</main>

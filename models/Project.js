@@ -8,7 +8,8 @@ var Types = keystone.Field.Types;
 
 var Project = new keystone.List('Project', {
 	map: { name: 'title' },
-	autokey: { path: 'slug', from: 'title', unique: true }
+	autokey: { path: 'slug', from: 'title', unique: true },
+	sortable: true
 });
 
 Project.add({

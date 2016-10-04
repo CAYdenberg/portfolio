@@ -21,7 +21,6 @@ exports = module.exports = function(req, res) {
 			.populate('author');
 
 		q.exec(function(err, results) {
-			console.log(results);
 			locals.data.projects = results;
 			next(err);
 		});

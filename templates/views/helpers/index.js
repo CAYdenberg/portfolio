@@ -329,7 +329,8 @@ module.exports = function() {
 	 * ===========================
 	 */
 	_helpers.htmlTitle = function(pageTitle) {
-		return pageTitle + ' | ' + keystone.get('name');
+		const siteTitle = keystone.get('name');
+		return (pageTitle ? pageTitle + ' | ' +  siteTitle : siteTitle); 
 	}
 
 

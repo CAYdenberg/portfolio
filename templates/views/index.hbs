@@ -1,41 +1,50 @@
 <header>
-	<h1>Casey A. Ydenberg</h1>
-	<h2>JavaScript Developer</h2>
-	<a href="/curriculum-vitae" class="button">CV</a>
-
-	<img src="." />
+	<div class="row">
+		<div class="column small-9">
+			<h1>Casey A. Ydenberg</h1>
+			<h2>JavaScript Developer</h2>
+			<a href="/curriculum-vitae" class="button">CV</a>
+		</div>
+		<div class="column small-3">
+			<img src="." />
+		</div>
+	</div>
 </header>
 
-<section class="portfolio">
-	<h2><a href="/portfolio">Projects</a></h2>
+<div class="row">
 
-	{{#each data.projects}}
-		<article>
-			<h3><a href="{{projectUrl slug}}" class="natural--secondary">{{title}}</a></h3>
-		</article>
-	{{/each}}
+	<section class="column small-12 medium-6 portfolio">
+		<h2><a href="/portfolio">Projects</a></h2>
 
-	<footer>
-		<h3>See my portfolio</h3>
-	</footer>
-</section>
+		{{#each data.projects}}
+			<article>
+				<h3><a href="{{projectUrl slug}}" class="natural--secondary">{{title}}</a></h3>
+			</article>
+		{{/each}}
 
+		<footer>
+			<h3>See my portfolio</h3>
+		</footer>
+	</section>
 
-<section class="blog">
-	<h2><a href="/blog">Blog</a></h2>
+	<section class="column small-12 medium-6 blog">
+		<h2><a href="/blog">Blog</a></h2>
 
-	{{#each data.posts}}
-		<article>
-			<h3><a href="{{postUrl slug}}" class="natural--secondary">{{title}}</a></h3>
-		</article>
-	{{/each}}
+		{{#each data.posts}}
+			<article>
+				<h3><a href="{{postUrl slug}}" class="natural--secondary">{{title}}</a></h3>
+			</article>
+		{{/each}}
 
-	<footer>
-		<h3>See all posts</h3>
-	</footer>
-</section>
+		<footer>
+			<h3>See all posts</h3>
+		</footer>
+	</section>
+</div>
 
 <footer>
-	<h2>Contact Me</h2>
-	<p>Social media</p>
+	<div class="row column">
+		<h2>Contact Me</h2>
+		<p>Social media</p>
+	</div>
 </footer>

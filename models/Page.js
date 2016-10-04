@@ -1,5 +1,7 @@
 var keystone = require('keystone');
-var Post = require('./Post');
+var Types = keystone.Field.Types;
+
+var Content = require('./ContentBase');
 
 /**
  * Page Model
@@ -7,7 +9,14 @@ var Post = require('./Post');
  */
 
  var Page = new keystone.List('Page', {
- 	inherits: Post
+ 	inherits: Content
+ });
+
+ Page.add({
+ 	image: { type: Types.CloudinaryImage },
+ 	content: {
+ 		extended: { type: Types.Markdown, wysiwyg: true, height: 400 }
+ 	}
  });
 
  Page.register();

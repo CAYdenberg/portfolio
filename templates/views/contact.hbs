@@ -7,7 +7,7 @@
 		{{#if enquirySubmitted}}
 			<h2>Thanks for getting in touch.</h2>
 		{{else}}
-			<form method="post" action=".">
+			<form method="POST" action="/contact">
 				<input type="hidden" name="action" value="contact">
 				<label>
 					Name *
@@ -15,11 +15,11 @@
 				</label>
 				<label>
 					Email *
-					<input type="email" name="email.full" aria-required="true" value="{{formData.[email.full]}}" {{#if validationErrors.email}}class="has-error"{{/if}}>
+					<input type="email" name="email" aria-required="true" value="{{formData.email}}" {{#if validationErrors.email}}class="has-error"{{/if}}>
 				</label>
 				<label>
 					Message
-					<textarea name="message" rows="4" aria-required="true" {{#if validationErrors.message}}class="has-error"{{/if}}>{{formData.message}}</textarea>
+					<textarea name="message" rows="4" aria-required="true">{{formData.message}}</textarea>
 				</label>
 				<button type="submit" class="secondary button">Send</button>
 			</form>

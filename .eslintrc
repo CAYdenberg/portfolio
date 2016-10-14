@@ -7,7 +7,8 @@
   },
   "globals": {
     "jQuery": true,
-    "$": true
+    "$": true,
+    "hljs": true
   },
   "extends": ["eslint:recommended"],
   "rules": {

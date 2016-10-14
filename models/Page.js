@@ -9,14 +9,14 @@ var Content = require('./ContentBase');
  */
 
  var Page = new keystone.List('Page', {
- 	inherits: Content
+   inherits: Content
  });
 
  Page.add({
- 	image: { type: Types.CloudinaryImage },
- 	content: {
- 		extended: { type: Types.Markdown, wysiwyg: true, height: 400 }
- 	}
+   image: { type: Types.CloudinaryImage },
+   content: {
+     extended: { type: Types.Markdown, wysiwyg: true, height: 400 }
+   }
  });
 
  Page.register();

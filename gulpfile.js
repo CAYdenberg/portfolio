@@ -12,7 +12,7 @@ const browserSync = require('browser-sync');
 const nodemon = require('gulp-nodemon');
 
 const JS_BUILD = [
-  './src/js/jquery.js',
+  './node_modules/jquery/dist/jquery.js',
   './node_modules/foundation-sites/dist/plugins/foundation.core.js',
   './node_modules/foundation-sites/dist/plugins/foundation.util.mediaQuery.js',
   './node_modules/foundation-sites/dist/plugins/foundation.util.triggers.js',

@@ -6,13 +6,13 @@ var cloudinary = require('cloudinary');
 
 
 // Declare Constants
-var CLOUDINARY_HOST = 'http://res.cloudinary.com';
+// var CLOUDINARY_HOST = 'http://res.cloudinary.com';
 
 // Collection of templates to interpolate
-var linkTemplate = _.template('<a href="<%= url %>"><%= text %></a>');
+// var linkTemplate = _.template('<a href="<%= url %>"><%= text %></a>');
 var scriptTemplate = _.template('<script src="<%= src %>"></script>');
 var cssLinkTemplate = _.template('<link href="<%= href %>" rel="stylesheet">');
-var cloudinaryUrlLimit = _.template(CLOUDINARY_HOST + '/<%= cloudinaryUser %>/image/upload/c_limit,f_auto,h_<%= height %>,w_<%= width %>/<%= publicId %>.jpg');
+// var cloudinaryUrlLimit = _.template(CLOUDINARY_HOST + '/<%= cloudinaryUser %>/image/upload/c_limit,f_auto,h_<%= height %>,w_<%= width %>/<%= publicId %>.jpg');
 
 
 module.exports = function() {
@@ -111,7 +111,7 @@ module.exports = function() {
 	 */
 
 	// block rendering for keystone admin css
-	_helpers.isAdminEditorCSS = function(user, options) {
+	_helpers.isAdminEditorCSS = function(user) {
 		var output = '';
 		if (typeof(user) !== 'undefined' && user.isAdmin) {
 			output = cssLinkTemplate({
@@ -122,7 +122,7 @@ module.exports = function() {
 	};
 
 	// block rendering for keystone admin js
-	_helpers.isAdminEditorJS = function(user, options) {
+	_helpers.isAdminEditorJS = function(user) {
 		var output = '';
 		if (typeof(user) !== 'undefined' && user.isAdmin) {
 			output = scriptTemplate({
@@ -197,7 +197,7 @@ module.exports = function() {
 
 	// might be a ghost helper
 	// used for pagination urls on blog
-	_helpers.pageUrl = function(pageNumber, options) {
+	_helpers.pageUrl = function(pageNumber) {
 		return '/blog?page=' + pageNumber;
 	};
 
@@ -222,7 +222,7 @@ module.exports = function() {
 		return options.inverse(this);
 	};
 
-	_helpers.paginationNavigation = function(pages, currentPage, totalPages, options){
+	_helpers.paginationNavigation = function(pages, currentPage, totalPages){
 		var html = '';
 
 		// pages should be an array ex.  [1,2,3,4,5,6,7,8,9,10, '....']
@@ -254,7 +254,7 @@ module.exports = function() {
 
   // special helper to ensure that we always have a valid page url set even if
   // the link is disabled, will default to page 1
-  _helpers.paginationPreviousUrl = function(previousPage, totalPages){
+  _helpers.paginationPreviousUrl = function(previousPage){
       if(previousPage === false){
           previousPage = 1;
       }
@@ -330,7 +330,7 @@ module.exports = function() {
 	 */
 	_helpers.htmlTitle = function(pageTitle) {
 		const siteTitle = keystone.get('name');
-		return (pageTitle ? pageTitle + ' | ' +  siteTitle : siteTitle); 
+		return (pageTitle ? pageTitle + ' | ' +  siteTitle : siteTitle);
 	}
 
 

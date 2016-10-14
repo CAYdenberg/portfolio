@@ -47,7 +47,7 @@ exports = module.exports = function(app) {
 	// app.get('/protected', middleware.requireUser, routes.views.protected);
 
   // the generic 404 response
-  app.use(function(req, res, next) {
+  app.use(function(req, res) {
     return res.status(404).render('404');
   });
 

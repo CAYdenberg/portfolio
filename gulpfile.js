@@ -1,5 +1,7 @@
 require('dotenv').config();
 
+const isProduction = () => (process.env.ENV === 'production');
+
 const gulp = require('gulp');
 const gutil = require('gulp-util');
 const rename = require('gulp-rename');
@@ -7,9 +9,12 @@ const sass = require('gulp-sass');
 const eslint = require('gulp-eslint');
 const imagemin = require('gulp-imagemin');
 const concat = require('gulp-concat');
+const minify = require('gulp-clean-css');
+const uglify = require('gulp-uglify');
+const gulpif = require('gulp-if');
 
-const browserSync = require('browser-sync');
-const nodemon = require('gulp-nodemon');
+const browserSync = isProduction() ? require('browser-sync') : null;
+const nodemon = isProduction() ? require('gulp-nodemon') : null;
 
 const JS_BUILD = [
   './node_modules/jquery/dist/jquery.js',
@@ -27,8 +32,9 @@ gulp.task('css', function() {
     .pipe(rename('style.css'))
     .pipe(sass())
     .on('error', gutil.log)
-    .pipe(gulp.dest('./dist'))
-    .pipe(browserSync.stream());
+    // minify in production, stream to browser in dev
+    .pipe(gulpif(isProduction(), minify(), browserSync.stream()))
+    .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('fonts', function() {
@@ -55,8 +61,10 @@ gulp.task('lint', function() {
 });
 
 gulp.task('js', function () {
-  return gulp.src(JS_BUILD)
+  gulp.src(JS_BUILD)
     .pipe(concat('main.js'))
+    // minify in production, stream to browser in dev
+    .pipe(gulpif(isProduction(), uglify(), browserSync.stream()))
     .pipe(gulp.dest('./dist'));
 });
 

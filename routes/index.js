@@ -34,6 +34,8 @@ var routes = {
 // Setup Route Bindings
 exports = module.exports = function(app) {
 
+	app.use(require('./redirects'));
+
 	// Views
 	app.get('/', routes.views.index);
 	app.get('/blog', routes.views.blog);

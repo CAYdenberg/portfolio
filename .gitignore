@@ -11,7 +11,10 @@ pids
 lib-cov
 
 # Compiled assets when the source assets will do
-dist
+dist/**/*.js
+dist/**/*.css
+dist/img/*
+
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release

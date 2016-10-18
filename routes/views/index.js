@@ -1,4 +1,5 @@
 var keystone = require('keystone');
+const shuffle = require('underscore').shuffle;
 
 exports = module.exports = function(req, res) {
 
@@ -34,11 +35,10 @@ exports = module.exports = function(req, res) {
 
 		var q = keystone.list('Project').model
 			.find()
-			.limit(2)
 			.where('state', 'published');
 
 		q.exec(function(err, results) {
-			locals.data.projects = results;
+			locals.data.projects = shuffle(results).slice(0, 2);
 			next(err);
 		});
 

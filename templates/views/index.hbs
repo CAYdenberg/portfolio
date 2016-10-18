@@ -3,7 +3,7 @@
 		<div class="row">
 			<div class="column small-9">
 				<h1>Casey A. Ydenberg</h1>
-				<h2>JavaScript Developer</h2>
+				<h2>Web Developer</h2>
 				<a href="/curriculum-vitae" class="button">CV</a>
 			</div>
 			<div class="column small-3">
@@ -16,10 +16,10 @@
 <main class="row">
 
 	<section class="column small-12 medium-6 homepage-section">
-		<h2><a href="/portfolio">Projects</a></h2>
+		<h2 class="homepage-section__title"><a href="/portfolio">Projects</a></h2>
 
 		{{#each data.projects}}
-			<ul class="homepage-portfolio">
+			<ul class="homepage-portfolio embiggen">
 				<li><a href="{{projectUrl slug}}" class="natural--secondary">
 					<strong>{{title}}</strong> {{brief}}
 				</a></li>
@@ -27,21 +27,21 @@
 		{{/each}}
 
 		<p>
-			<a href="/portfolio">See my portfolio</a>
+			<a href="/portfolio">See my portfolio &rarr;</a>
 		</p>
 	</section>
 
 	<section class="column small-12 medium-6 homepage-section">
-		<h2><a href="/blog">Blog</a></h2>
+		<h2 class="homepage-section__title"><a href="/blog">Blog</a></h2>
 
 		{{#each data.posts}}
 			<ul class="homepage-blog">
-				<li><a href="{{postUrl slug}}" class="natural--secondary">{{title}}</a></li>
+				<li class="embiggen"><a href="{{postUrl slug}}" class="natural--secondary">{{title}}</a></li>
 			</ul>
 		{{/each}}
 
 		<p>
-			<a href="/blog">See all posts</a>
+			<a href="/blog">See all posts &rarr;</a>
 		</p>
 	</section>
 

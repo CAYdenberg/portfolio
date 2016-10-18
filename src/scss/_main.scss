@@ -50,6 +50,10 @@ article {
     color: $light-gray;
   }
 }
+.embiggen {
+  font-size: 1.4em;
+  margin-bottom: 1em;
+}
 
 
 /**
@@ -207,16 +211,22 @@ article {
   background-size: cover;
   background-position: right middle;
   color: white;
+  h1, h2 {
+    margin-bottom: ($global-margin * 3);
+  }
 }
 
 .homepage-header__filter {
-  padding: rem-calc(50) 0;
+  padding: rem-calc(80) 0;
   background: rgba(0, 0, 0, 0.7);
   height: 100%;
 }
 
 .homepage-section {
-  margin: rem-calc(50) 0;
+  margin: rem-calc(80) 0;
+}
+.homepage-section__title {
+  margin-bottom: ($global-margin) * 2.5;
 }
 
 .homepage-portfolio,

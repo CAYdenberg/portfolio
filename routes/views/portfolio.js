@@ -1,4 +1,5 @@
-var keystone = require('keystone');
+const keystone = require('keystone');
+const shuffle = require('underscore').shuffle;
 
 exports = module.exports = function(req, res) {
 
@@ -21,7 +22,7 @@ exports = module.exports = function(req, res) {
 			.populate('author');
 
 		q.exec(function(err, results) {
-			locals.data.projects = results;
+			locals.data.projects = shuffle(results);
 			next(err);
 		});
 

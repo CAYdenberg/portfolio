@@ -11,7 +11,7 @@
 @include foundation-pagination;
 
 // include icons
-@import "../icons/styles.scss";
+@import "icons";
 
 // include prism
 @import "highlight.darcula.scss";

@@ -95,4 +95,4 @@ gulp.task('watch', function () {
 
 });
 
-gulp.task('default', ['css', 'fonts', 'images', 'lint', 'js']);
+gulp.task('default', ['css', 'images', 'lint', 'js']);

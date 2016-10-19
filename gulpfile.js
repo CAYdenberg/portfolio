@@ -37,11 +37,6 @@ gulp.task('css', function() {
     .pipe(gulp.dest('./dist'));
 });
 
-gulp.task('fonts', function() {
-  return gulp.src('./src/icons/fonts/**')
-    .pipe(gulp.dest('./dist/fonts'));
-});
-
 gulp.task('images', function() {
   return gulp.src('src/img/**')
     .pipe(imagemin())
@@ -72,8 +67,10 @@ gulp.task('js', function () {
 gulp.task('watch', function () {
 
   gulp.watch(['src/**/*.scss'], ['css']);
+
   // watch CLIENT SIDE JS
   gulp.watch(['src/**/*.js'], ['js']);
+
   // trigger browserSync reload when HBS files change
   gulp.watch(['**/*.hbs'], browserSync.reload);
 
@@ -87,11 +84,13 @@ gulp.task('watch', function () {
     watch: ['app.js', 'routes/**/*.js', 'models/**/*.js', 'templates/**/*.js']
 
   })
+
   .once('start', function() {
     browserSync.init({
       proxy: 'http://localhost:' + process.env.PORT,
       port: (parseInt(process.env.PORT, 10) + 1)
     });
+
   }).on('restart', browserSync.reload);
 
 });

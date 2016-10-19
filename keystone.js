@@ -19,7 +19,7 @@ keystone.init({
 	'brand': 'Casey A. Ydenberg',
 
 	'static': 'dist',
-	'favicon': 'dist/favicon.ico',
+	'favicon': 'dist/favicon.png',
 	'views': 'templates/views',
 	'view engine': 'hbs',
 

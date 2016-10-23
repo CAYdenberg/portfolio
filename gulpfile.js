@@ -13,8 +13,8 @@ const minify = require('gulp-clean-css');
 const uglify = require('gulp-uglify');
 const gulpif = require('gulp-if');
 
-const browserSync = !isProduction() ? require('browser-sync') : null;
-const nodemon = !isProduction() ? require('gulp-nodemon') : null;
+const browserSync = require('browser-sync');
+const nodemon = require('gulp-nodemon');
 
 const JS_BUILD = [
   './node_modules/jquery/dist/jquery.js',

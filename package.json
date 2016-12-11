@@ -20,7 +20,7 @@
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
     "handlebars": "^2.0.0",
-    "keystone": "file:../keystone",
+    "keystone": "^0.3.14",
     "moment": "^2.10.6",
     "rss": "^1.2.1",
     "underscore": "^1.8.3"

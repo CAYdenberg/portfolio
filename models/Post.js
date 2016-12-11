@@ -24,4 +24,8 @@ Post.schema.virtual('content.full').get(function() {
 	return this.content.extended || this.content.brief;
 });
 
+Post.schema.methods.canonicalUrl = function() {
+	return keystone.get('url') + '/blog/' + this.slug;
+}
+
 Post.register();

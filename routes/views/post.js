@@ -26,6 +26,7 @@ exports = module.exports = function(req, res) {
       }
 			locals.data.post = result;
 			locals.pageTitle = locals.data.post.title;
+			locals.currentUrl = locals.data.post.canonicalUrl();
       next(err);
 		});
 

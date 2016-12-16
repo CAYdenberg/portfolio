@@ -17,9 +17,14 @@
 	<footer class="main-content__footer">
 		<h2>Share this post</h2>
 		<div class="share-icons">
-			<a class="fa fa-twitter-square" href="https://twitter.com/share?text={{encode pageTitle}}" title="Tweet this page"
-					onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
-					<span class="hidden"><i class="icon-twitter"></i></span>
+			<a href="https://twitter.com/sharer.php?url={{encode currentUrl}}" title="Share this page on Facebook">
+				<span class="hidden"><i class="icon-facebook"></i></span>
+			</a>
+			<a href="https://twitter.com/share?text={{encode pageTitle}}&url={{encode currentUrl}}" title="Tweet this page">
+				<span class="hidden"><i class="icon-twitter"></i></span>
+			</a>
+			<a href="https://www.linkedin.com/shareArticle?url={{encode currentUrl}}&mini=true&title={{encode pageTitle}}" title="Tweet this page">
+				<span class="hidden"><i class="icon-linkedin"></i></span>
 			</a>
 		</div>
 
@@ -41,4 +46,5 @@
 				<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 		</div>
 	</footer>
+
 </article>

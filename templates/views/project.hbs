@@ -14,25 +14,27 @@
 			{{{myRole.html}}}
 		</section>
 
+		<ul class="portfolio-links--large">
+			{{#if links.site}}
+				<li class="portfolio-links__item">
+					<a href="{{links.site}}" title="Link to the site" target="_blank">
+						<i class="icon-demo"></i>
+					</a>
+				</li>
+			{{/if}}
+			{{#if links.code}}
+				<li class="portfolio-links__item">
+					<a href="{{links.code}}" title="Link to the code" target="_blank">
+						<i class="icon-github"></i>
+					</a>
+				</li>
+			{{/if}}
+		</ul>
+
 		<hr />
 
 		<footer>
-			<ul class="portfolio-links--large">
-				{{#if links.site}}
-					<li class="portfolio-links__item">
-						<a href="{{links.site}}" title="Link to the site" target="_blank">
-							<i class="icon-demo"></i>
-						</a>
-					</li>
-				{{/if}}
-				{{#if links.code}}
-					<li class="portfolio-links__item">
-						<a href="{{links.code}}" title="Link to the code" target="_blank">
-							<i class="icon-github"></i>
-						</a>
-					</li>
-				{{/if}}
-			</ul>
+			{{>cta}}
 		</footer>
 
 	</article>

@@ -175,6 +175,16 @@ module.exports = function() {
 		}
 	};
 
+	_helpers.cloudinaryTag = function(context, options) {
+		const imageName = context.public_id.concat('.',context.format);
+		const naturalSrc = cloudinary.url(imageName, {width: context.width})
+		const srcset = [3000, 2500, 1500, 1000, 800, 600, 400].reduce((str, size) => {
+			if (context.width < size) return str
+			return `${str}, ${cloudinary.url(imageName, {width: size})} ${size}w`
+		}, `${naturalSrc} ${context.width}w`)
+		return `<img src="${naturalSrc}" srcset="${srcset}" width="${context.width}" height="${context.height}" sizes="${options.hash.sizes}" alt="${options.hash.alt}" />`
+	}
+
 	// ### Content Url Helpers
 	// KeystoneJS url handling so that the routes are in one place for easier
 	// editing.  Should look at Django/Ghost which has an object layer to access

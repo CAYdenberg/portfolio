@@ -209,54 +209,97 @@ article {
 * HOMEPAGE
 */
 
-.homepage-header {
-  background-image: url(./img/code.jpg);
-  background-size: cover;
-  background-position: right middle;
+.homepage-main {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.homepage-row {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+.homepage-tile {
+  flex-grow: 1;
+  width: 50%;
+  overflow: hidden;
+  position: relative;
+}
+.homepage-tile__item {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  position: absolute;
+  display: block;
+  background: white;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.5s ease-in-out opacity;
+}
+.homepage-tile__item:first-child,
+.homepage-tile__item.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.homepage-nav {
+  font-size: 2rem;
+  font-weight: 700;
   color: white;
-  h1, h2 {
-    margin-bottom: ($global-margin * 3);
+  background: $dark-gray;
+  display: flex;
+  flex-direction: row;
+}
+.homepage-nav__link {
+  flex-grow: 1;
+  text-align: center;
+  padding: 0.5em 0;
+  &:hover {
+    background: map-get($foundation-palette, secondary);
+    color: white;
   }
 }
 
-.homepage-header__filter {
-  padding: rem-calc(80) 0;
-  background: rgba(0, 0, 0, 0.7);
-  height: 100%;
-}
-
-.homepage-section {
-  margin: rem-calc(80) 0;
-}
-.homepage-section__title {
-  margin-bottom: ($global-margin) * 2.5;
-}
-
-.homepage-portfolio,
-.homepage-blog {
-  list-style-type: none;
-  margin-left: 0;
-  line-height: 1.1;
-}
-
-.homepage-footer {
-  background: $dark-gray;
+.homepage-project {
+  position: relative;
   color: white;
-  padding: rem-calc(50) 0;
-}
-
-.social-nav--large {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  font-size: 2em;
-  li {
-    display: inline-block;
-    &:first-child {
-      margin-right: 1em;
+  border-color: map-get($foundation-palette, secondary);
+  transition: 0.3s ease-in-out;
+  &:hover {
+    color: map-get($foundation-palette, primary);
+    border-color: map-get($foundation-palette, primary);
+    img {
+      filter: blur(5px);
     }
   }
-
+}
+.homepage-project__bg,
+.homepage-project__fg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.homepage-project__bg img {
+  display: block;
+  width: 100%;
+  transition: 0.3s ease-in-out;
+}
+.homepage-project__fg {
+  border: 2px solid;
+  border-color: inherit;
+  background: linear-gradient(rgba($dark-gray, 0), rgba($dark-gray, 0.9));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.homepage-project__title {
+  padding: 0 1.25em;
+  color: inherit;
 }
 
 /**

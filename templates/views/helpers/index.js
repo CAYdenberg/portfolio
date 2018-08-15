@@ -176,6 +176,8 @@ module.exports = function() {
 	};
 
 	_helpers.cloudinaryTag = function(context, options) {
+		if (!context || !context.public_id) return ''
+
 		const imageName = context.public_id.concat('.',context.format);
 		const naturalSrc = cloudinary.url(imageName, {width: context.width})
 		const srcset = [3000, 2500, 1500, 1000, 800, 600, 400].reduce((str, size) => {

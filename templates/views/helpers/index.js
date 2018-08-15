@@ -179,10 +179,10 @@ module.exports = function() {
 		if (!context || !context.public_id) return ''
 
 		const imageName = context.public_id.concat('.',context.format);
-		const naturalSrc = cloudinary.url(imageName, {width: context.width})
+		const naturalSrc = cloudinary.url(imageName, {width: context.width, secure: true})
 		const srcset = [3000, 2500, 1500, 1000, 800, 600, 400].reduce((str, size) => {
 			if (context.width < size) return str
-			return `${str}, ${cloudinary.url(imageName, {width: size})} ${size}w`
+			return `${str}, ${cloudinary.url(imageName, {width: size, secure: true})} ${size}w`
 		}, `${naturalSrc} ${context.width}w`)
 		return `<img src="${naturalSrc}" srcset="${srcset}" width="${context.width}" height="${context.height}" sizes="${options.hash.sizes}" alt="${options.hash.alt}" />`
 	}

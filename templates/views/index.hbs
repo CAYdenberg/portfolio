@@ -4,7 +4,7 @@
 		<div class="homepage-tile">
 			{{#with data.projects.[0]}}
 				<a class="homepage-tile__item homepage-project" href="#">
-					<div class="homepage-project__bg">{{{cloudinaryTag image sizes="50vw"}}}</div>
+					<div class="homepage-project__bg"><img src="{{{cloudinaryUrl image}}}" alt="{{brief}}" /></div>
 					<div class="homepage-project__fg">
 						<h2 class="homepage-project__title">{{{title}}}</h2>
 					</div>
@@ -25,8 +25,8 @@
 
 	<nav class="homepage-nav">
 		<a class="homepage-nav__link" href="#">Blog</a>
-		<a class="homepage-nav__link" href="#">CV</a>
 		<a class="homepage-nav__link" href="#">Contact</a>
+		<a class="homepage-nav__link" href="#">CV</a>
 	</nav>
 
 	<div class="homepage-row">

@@ -1,11 +1,15 @@
-$(document).ready(function() {
-  $(document).foundation();
 
-  $('pre code').each(function(i, block) {
-    hljs.highlightBlock(block);
-  });
+$(document).foundation();
 
-  $('input, textarea').change(function() {
-    $(this).removeClass('has-error');
-  });
-});
+// ON clicking button.menu-toggle :
+// ADD .is-off-canvas-open and .is-open-left
+// TO .off-canvas-wrapper-inner
+//
+// ADD .is-open to .sidebar-wrapper
+// AND toggle aria-hidden
+//
+// When clicked again hide them.
+//
+// ALSO toggle aria-expanded on button.menu-toggle
+
+hljs.initHighlightingOnLoad();

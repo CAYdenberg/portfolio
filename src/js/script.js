@@ -24,5 +24,3 @@ function closeSidebar() {
 
 document.querySelector('.menu-toggle').addEventListener('click', openSidebar)
 document.querySelector('.off-canvas-content').addEventListener('click', closeSidebar)
-
-hljs.initHighlightingOnLoad();

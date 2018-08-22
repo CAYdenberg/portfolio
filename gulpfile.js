@@ -8,18 +8,15 @@ const rename = require('gulp-rename');
 const sass = require('gulp-sass');
 const eslint = require('gulp-eslint');
 const imagemin = require('gulp-imagemin');
-const concat = require('gulp-concat');
+const browserify = require('browserify');
+const source = require('vinyl-source-stream');
+const buffer = require('vinyl-buffer');
 const minify = require('gulp-clean-css');
 const uglify = require('gulp-uglify');
 const gulpif = require('gulp-if');
 
 const browserSync = require('browser-sync');
 const nodemon = require('gulp-nodemon');
-
-const JS_BUILD = [
-  './src/js/highlight.pack.js',
-  './src/js/script.js'
-];
 
 gulp.task('css', function() {
   gulp.src('./src/scss/_main.scss')
@@ -50,8 +47,11 @@ gulp.task('lint', function() {
 });
 
 gulp.task('js', function () {
-  gulp.src(JS_BUILD)
-    .pipe(concat('main.js'))
+  browserify('./src/js/script.js')
+    .transform('babelify', {presets: ['es2015', 'env']})
+    .bundle()
+    .pipe(source('main.js'))
+    .pipe(buffer())
     // minify in production, stream to browser in dev
     .pipe(gulpif(isProduction(), uglify(), browserSync.stream()))
     .pipe(gulp.dest('./dist'));

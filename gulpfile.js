@@ -17,12 +17,6 @@ const browserSync = require('browser-sync');
 const nodemon = require('gulp-nodemon');
 
 const JS_BUILD = [
-  './node_modules/jquery/dist/jquery.js',
-  './node_modules/foundation-sites/dist/plugins/foundation.core.js',
-  './node_modules/foundation-sites/dist/plugins/foundation.util.mediaQuery.js',
-  './node_modules/foundation-sites/dist/plugins/foundation.util.triggers.js',
-  './node_modules/foundation-sites/dist/plugins/foundation.util.motion.js',
-  './node_modules/foundation-sites/dist/plugins/foundation.offcanvas.js',
   './src/js/highlight.pack.js',
   './src/js/script.js'
 ];

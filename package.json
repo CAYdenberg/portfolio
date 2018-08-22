@@ -20,9 +20,13 @@
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
     "handlebars": "^4.0.11",
+    "highlight-javascript": "github:segmentio/highlight-javascript",
+    "highlight-php": "github:segmentio/highlight-php",
+    "highlight-xml": "github:segmentio/highlight-xml",
     "keystone": "^4.0.0",
     "moment": "^2.10.6",
     "rss": "^1.2.1",
+    "syntax-highlighter": "github:segmentio/highlight",
     "underscore": "^1.8.3"
   },
   "devDependencies": {

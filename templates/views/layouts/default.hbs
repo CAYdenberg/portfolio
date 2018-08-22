@@ -22,7 +22,6 @@
 
 		{{!-- This file provides the default styling for the KeystoneJS Content Editor
 			- only renders when user is logged in and admin--}}
-		{{{isAdminEditorCSS user}}}
 
 	</head>
 
@@ -33,7 +32,7 @@
 				{{#ifeq section "home"}}
 				{{else}}
           <div class="menu-toggle-wrapper">
-            <button type="button" class="button hollow menu-toggle" data-toggle="sidebar-wrapper">
+            <button type="button" class="button hollow menu-toggle" data-toggle="sidebar-wrapper" aria-expanded="false" aria-controls="sidebar-wrapper">
               <i class="icon-bars"></i>
             </button>
           </div>
@@ -70,7 +69,6 @@
 			</div>
 		</div>
 
-		<script src="/main.js"></script>
-		{{{isAdminEditorJS user}}}
+		<script src="/main.js" defer></script>
 	</body>
 </html>

@@ -1,4 +1,6 @@
 
+// ADD syntax-highlighter see https://www.npmjs.com/package/syntax-highlighter
+
 function openSidebar(e) {
   e.preventDefault()
   const button = document.querySelector('.menu-toggle')
@@ -26,5 +28,3 @@ function closeSidebar(e) {
 
 document.querySelector('.menu-toggle').addEventListener('click', openSidebar)
 document.querySelector('.off-canvas-content').addEventListener('click', closeSidebar)
-
-hljs.initHighlightingOnLoad();

@@ -31,14 +31,7 @@
 
 	<div class="homepage-row">
 		<div class="homepage-tile">
-			{{#with data.projects.[2]}}
-				<div class="homepage-tile__item homepage-project">
-					<div class="homepage-project__bg">{{{cloudinaryTag image sizes="50vw"}}}</div>
-					<div class="homepage-project__fg">
-						<h2>{{{title}}}</h2>
-					</div>
-				</div>
-			{{/with}}
+			{{{rendered}}}
 		</div>
 		<div class="homepage-tile">
 			{{#with data.projects.[3]}}

@@ -1,6 +1,13 @@
 var keystone = require('keystone');
 const shuffle = require('underscore').shuffle;
 
+const render = require('preact-render-to-string');
+const h = require('preact').h
+const Hello = require('../../compiled/src/components/Hello').default
+
+const str = render(h(Hello, {who: 'casey'}))
+console.log(str)
+
 exports = module.exports = function(req, res) {
 
 	var view = new keystone.View(req, res);
@@ -22,6 +29,7 @@ exports = module.exports = function(req, res) {
 
 		q.exec(function(err, results) {
 			locals.data.projects = results;
+			locals.rendered = str
 			next(err);
 		});
 

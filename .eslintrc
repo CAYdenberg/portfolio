@@ -1,4 +1,12 @@
 {
+  "parser": "babel-eslint",
+
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+
   "env": {
     "es6": true,
     "commonjs": true,
@@ -6,11 +14,9 @@
     "browser": true
   },
   "globals": {
-    "jQuery": true,
-    "$": true,
-    "hljs": true
+    "h": true
   },
-  "extends": ["eslint:recommended"],
+  "extends": ["eslint:recommended", "standard-preact"],
   "rules": {
     "no-console": 0
   }

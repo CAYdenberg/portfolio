@@ -48,7 +48,7 @@ gulp.task('lint', function() {
 
 gulp.task('js', function () {
   browserify('./src/js/script.js')
-    .transform('babelify', {presets: ['es2015', 'env']})
+    .transform('babelify')
     .bundle()
     .pipe(source('main.js'))
     .pipe(buffer())

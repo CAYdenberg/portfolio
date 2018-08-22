@@ -14,7 +14,7 @@ lib-cov
 dist/**/*.js
 dist/style.css
 dist/img/*
-
+compiled/*
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release

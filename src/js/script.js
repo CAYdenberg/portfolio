@@ -1,9 +1,8 @@
 
-function openSidebar(e) {
-  e.preventDefault()
+function openSidebar() {
   const button = document.querySelector('.menu-toggle')
   if (button.getAttribute('aria-expanded') === 'true') {
-    return closeSidebar(e)
+    return closeSidebar()
   }
 
   button.setAttribute('aria-expanded', "true")
@@ -14,8 +13,7 @@ function openSidebar(e) {
   document.getElementById('sidebar-wrapper').classList.add('is-open')
 }
 
-function closeSidebar(e) {
-  e.preventDefault()
+function closeSidebar() {
   document.querySelector('.menu-toggle').setAttribute('aria-expanded', "false")
 
   const inner = document.querySelector('.off-canvas-wrapper-inner')

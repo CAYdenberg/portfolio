@@ -1,6 +1,19 @@
 
 // ADD syntax-highlighter see https://www.npmjs.com/package/syntax-highlighter
 
+var Highlight = require('syntax-highlighter')
+var html = require('highlight-xml')
+var js = require('highlight-javascript')
+var php = require('highlight-php')
+
+var highlight = new Highlight().use(js).use(html).use(php)
+
+try {
+  highlight.all()
+} catch (e) {
+  console.error('Bad language definition')
+}
+
 function openSidebar(e) {
   e.preventDefault()
   const button = document.querySelector('.menu-toggle')

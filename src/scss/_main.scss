@@ -83,7 +83,7 @@ article {
   @include breakpoint(large) {
     background-image: url(./img/cover.jpg);
     background-size: cover;
-    background-position: middle top;
+    background-position: center top;
   }
 }
 .sidebar-filter {

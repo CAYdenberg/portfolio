@@ -106,22 +106,22 @@ $header-font-family: $body-font-family;
 $header-font-weight: 700;
 $header-font-style: normal;
 $font-family-monospace: Consolas, 'Liberation Mono', Courier, monospace;
-$header-sizes: (
+$header-styles: (
   small: (
-    'h1': 28,
-    'h2': 24,
-    'h3': 22,
-    'h4': 20,
-    'h5': 18,
-    'h6': 16,
+    'h1': ('font-size': 24),
+    'h2': ('font-size': 20),
+    'h3': ('font-size': 19),
+    'h4': ('font-size': 18),
+    'h5': ('font-size': 17),
+    'h6': ('font-size': 16),
   ),
   medium: (
-    'h1': 40,
-    'h2': 35,
-    'h3': 30,
-    'h4': 24,
-    'h5': 18,
-    'h6': 16,
+    'h1': ('font-size': 48),
+    'h2': ('font-size': 40),
+    'h3': ('font-size': 31),
+    'h4': ('font-size': 25),
+    'h5': ('font-size': 20),
+    'h6': ('font-size': 16),
   ),
 );
 $header-color: inherit;
@@ -396,7 +396,12 @@ $meter-fill-bad: $alert-color;
 // 24. Off-canvas
 // --------------
 
-$offcanvas-size: 370px;
+$offcanvas-sizes: (
+  small: 370px,
+);
+$offcanvas-vertical-sizes: (
+  small: 250px,
+);
 $offcanvas-background: $light-gray;
 $offcanvas-zindex: 0;
 $offcanvas-transition-length: 0.5s;

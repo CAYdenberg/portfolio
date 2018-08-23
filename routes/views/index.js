@@ -3,10 +3,7 @@ const shuffle = require('underscore').shuffle;
 
 const render = require('preact-render-to-string');
 const h = require('preact').h
-const Hello = require('../../compiled/src/components/Hello').default
-
-const str = render(h(Hello, {who: 'casey'}))
-console.log(str)
+const Portfolio = require('../../compiled/src/components/Portfolio').default
 
 exports = module.exports = function(req, res) {
 
@@ -28,6 +25,7 @@ exports = module.exports = function(req, res) {
 			.where('state', 'published');
 
 		q.exec(function(err, results) {
+			const str = render(h(Portfolio, {projects: results}))
 			locals.data.projects = results;
 			locals.rendered = str
 			next(err);

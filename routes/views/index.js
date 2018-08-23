@@ -25,7 +25,7 @@ exports = module.exports = function(req, res) {
 			.where('state', 'published');
 
 		q.exec(function(err, results) {
-			const str = render(h(Portfolio, {projects: results}))
+			const str = render(h( Portfolio, {projects: shuffle(results)} ))
 			locals.data.projects = results;
 			locals.rendered = str
 			next(err);

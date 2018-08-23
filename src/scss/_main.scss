@@ -300,13 +300,13 @@ article {
   transition: 0.3s ease-in-out;
 }
 .homepage-project__fg {
-  background: linear-gradient(rgba($dark-gray, 0), rgba($dark-gray, 0.9));
+  background: linear-gradient(rgba($dark-gray, 0.3), rgba($dark-gray, 0.9));
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  padding: 1em;
 }
 .homepage-project__title {
-  padding: 0 1.25em;
   color: inherit;
 }
 

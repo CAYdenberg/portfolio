@@ -25,6 +25,8 @@
     "highlight-xml": "github:segmentio/highlight-xml",
     "keystone": "^4.0.0",
     "moment": "^2.10.6",
+    "preact": "^8.3.1",
+    "preact-render-to-string": "^3.8.2",
     "rss": "^1.2.1",
     "syntax-highlighter": "github:segmentio/highlight",
     "underscore": "^1.8.3"

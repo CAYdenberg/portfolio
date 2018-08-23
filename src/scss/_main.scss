@@ -57,6 +57,20 @@ article {
 .rounded-corners {
   border-radius: $global-radius;
 }
+.launch-link {
+  display: block;
+  width: 100%;
+  text-align: center;
+  border: 1px solid $dark-gray;
+  font-size: 2rem;
+  padding: 0.25em 0;
+  color: white;
+  background: map-get($foundation-palette, secondary);
+  &:hover {
+    color: white;
+    opacity: 0.8;
+  }
+}
 
 
 /**

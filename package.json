@@ -40,7 +40,7 @@
     "browser-sync": "^2.15.0",
     "browserify": "^16.2.2",
     "eslint-config-standard-preact": "^1.1.6",
-    "gulp-nodemon": "^2.1.0",
+    "gulp-nodemon": "^2.2.1",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
   },

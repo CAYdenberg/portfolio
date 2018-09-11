@@ -8,6 +8,11 @@
 			<h2>Thanks for getting in touch.</h2>
 		{{else}}
 			<form method="POST" action="/contact">
+
+				{{#if validationErrors}}
+					<h2>Name and Email are required</h2>
+				{{/if}}
+
 				<input type="hidden" name="action" value="contact">
 				<label>
 					Name *

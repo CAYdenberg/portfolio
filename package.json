@@ -25,6 +25,7 @@
     "highlight-xml": "github:segmentio/highlight-xml",
     "keystone": "^4.0.0",
     "moment": "^2.10.6",
+    "nodemailer": "^4.6.8",
     "preact": "^8.3.1",
     "preact-render-to-string": "^3.8.2",
     "rss": "^1.2.1",

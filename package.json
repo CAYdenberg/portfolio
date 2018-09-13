@@ -9,7 +9,6 @@
     "dotenv": "^1.1.0",
     "express-handlebars": "^1.1.0",
     "foundation-sites": "^6.4.3",
-    "gulp": "^3.9.1",
     "gulp-clean-css": "^2.0.13",
     "gulp-concat": "^2.6.0",
     "gulp-eslint": "^3.0.1",
@@ -27,7 +26,10 @@
     "moment": "^2.10.6",
     "nodemailer": "^4.6.8",
     "preact": "^8.3.1",
+    "preact-redux": "^2.0.3",
     "preact-render-to-string": "^3.8.2",
+    "redux": "^4.0.0",
+    "redux-devtools-extension": "^2.13.5",
     "rss": "^1.2.1",
     "syntax-highlighter": "github:segmentio/highlight",
     "underscore": "^1.8.3"
@@ -41,6 +43,7 @@
     "browser-sync": "^2.15.0",
     "browserify": "^16.2.2",
     "eslint-config-standard-preact": "^1.1.6",
+    "gulp": "^3.9.1",
     "gulp-nodemon": "^2.2.1",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
@@ -51,7 +54,9 @@
   },
   "scripts": {
     "start": "node keystone.js",
-    "compile": "./node_modules/.bin/babel -d compiled/ src/components/**/*.js"
+    "compile": "./node_modules/.bin/babel -d compiled/ src/components/**/*.js",
+    "build": "npx gulp",
+    "dev": "npx gulp watch"
   },
   "main": "keystone.js"
 }

@@ -5,7 +5,7 @@ var cloudinary = require('cloudinary');
 const cloudinaryUrl = (image) => {
   if ((image) && (image.public_id)) {
     var imageName = image.public_id.concat('.', image.format);
-    return cloudinary.url(imageName);
+    return cloudinary.url(imageName, {secure: true});
   } else {
     return null;
   }

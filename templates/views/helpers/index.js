@@ -345,6 +345,10 @@ module.exports = function() {
 		return (pageTitle ? pageTitle + ' | ' +  siteTitle : siteTitle);
 	}
 
+	_helpers.json = function(data) {
+		return JSON.stringify(data)
+	}
+
 
 	return _helpers;
 };

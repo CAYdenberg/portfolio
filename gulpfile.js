@@ -89,4 +89,4 @@ gulp.task('watch', function () {
 
 });
 
-gulp.task('default', ['css', 'images', 'lint', 'js']);
+gulp.task('default', ['css', 'js']);

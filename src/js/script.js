@@ -6,6 +6,8 @@ var html = require('highlight-xml')
 var js = require('highlight-javascript')
 var php = require('highlight-php')
 
+require('./setup')
+
 var highlight = new Highlight().use(js).use(html).use(php)
 
 try {

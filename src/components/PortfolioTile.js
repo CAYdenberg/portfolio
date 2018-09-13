@@ -1,5 +1,5 @@
 import {h} from 'preact'
-var cloudinary = require('cloudinary');
+import cloudinary from 'cloudinary'
 
 // clone of handlebar method
 const cloudinaryUrl = (image) => {

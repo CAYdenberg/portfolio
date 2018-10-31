@@ -6,19 +6,28 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 		<title>{{htmlTitle pageTitle}}</title>
+		<meta name="description" content="Visual data and science communication on the web">
 
 		<link rel="shortcut icon" href="/favicon.png">
-		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700" rel="stylesheet">
-		<link href="/style.css" rel="stylesheet">
-		<link href="/print_styles.css" rel="stylesheet" media="print">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+		<link rel="stylesheet" href="/style.css">
+		<link rel="stylesheet" href="/print_styles.css" media="print">
+
+		<link rel="canonical" href="{{ canonicalUrl }}">
 		<link rel="alternate" type="application/rss+xml" href="/feed/">
 
-		<meta property="og:title" content="{{htmlTitle pageTitle}}">
-		<meta property="og:image" content="/img/profile_sm.jpg">
+		<meta name="og:title" content="{{htmlTitle pageTitle}}">
+		<meta name="og:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="og:image:alt" content="Visual data and science communication on the web">
+		<meta name="og:url" content="{{ canonicalUrl }}">
 
-		<meta property="twitter:creator" content="@CAYdenberg">
-		<meta property="twitter:title" content="{{htmlTitle pageTitle}}">
-		<meta property="twitter:image" content="/img/profile_sm.jpg">
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="@CAYdenberg">
+		<meta name="twitter:creator" content="@CAYdenberg">
+		<meta name="twitter:title" content="{{htmlTitle pageTitle}}">
+		<meta name="twitter:description" content="Visual data and science communication on the web">
+		<meta name="twitter:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="twitter:image:alt" content="Visual data and science communication on the web">
 
 		{{!-- This file provides the default styling for the KeystoneJS Content Editor
 			- only renders when user is logged in and admin--}}

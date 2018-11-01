@@ -7,6 +7,7 @@ ReactDOM.render(React.createElement(
   'button',
   {
     type: 'button',
+    className: 'button',
     onClick: function onClick() {
       return setDateInput(new Date());
     }

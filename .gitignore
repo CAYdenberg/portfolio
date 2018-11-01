@@ -12,6 +12,7 @@ lib-cov
 
 # Compiled assets when the source assets will do
 dist/**/*.js
+!dist/today.js
 dist/style.css
 dist/img/*
 compiled/*

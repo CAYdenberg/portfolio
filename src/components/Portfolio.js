@@ -11,8 +11,8 @@ export default props => {
 
       <nav className="homepage-nav">
         <a className="homepage-nav__link" href="/blog">Blog</a>
+        <a className="homepage-nav__link" href="/talks">Speaking</a>
         <a className="homepage-nav__link" href="/contact">Contact</a>
-        <a className="homepage-nav__link" href="/curriculum-vitae">CV</a>
       </nav>
 
       <div className="homepage-row">

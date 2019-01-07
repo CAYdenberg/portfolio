@@ -1,0 +1,21 @@
+<main class="main-content">
+	<header class="main-content__header">
+		<h1>{{pageTitle}}</h1>
+	</header>
+
+	<section class="main-content__body blog-listing">
+		{{# each data.posts.results}}
+			<article data-ks-editable="{{#if ../user}}{{adminEditableUrl ../../user _id}}{{/if}}" class="blog-listing__post">
+				<h2>{{{title}}}</h2>
+				<div>{{{content.brief.html}}}</div>
+
+				<ul class="talks-links">
+					<li class="talks-links__item"><a href="{{ links.video }}" target="_blank">Video</a></li>
+					<li class="talks-links__item"><a href="{{ links.slides }}" target="_blank">Slides</a></li>
+				</ul>
+
+			</article>
+		{{/each}}
+	</section>
+
+</main>

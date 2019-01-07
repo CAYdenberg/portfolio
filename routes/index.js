@@ -21,6 +21,9 @@
 var keystone = require('keystone');
 var middleware = require('./middleware');
 var importRoutes = keystone.importer(__dirname);
+var Recaptcha = require('express-recaptcha').Recaptcha;
+var recaptcha = new Recaptcha(process.env.CAPTCHA_KEY, process.env.CAPTCHA_SECRET_KEY);
+
 
 // Common Middleware
 keystone.pre('routes', middleware.initLocals);
@@ -43,7 +46,7 @@ exports = module.exports = function(app) {
 	app.get('/feed/', require('./feed'));
 	app.get('/portfolio', routes.views.portfolio);
 	app.get('/portfolio/:project', routes.views.project);
-	app.all('/contact', routes.views.contact);
+	app.all('/contact', [recaptcha.middleware.render, recaptcha.middleware.verify], routes.views.contact);
 	app.get('/talks', routes.views.talks);
 	app.get('/:page', routes.views.page);
 

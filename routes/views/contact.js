@@ -13,12 +13,19 @@ exports = module.exports = function(req, res) {
 	locals.validationErrors = false;
 	locals.enquirySubmitted = false;
 	locals.pageTitle = "Contact me";
+	locals.captcha = res.recaptcha;
 
 	// On POST requests, add the Enquiry item to the database
 	view.on('post', { action: 'contact' }, function(next) {
 
 		var newEnquiry = new Enquiry.model(),
 			updater = newEnquiry.getUpdateHandler(req);
+
+		if (req.recaptcha.error) {
+			console.log(req.recaptcha.error)
+			var err = new Error(req.recaptcha.error)
+			return next(err)
+		}
 
 		updater.process(req.body, {
 			flashErrors: true,

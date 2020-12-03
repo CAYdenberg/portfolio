@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<title>Opinionated opinions on code organization of a React-Redux project | Casey A. Ydenberg</title>
+		<meta name="description" content="Visual data and science communication on the web">
+
+		<link rel="shortcut icon" href="../favicon.png">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+		<link rel="stylesheet" href="../style.css">
+		<link rel="stylesheet" href="../print_styles.css" media="print">
+
+		<link rel="canonical" href="opinionated-opinions-on-code-organization-of-a-react-redux-project.html">
+		<link rel="alternate" type="application/rss+xml" href="../feed/index.html">
+
+		<meta name="og:title" content="Opinionated opinions on code organization of a React-Redux project | Casey A. Ydenberg">
+		<meta name="og:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="og:image:alt" content="Visual data and science communication on the web">
+		<meta name="og:url" content="https://caydenberg.io/blog/opinionated-opinions-on-code-organization-of-a-react-redux-project">
+
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="@CAYdenberg">
+		<meta name="twitter:creator" content="@CAYdenberg">
+		<meta name="twitter:title" content="Opinionated opinions on code organization of a React-Redux project | Casey A. Ydenberg">
+		<meta name="twitter:description" content="Visual data and science communication on the web">
+		<meta name="twitter:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="twitter:image:alt" content="Visual data and science communication on the web">
+
+
+	</head>
+
+	<body class="blog">
+		<div class="off-canvas-wrapper">
+			<div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+
+          <div class="menu-toggle-wrapper">
+            <button type="button" class="button hollow menu-toggle" data-toggle="sidebar-wrapper" aria-expanded="false" aria-controls="sidebar-wrapper">
+              <i class="icon-bars"></i>
+            </button>
+          </div>
+
+					<div class="off-canvas position-left reveal-for-large sidebar-wrapper" id="sidebar-wrapper" data-off-canvas>
+						<div class="sidebar-filter">
+							<aside class="sidebar-body">
+								<h2 class="site-title"><a href="../index.html" class="natural">Casey A. Ydenberg</a></h2>
+								<h3 class="site-description">Web Developer</h3>
+
+								<ul class="main-nav" role="menu">
+										<li class="active">
+											<a href="../blog.html">Blog</a>
+										</li>
+										<li >
+											<a href="../talks.html">Speaking</a>
+										</li>
+										<li >
+											<a href="../contact.html">Contact</a>
+										</li>
+								</ul>
+
+								<ul class="social-nav" role="menu">
+									<li><a href="https://github.com/CAYdenberg" target="_blank"><i class="icon-github" title="GitHub profile"></i></a></li>
+									<li><a href="https://twitter.com/CAYdenberg" target="_blank"><i class="icon-twitter" title="Twitter feed"></i></a></li>
+									<li><a href="https://www.linkedin.com/in/caydenberg" target="_blank"><i class="icon-linkedin" title="LinkedIn page"></i></a></li>
+								</ul>
+
+							</aside>
+						</div>
+					</div>
+
+				<div class="off-canvas-content" data-off-canvas-content>
+					<article class="main-content">
+
+		<header class="main-content__header">
+			<h1>Opinionated opinions on code organization of a React-Redux project</h1>
+			<p><a href="../blog.html">&larr; back to the blog</a></p>
+		</header>
+
+		<section class="main-content__body blog-content">
+			<p>I&#39;ve been working on a large-scale React-Redux project for several months now. React is not a framework and so it doesn&#39;t enforce a particular way of grouping related code or related files. I&#39;ve been thinking about what it means to provide forward-maintainability in this type of codebase and how we can make our code understandable to other human beings (ok, all human beings, including the original programmer). I thought I would share some of what I&#39;ve learned (often the hard way) and see what other people who&#39;ve faced this think.</p>
+<h2 id="1-keep-store-related-concerns-together">1. Keep store-related concerns together</h2>
+<p>It seems pretty normal to have one top-level folder for actions and another for reducers, but I&#39;ve decided that this isn&#39;t great. For one thing, both actions and reducers need access to the same set of constants. For another, large stores have a need for a type of &quot;store-query&quot; function that doesn&#39;t really belong in either place. I&#39;ve ultimately decided that a better organization is to have a single &quot;store&quot; folder containing a set of files which export separately their constants, actions, reducer, and queries. Each part of the store is then grouped together in one file making it easier to understand what its purpose it and cutting down on <code>import</code> boilerplate.</p>
+<h2 id="2-test-your-store">2. Test your store</h2>
+<p>Action creators (at least synchronous ones) and reducers are extremely easy to test and the benefits of testing therefore greatly outweigh the costs. Redux&#39;s <code>combineReducers</code> method makes it easy to write reducers that only need to know about a single section of the store, limiting the amount of state we have to mock in our tests. For example, to test an ADD_TODO action we could write:</p>
+<pre><code class="lang-js">import todosReducers, {constants as c} from &#39;../todos&#39;
+
+it(&#39;should add a TODO&#39;, () =&gt; {
+    const initialState = []
+    const finalState = todoReducer(initialState, {type: c.ADD_TODO, todo: &#39;Write unit tests&#39;})
+    expect(finalState).toHaveLength(1)
+})
+</code></pre>
+<p>While our application state will surely be more complex than a single array, the todosReducer doesn&#39;t care. These types of tests are trivially easy to write, and the process of writing them will solidify the design of the reducers as well and guard against regressions.</p>
+<h2 id="3-redux-middleware-is-powerful">3. Redux middleware is powerful</h2>
+<p>Redux is not about fetching data, it is about predictable data management. Yet the two are so closely intertwined that you basically cannot have one without the other. The &quot;de facto&quot; solution for binding asynchonous calls to redux is redux-thunk, which allows you to dispatch a function which is passed dispatch as an argument.</p>
+<p>Did you know that the source code for <a href="https://github.com/gaearon/redux-thunk/blob/master/src/index.js">redux-thunk</a> is only 14 lines? It does its&#39; job because the middleware interface for Redux is so well designed: if the middleware sees a <em>thing</em> which matches some criteria (in this case: it&#39;s a function), it is able to dispatch other actions (in this case when the function says so).</p>
+<p>But there isn&#39;t any reason to stop there: <a href="https://github.com/acdlite/redux-promise">middleware that sees a promise</a> can dispatch when the promise resolves (or errors); middleware that requests geolocation could dispatch when the user gives permission. There are a myriad of middleware libraries to choose from or you can write your own, and the advantage over thunk is that they make it easy to test your action creators. If your app uses a particular type of data and you know how you will be requesting it, you can use ONE hard-to-test middleware that interfaces with your now easy-to-test action creators, of which you will have many. Going with thunk alone is simple to begin, but testing it <em>sucks</em> (<a href="http://redux.js.org/docs/recipes/WritingTests.html#async-action-creators">the recommended approach is to mock the entire store/state</a>).</p>
+<p>For example, suppose all your app&#39;s data is fetched over REST. You could write (or pick) a middleware that monitors for objects that look like this:</p>
+<pre><code class="lang-js">{
+    type: &#39;REQUEST&#39;,
+    method: &#39;GET&#39;,
+    url: &#39;http://example.com/api/send&#39;
+    query: // ...
+}
+</code></pre>
+<p>Your action creators now spit out simple objects which makes them a piece of cake to test. Your middleware looks for these &quot;actions&quot; and then dispatches when they are made, when they resolve, and when they error. The middleware is harder to test but once it works, it works (and chances are a library already exists).</p>
+<h2 id="4-immutability-helpers-the-best-kept-secret-in-state-management">4. Immutability helpers: the best kept secret in state management</h2>
+<p>I&#39;ve extolled the virtues of the immutability helpers in a (<a href="http://caseyy.org/blog/using-immutability-helpers-for-redux-reducers)[previous">http://caseyy.org/blog/using-immutability-helpers-for-redux-reducers)[previous</a> post] - I really like this solution for immutable state management and haven&#39;t felt the need to go all-in and use Immutable.js. Yet.</p>
+<h2 id="5-nest-as-deeply-as-you-need-to">5. Nest as deeply as you need to</h2>
+<p>When I took over this current project, all of the components were kept in one folder one level deep. This does not ... scale. When you have hundreds or even dozens of components, it becomes hard to find what you&#39;re looking for. I&#39;ve found a better approach is to make any &quot;parent&quot; component the index file in its own folder, with all of its subcomponents as separate files. If/when those subcomponents become components, they are moved to directories (of the same name) and become index files. This can create some very deeply nested folders, but it&#39;s much better than the alternative. I also have a top-level &quot;partials&quot; folder with shared/reusable components. </p>
+<p>As far as the annoying <code>require(&#39;../../../../...&#39;)</code>-like statements you tend to get, <a href="https://gist.github.com/branneman/8048520">there are some possible solutions to that, too</a>.</p>
+<p>Shortly before I published this, <a href="https://hackernoon.com/the-100-correct-way-to-structure-a-react-app-or-why-theres-no-such-thing-3ede534ef1ed">this article came out from Hacker Noon</a>, which dives into this whole topic a lot more deeply.</p>
+<h2 id="6-test-components-judiciously">6. Test components judiciously</h2>
+<p>Generally speaking, it&#39;s easiest to test code that is free of side-effects, and React components fail this litmus test (by their nature, they &quot;mutate&quot; the DOM). There&#39;s also a litany of ways that a UI can look &quot;broken&quot; while producing perfectly valid markup and error-free processes, so it&#39;s arguable whether any amount of automated testing can eliminate regressions entirely. Still, there can be advantages to testing components, especially when a component is used in a wide variety of contexts throughout the application. <a href="http://caseyy.org/blog/dry-react">Reusage of components</a> provides more opportunity for something to go wrong in one context, and a greater need to clearly define the <a href="https://medium.freecodecamp.org/the-right-way-to-test-react-components-548a4736ab22">contract of the component</a>, increasing the value of both unit testing and TDD.</p>
+<h2 id="7-proptypes-help-to-self-document-a-component-s-responsibilities">7. PropTypes help to self-document a component&#39;s responsibilities</h2>
+<p>Speaking of defining the responsibilities of a component, PropTypes are just a godsend here. Not because they provide any safeguard against bugs, or are a replacement for static typing (they aren&#39;t and shouldn&#39;t be), but for the sheer value of writing out the PropTypes any component will accept. They are more documentation that anything else, with the added benefit that React will warn you when your expectations fail.</p>
+<p>An additional nugget that took me way too long to learn about was using <code>PropTypes.shape</code> to define objects with particular properties. It can a little tempting to go nuts here, so I settled on defining objects down as far as any particular prop that will be accessed within that component itself, and then further deconstructing it inside of any child components as necessary.</p>
+<h2 id="8-any-component-which-can-be-functional-should-be-functional">8. Any component which can be functional, should be functional</h2>
+<p><a href="https://medium.com/dailyjs/we-jumped-the-gun-moving-react-components-to-es2015-class-syntax-2b2bb6f35cb3">Jacques Favreau made a compelling argument recently</a> that React jumped the gun in deprecating <code>createClass</code> in favour of ES6 classes, and I&#39;m tempted to agree. But that is a secondary consideration to the fact that functional stateless components are just easier to understand and reason about. Unless you have a compelling reason for storing state in a React component instead of in Redux, do so. Unless you have a compelling reason to use a lifecycle method, do not use a lifecycle method. For me, the overuse of <code>shouldComponentUpdate</code>, <code>componentDidMount</code>, and <code>componentWillReceiveProps</code> is a code-smell: it maybe means there is something more deeply wrong about this part of the component tree and it should be rethought.</p>
+<h2 id="9-jsx-is-more-like-html-than-it-is-like-javascript">9. JSX is more like HTML than it is like JavaScript</h2>
+<p>Another use I have seen for class methods in React is calling out additional &quot;render&quot; methods from the main render function. So, instead of placing all JSX in one render, the render calls <code>renderSomePartOfTheDOM</code>. I believe the idea behind this pattern was that it keeps code compartmentalized and the various render functions &quot;doing one thing&quot;, but I personally find it impenetrable spaghetti. JSX should be &quot;templating&quot;, it should look like HTML and HTML is easier to understand when it&#39;s obvious where a given set of tags fits into its environment.</p>
+<p>If you think about templating languages like Handlebars, they have &quot;reduced&quot; features compared to Turing-complete languages because you only need a few things: loops are handy, so are conditionals, and the ability to &quot;include&quot; other templates is essential. JSX allows you to &quot;jump&quot; back into JavaScript at any point using curly braces and call other functions if you want to, but any expression must be complete before the closing brace. So <code>map</code> works for looping, while ternary expressions are my go-to for conditional statements. Any more complex logic should probably be handled outside of the JSX entirely.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>I have endevoured in this post to be opinionated but not preachy: I&#39;m genuinely curious to know how others handle these problems and if anyone disagrees with me. The flexability of React is both a blessing a curse, and I greatly enjoy working in a space where there are so many ways to skin a cat.</p>
+
+		</section>
+
+
+	<hr />
+
+	<footer class="main-content__footer">
+		<p><strong>I am starting out as a freelance frontend developer and looking for projects.</strong> <a href="../contact.html">Contact me</a> and let's talk about what we can make together.</p>
+
+		<h2>Share this post</h2>
+		<div class="share-icons">
+			<a href="https://facebook.com/sharer.php?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fopinionated-opinions-on-code-organization-of-a-react-redux-project" title="Share this page on Facebook">
+				<span class="hidden"><i class="icon-facebook"></i></span>
+			</a>
+			<a href="https://twitter.com/share?text=Opinionated%20opinions%20on%20code%20organization%20of%20a%20React-Redux%20project&url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fopinionated-opinions-on-code-organization-of-a-react-redux-project" title="Tweet this page">
+				<span class="hidden"><i class="icon-twitter"></i></span>
+			</a>
+			<a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fopinionated-opinions-on-code-organization-of-a-react-redux-project&mini=true&title=Opinionated%20opinions%20on%20code%20organization%20of%20a%20React-Redux%20project" title="Tweet this page">
+				<span class="hidden"><i class="icon-linkedin"></i></span>
+			</a>
+		</div>
+
+	</footer>
+
+</article>
+
+				</div>
+
+			</div>
+		</div>
+
+		<script src="../main.js" defer></script>
+	</body>
+</html>

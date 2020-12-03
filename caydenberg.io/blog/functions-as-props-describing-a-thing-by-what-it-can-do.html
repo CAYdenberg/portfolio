@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<title>Functions as props: Describing a thing by what it can do | Casey A. Ydenberg</title>
+		<meta name="description" content="Visual data and science communication on the web">
+
+		<link rel="shortcut icon" href="../favicon.png">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+		<link rel="stylesheet" href="../style.css">
+		<link rel="stylesheet" href="../print_styles.css" media="print">
+
+		<link rel="canonical" href="functions-as-props-describing-a-thing-by-what-it-can-do.html">
+		<link rel="alternate" type="application/rss+xml" href="../feed/index.html">
+
+		<meta name="og:title" content="Functions as props: Describing a thing by what it can do | Casey A. Ydenberg">
+		<meta name="og:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="og:image:alt" content="Visual data and science communication on the web">
+		<meta name="og:url" content="https://caydenberg.io/blog/functions-as-props-describing-a-thing-by-what-it-can-do">
+
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="@CAYdenberg">
+		<meta name="twitter:creator" content="@CAYdenberg">
+		<meta name="twitter:title" content="Functions as props: Describing a thing by what it can do | Casey A. Ydenberg">
+		<meta name="twitter:description" content="Visual data and science communication on the web">
+		<meta name="twitter:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="twitter:image:alt" content="Visual data and science communication on the web">
+
+
+	</head>
+
+	<body class="blog">
+		<div class="off-canvas-wrapper">
+			<div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+
+          <div class="menu-toggle-wrapper">
+            <button type="button" class="button hollow menu-toggle" data-toggle="sidebar-wrapper" aria-expanded="false" aria-controls="sidebar-wrapper">
+              <i class="icon-bars"></i>
+            </button>
+          </div>
+
+					<div class="off-canvas position-left reveal-for-large sidebar-wrapper" id="sidebar-wrapper" data-off-canvas>
+						<div class="sidebar-filter">
+							<aside class="sidebar-body">
+								<h2 class="site-title"><a href="../index.html" class="natural">Casey A. Ydenberg</a></h2>
+								<h3 class="site-description">Web Developer</h3>
+
+								<ul class="main-nav" role="menu">
+										<li class="active">
+											<a href="../blog.html">Blog</a>
+										</li>
+										<li >
+											<a href="../talks.html">Speaking</a>
+										</li>
+										<li >
+											<a href="../contact.html">Contact</a>
+										</li>
+								</ul>
+
+								<ul class="social-nav" role="menu">
+									<li><a href="https://github.com/CAYdenberg" target="_blank"><i class="icon-github" title="GitHub profile"></i></a></li>
+									<li><a href="https://twitter.com/CAYdenberg" target="_blank"><i class="icon-twitter" title="Twitter feed"></i></a></li>
+									<li><a href="https://www.linkedin.com/in/caydenberg" target="_blank"><i class="icon-linkedin" title="LinkedIn page"></i></a></li>
+								</ul>
+
+							</aside>
+						</div>
+					</div>
+
+				<div class="off-canvas-content" data-off-canvas-content>
+					<article class="main-content">
+
+		<header class="main-content__header">
+			<h1>Functions as props: Describing a thing by what it can do</h1>
+			<p><a href="../blog.html">&larr; back to the blog</a></p>
+		</header>
+
+		<section class="main-content__body blog-content">
+			<p>One of the best things about React is that it manages to combine almost-real JavaScript with an intuitive way to interact with the DOM. Whereas in a templating language you need a new vocabulary to have conditional statements, in JSX you can do things like:</p>
+<script src="https://gist.github.com/CAYdenberg/84bbac55cff24c380c720a1361815524.js"></script>
+
+<p>which is evaluated like any other JavaScript &quot;and&quot; statement (nothing will render if props.visible is false, otherwise <code>&lt;component&gt;</code> will render).</p>
+<p>Similarly, the ability to pass functions as props provides a simple way to tie user actions to particular interface elements, without having to use an event emitter-like system. Just as functions can be passed as arguments into a normal JavaScript function, so are functions passed as props into other components.</p>
+<p>Consider a generic button element, which might be part of a pattern library:</p>
+<script src="https://gist.github.com/CAYdenberg/c8233bf54e7ca6779d4f1b7270207b2e.js"></script>
+
+<p>So what? All we&#39;ve done is abstract over an HTML button element. This component knows nothing about what will happen when it&#39;s clicked - it simply delegates that responsibility up to its parent.</p>
+<p>And therein lies the power. Suppose at certain times the button will not do anything. We could expand it to communicate that:</p>
+<script src="https://gist.github.com/CAYdenberg/7aefb9ae78947507845f5ac1f51c43fb.js"></script>
+
+<p>At this point, the parent can decide what the button does, and even if it does <em>anything at all</em>. If it doesn&#39;t have a click handler, the button will appear disabled, clearly communicating its function through its form. Rather than tracking separate props for the click handler and <code>disabled</code> you can remove the click handler when the button is disabled. This is very hard to get right with an event-based system.</component></p>
+
+		</section>
+
+
+	<hr />
+
+	<footer class="main-content__footer">
+		<p><strong>I am starting out as a freelance frontend developer and looking for projects.</strong> <a href="../contact.html">Contact me</a> and let's talk about what we can make together.</p>
+
+		<h2>Share this post</h2>
+		<div class="share-icons">
+			<a href="https://facebook.com/sharer.php?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Ffunctions-as-props-describing-a-thing-by-what-it-can-do" title="Share this page on Facebook">
+				<span class="hidden"><i class="icon-facebook"></i></span>
+			</a>
+			<a href="https://twitter.com/share?text=Functions%20as%20props%3A%20Describing%20a%20thing%20by%20what%20it%20can%20do&url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Ffunctions-as-props-describing-a-thing-by-what-it-can-do" title="Tweet this page">
+				<span class="hidden"><i class="icon-twitter"></i></span>
+			</a>
+			<a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Ffunctions-as-props-describing-a-thing-by-what-it-can-do&mini=true&title=Functions%20as%20props%3A%20Describing%20a%20thing%20by%20what%20it%20can%20do" title="Tweet this page">
+				<span class="hidden"><i class="icon-linkedin"></i></span>
+			</a>
+		</div>
+
+	</footer>
+
+</article>
+
+				</div>
+
+			</div>
+		</div>
+
+		<script src="../main.js" defer></script>
+	</body>
+</html>

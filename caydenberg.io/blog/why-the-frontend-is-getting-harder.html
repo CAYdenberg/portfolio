@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<title>Why the frontend is getting harder | Casey A. Ydenberg</title>
+		<meta name="description" content="Visual data and science communication on the web">
+
+		<link rel="shortcut icon" href="../favicon.png">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+		<link rel="stylesheet" href="../style.css">
+		<link rel="stylesheet" href="../print_styles.css" media="print">
+
+		<link rel="canonical" href="why-the-frontend-is-getting-harder.html">
+		<link rel="alternate" type="application/rss+xml" href="../feed/index.html">
+
+		<meta name="og:title" content="Why the frontend is getting harder | Casey A. Ydenberg">
+		<meta name="og:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="og:image:alt" content="Visual data and science communication on the web">
+		<meta name="og:url" content="https://caydenberg.io/blog/why-the-frontend-is-getting-harder">
+
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="@CAYdenberg">
+		<meta name="twitter:creator" content="@CAYdenberg">
+		<meta name="twitter:title" content="Why the frontend is getting harder | Casey A. Ydenberg">
+		<meta name="twitter:description" content="Visual data and science communication on the web">
+		<meta name="twitter:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="twitter:image:alt" content="Visual data and science communication on the web">
+
+
+	</head>
+
+	<body class="blog">
+		<div class="off-canvas-wrapper">
+			<div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+
+          <div class="menu-toggle-wrapper">
+            <button type="button" class="button hollow menu-toggle" data-toggle="sidebar-wrapper" aria-expanded="false" aria-controls="sidebar-wrapper">
+              <i class="icon-bars"></i>
+            </button>
+          </div>
+
+					<div class="off-canvas position-left reveal-for-large sidebar-wrapper" id="sidebar-wrapper" data-off-canvas>
+						<div class="sidebar-filter">
+							<aside class="sidebar-body">
+								<h2 class="site-title"><a href="../index.html" class="natural">Casey A. Ydenberg</a></h2>
+								<h3 class="site-description">Web Developer</h3>
+
+								<ul class="main-nav" role="menu">
+										<li class="active">
+											<a href="../blog.html">Blog</a>
+										</li>
+										<li >
+											<a href="../talks.html">Speaking</a>
+										</li>
+										<li >
+											<a href="../contact.html">Contact</a>
+										</li>
+								</ul>
+
+								<ul class="social-nav" role="menu">
+									<li><a href="https://github.com/CAYdenberg" target="_blank"><i class="icon-github" title="GitHub profile"></i></a></li>
+									<li><a href="https://twitter.com/CAYdenberg" target="_blank"><i class="icon-twitter" title="Twitter feed"></i></a></li>
+									<li><a href="https://www.linkedin.com/in/caydenberg" target="_blank"><i class="icon-linkedin" title="LinkedIn page"></i></a></li>
+								</ul>
+
+							</aside>
+						</div>
+					</div>
+
+				<div class="off-canvas-content" data-off-canvas-content>
+					<article class="main-content">
+
+		<header class="main-content__header">
+			<h1>Why the frontend is getting harder</h1>
+			<p><a href="../blog.html">&larr; back to the blog</a></p>
+		</header>
+
+		<section class="main-content__body blog-content">
+			<p>I gave a talk recently extoling the virtues of PouchDB and how you can use it build web experiences that feel very much like native apps. In short, with PouchDB you can give users app-like experiences with no login, and that store data while offline. And yet they still have the best feature of web app: they can found with a URL.</p>
+<p>After the talk, I got a very natural question:</p>
+<p>&gt; Are there any UI libraries for resolving conflicts?</p>
+<p>Conflicts are a natural part of PouchDB apps, because if two users edit the same piece of data while offline, it&#39;s only natural that any differences have to be resolved.</p>
+<p>The question threw me for a minute, because at first I thought: &quot;Hey! There should be UI for resolving conflicts! And this is JavaScript, and it&#39;s 2019, if something <em>should</em> be built, surely someone has already done it!&quot;</p>
+<p>A few seconds of thought cleared it up for me, though. How you deal with conflicts depends entirely on the nature of the data being editing, and therefore there can be as much variety in conflict UI as there is in the UI for editing values in the first place. How you resolve a conflict in a rich-text document bears no relationship to how you would do it for, say, a phone number, and so the question is really moot.</p>
+<p>The full implications of the question didn&#39;t really hit me until later, though. Basically, <strong>if we want apps to work offline, we inherit all the problems of distributed computing</strong>, whether PouchDB is our tool of choice or not. Distributed computing, formerly the province of academics, comes into the browser uninvited.</p>
+<p>And of course, we&#39;ve been in this movie before. When the logic of user interaction moved from the server to the client, <a href="thinking-in-state-the-tao-of-frontend-development.html">frontend developers had to worry about managing application state</a>, and we had to invent browser state machines. </p>
+<p>With more and more computation happening in the browser, frontend developers had to learn about time-complexity, mostly for the first time in their careers.</p>
+<p>When more and more code had to be delivered to the client to perform these additional tasks, a whole new science of build pipelines and code-splitting grew up.</p>
+<p>I think about this every time I see yet another blog post about how complicated web development has become. <strong>It&#39;s become complicated because it is complicated.</strong></p>
+
+		</section>
+
+
+	<hr />
+
+	<footer class="main-content__footer">
+		<p><strong>I am starting out as a freelance frontend developer and looking for projects.</strong> <a href="../contact.html">Contact me</a> and let's talk about what we can make together.</p>
+
+		<h2>Share this post</h2>
+		<div class="share-icons">
+			<a href="https://facebook.com/sharer.php?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fwhy-the-frontend-is-getting-harder" title="Share this page on Facebook">
+				<span class="hidden"><i class="icon-facebook"></i></span>
+			</a>
+			<a href="https://twitter.com/share?text=Why%20the%20frontend%20is%20getting%20harder&url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fwhy-the-frontend-is-getting-harder" title="Tweet this page">
+				<span class="hidden"><i class="icon-twitter"></i></span>
+			</a>
+			<a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fwhy-the-frontend-is-getting-harder&mini=true&title=Why%20the%20frontend%20is%20getting%20harder" title="Tweet this page">
+				<span class="hidden"><i class="icon-linkedin"></i></span>
+			</a>
+		</div>
+
+	</footer>
+
+</article>
+
+				</div>
+
+			</div>
+		</div>
+
+		<script src="../main.js" defer></script>
+	</body>
+</html>

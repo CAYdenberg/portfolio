@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<title>DIY Lazy Load | Casey A. Ydenberg</title>
+		<meta name="description" content="Visual data and science communication on the web">
+
+		<link rel="shortcut icon" href="../favicon.png">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+		<link rel="stylesheet" href="../style.css">
+		<link rel="stylesheet" href="../print_styles.css" media="print">
+
+		<link rel="canonical" href="diy-lazy-load.html">
+		<link rel="alternate" type="application/rss+xml" href="../feed/index.html">
+
+		<meta name="og:title" content="DIY Lazy Load | Casey A. Ydenberg">
+		<meta name="og:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="og:image:alt" content="Visual data and science communication on the web">
+		<meta name="og:url" content="https://caydenberg.io/blog/diy-lazy-load">
+
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="@CAYdenberg">
+		<meta name="twitter:creator" content="@CAYdenberg">
+		<meta name="twitter:title" content="DIY Lazy Load | Casey A. Ydenberg">
+		<meta name="twitter:description" content="Visual data and science communication on the web">
+		<meta name="twitter:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="twitter:image:alt" content="Visual data and science communication on the web">
+
+
+	</head>
+
+	<body class="blog">
+		<div class="off-canvas-wrapper">
+			<div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+
+          <div class="menu-toggle-wrapper">
+            <button type="button" class="button hollow menu-toggle" data-toggle="sidebar-wrapper" aria-expanded="false" aria-controls="sidebar-wrapper">
+              <i class="icon-bars"></i>
+            </button>
+          </div>
+
+					<div class="off-canvas position-left reveal-for-large sidebar-wrapper" id="sidebar-wrapper" data-off-canvas>
+						<div class="sidebar-filter">
+							<aside class="sidebar-body">
+								<h2 class="site-title"><a href="../index.html" class="natural">Casey A. Ydenberg</a></h2>
+								<h3 class="site-description">Web Developer</h3>
+
+								<ul class="main-nav" role="menu">
+										<li class="active">
+											<a href="../blog.html">Blog</a>
+										</li>
+										<li >
+											<a href="../talks.html">Speaking</a>
+										</li>
+										<li >
+											<a href="../contact.html">Contact</a>
+										</li>
+								</ul>
+
+								<ul class="social-nav" role="menu">
+									<li><a href="https://github.com/CAYdenberg" target="_blank"><i class="icon-github" title="GitHub profile"></i></a></li>
+									<li><a href="https://twitter.com/CAYdenberg" target="_blank"><i class="icon-twitter" title="Twitter feed"></i></a></li>
+									<li><a href="https://www.linkedin.com/in/caydenberg" target="_blank"><i class="icon-linkedin" title="LinkedIn page"></i></a></li>
+								</ul>
+
+							</aside>
+						</div>
+					</div>
+
+				<div class="off-canvas-content" data-off-canvas-content>
+					<article class="main-content">
+
+		<header class="main-content__header">
+			<h1>DIY Lazy Load</h1>
+			<p><a href="../blog.html">&larr; back to the blog</a></p>
+		</header>
+
+		<section class="main-content__body blog-content">
+			<p>I am constantly looking for practical ways to get all the beautiful images in a design to load without hampering the page load unreasonably. While <a href="http://www.sitepoint.com/responsive-images-part-1-using-srcset/">responsive images</a> have been the biggest help, occasionally something else is called for.</p>
+<p>For example, the content of carousel slides that are initially invisible can be deferred until the rest of the page has loaded, and the carousel can be started manually only once all the images are obtained. This lets the page load fast, and defers requests for images that aren&#39;t visible anyway. The user&#39;s experience is &quot;enhanced&quot; by starting the carousel once all the required content has been obtained.</p>
+<p>How to implement this? While there are several lazy loading plugins available, most of them are based on scrolling which doesn&#39;t match our use case. What I came up with was the following:</p>
+<pre><code class="lang-javascript">
+(function($) {
+  $.fn.deferImageLoading = function(callback) {
+    var group = this;
+    var count = this.length;
+
+    return this.each(function() {
+      var $img = $(this);
+      $(window).load(function() {
+        $img.attr(&#39;src&#39;, $img.data(&#39;src&#39;)).load(function() {
+          count--;
+          if (!count &amp;&amp; $.isFunction(callback)) {
+              callback.call(group);
+          }
+        });
+      });
+    });
+
+  };
+}(jQuery));
+</code></pre>
+<p>This JQuery method will take every selected element, and <em>after the page has fully loaded</em>, replace the src attribute with the data-src attribute, effectively spurring image loading or replacing a low-resolution image with a high-resolution one.</p>
+<pre><code class="lang-html">&lt;img src=&quot;#&quot; data-src=&quot;high-res.png&quot; class=&quot;defer&quot; /&gt;
+</code></pre>
+<pre><code class="lang-javascript">$(&#39;.defer&#39;).deferImageLoading(function() {
+  // start the carousel (or whatever)
+});
+</code></pre>
+<p>To enhance this even further, all the controls to access deferred images can be hidden until the callback is called.</p>
+
+		</section>
+
+
+	<hr />
+
+	<footer class="main-content__footer">
+		<p><strong>I am starting out as a freelance frontend developer and looking for projects.</strong> <a href="../contact.html">Contact me</a> and let's talk about what we can make together.</p>
+
+		<h2>Share this post</h2>
+		<div class="share-icons">
+			<a href="https://facebook.com/sharer.php?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fdiy-lazy-load" title="Share this page on Facebook">
+				<span class="hidden"><i class="icon-facebook"></i></span>
+			</a>
+			<a href="https://twitter.com/share?text=DIY%20Lazy%20Load&url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fdiy-lazy-load" title="Tweet this page">
+				<span class="hidden"><i class="icon-twitter"></i></span>
+			</a>
+			<a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fdiy-lazy-load&mini=true&title=DIY%20Lazy%20Load" title="Tweet this page">
+				<span class="hidden"><i class="icon-linkedin"></i></span>
+			</a>
+		</div>
+
+	</footer>
+
+</article>
+
+				</div>
+
+			</div>
+		</div>
+
+		<script src="../main.js" defer></script>
+	</body>
+</html>

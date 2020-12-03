@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<title>What I want from a React UI framework: Intentions and skins in the presentation layer | Casey A. Ydenberg</title>
+		<meta name="description" content="Visual data and science communication on the web">
+
+		<link rel="shortcut icon" href="../favicon.png">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+		<link rel="stylesheet" href="../style.css">
+		<link rel="stylesheet" href="../print_styles.css" media="print">
+
+		<link rel="canonical" href="what-i-want-from-a-react-ui-framework-intentions-and-skins-in-the-presentation-layer.html">
+		<link rel="alternate" type="application/rss+xml" href="../feed/index.html">
+
+		<meta name="og:title" content="What I want from a React UI framework: Intentions and skins in the presentation layer | Casey A. Ydenberg">
+		<meta name="og:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="og:image:alt" content="Visual data and science communication on the web">
+		<meta name="og:url" content="https://caydenberg.io/blog/what-i-want-from-a-react-ui-framework-intentions-and-skins-in-the-presentation-layer">
+
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="@CAYdenberg">
+		<meta name="twitter:creator" content="@CAYdenberg">
+		<meta name="twitter:title" content="What I want from a React UI framework: Intentions and skins in the presentation layer | Casey A. Ydenberg">
+		<meta name="twitter:description" content="Visual data and science communication on the web">
+		<meta name="twitter:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="twitter:image:alt" content="Visual data and science communication on the web">
+
+
+	</head>
+
+	<body class="blog">
+		<div class="off-canvas-wrapper">
+			<div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+
+          <div class="menu-toggle-wrapper">
+            <button type="button" class="button hollow menu-toggle" data-toggle="sidebar-wrapper" aria-expanded="false" aria-controls="sidebar-wrapper">
+              <i class="icon-bars"></i>
+            </button>
+          </div>
+
+					<div class="off-canvas position-left reveal-for-large sidebar-wrapper" id="sidebar-wrapper" data-off-canvas>
+						<div class="sidebar-filter">
+							<aside class="sidebar-body">
+								<h2 class="site-title"><a href="../index.html" class="natural">Casey A. Ydenberg</a></h2>
+								<h3 class="site-description">Web Developer</h3>
+
+								<ul class="main-nav" role="menu">
+										<li class="active">
+											<a href="../blog.html">Blog</a>
+										</li>
+										<li >
+											<a href="../talks.html">Speaking</a>
+										</li>
+										<li >
+											<a href="../contact.html">Contact</a>
+										</li>
+								</ul>
+
+								<ul class="social-nav" role="menu">
+									<li><a href="https://github.com/CAYdenberg" target="_blank"><i class="icon-github" title="GitHub profile"></i></a></li>
+									<li><a href="https://twitter.com/CAYdenberg" target="_blank"><i class="icon-twitter" title="Twitter feed"></i></a></li>
+									<li><a href="https://www.linkedin.com/in/caydenberg" target="_blank"><i class="icon-linkedin" title="LinkedIn page"></i></a></li>
+								</ul>
+
+							</aside>
+						</div>
+					</div>
+
+				<div class="off-canvas-content" data-off-canvas-content>
+					<article class="main-content">
+
+		<header class="main-content__header">
+			<h1>What I want from a React UI framework: Intentions and skins in the presentation layer</h1>
+			<p><a href="../blog.html">&larr; back to the blog</a></p>
+		</header>
+
+		<section class="main-content__body blog-content">
+			<p>Front-end frameworks like Bootstrap and Foundation are reviled among some front-end developers for creating bloated CSS and for making every site look the same. However, much of this hatred focuses on the use of the use of the framework as a &quot;drop-in&quot; CSS (and JavaScript) file. <a href="https://github.com/twbs/bootstrap-sass/blob/master/assets/stylesheets/bootstrap/_variables.scss">Customization of SCSS variables</a> can <a href="http://foundation.zurb.com/sites/docs/sass.html#the-settings-file">produce amazingly distinctive designs</a>, and it&#39;s possible to include only those parts of the framework which are needed, drastically reducing the size of both the CSS and JS assets. To my mind, these frameworks provide two advantages: standardized responsive grid layout systems which work across browsers, and a variety of components (tooltips, dropdown menus, modals etc.) which can be included in a project without being coded from scratch.</p>
+<p>At first glance, this &quot;component-based&quot; system would seem to be a good fit for React.js, but that leaves you heavily reliant on jQuery. A new set of projects has sprung up that each provide a library of components that replace the common Bootstrap and Foundation UX patterns that both users and developers are used to. These include <a href="https://www.material-ui.com/">Material UI</a>, <a href="https://react.semantic-ui.com/introduction">Semantic UI React</a> and <a href="http://elemental-ui.com/">Elemental UI</a>.</p>
+<p>One major consideration in choosing between these libraries in the degree to which you will be dependent on <strong>inline styles</strong>. The argument in favour goes like this: React pushes a component-based architecture, and just as separating form and function between HTML and JavaScript no longer makes sense, it also no longer makes sense to separate content and style by using CSS. Instead, JavaScript manages function, presentation and style. The concerns that need separation are no longer between different layers of a component, but between the components themselves.</p>
+<p>Personally, I don&#39;t share this outlook. It makes perfect sense for JavaScript to be tightly coupled to HTML in a user-interface library, because the <strong>intent</strong> of the component depends on the state of that component and its function. But how this intent translates in the styles (&quot;skin&quot;) of the component is a different consideration. That is why a <code>&amp;lt;strong&amp;gt;</code> HTML tag and a <code>font-weight</code> CSS property are different things: strong text is the intention, but bold text is the skin that communicates that intention. </p>
+<p>You might want to change the skin of a component without changing its function (such as the share of orange or yellow meant to communicate a warning) but you will rarely change the meaning red or orange without changing the function itself. Moreover, if you change the shade of red or orange, you&#39;ll likely want to change it across the entire the site or app. The stylesheet is therefore a reference that components make use of, not an embedded part of the components themselves.</p>
+<p>For libraries that make heavy use of inline styles, the bottom line is that components are not really reusable, at least not in the way that I would like. I can override the custom styles by providing a custom style object or <code>className</code> to the component (and then write CSS with heavy use of <code>!important</code> declarations), but then I have to do this every time I use that component. The only way to do that in a DRY way to wrap the library component in another component which provides the customizations for a particular project, adding to the depth of nesting and complexity.</p>
+<p><a href="https://www.material-ui.com/#/customization/styles">Material UI has noted other downsides to inline styles</a>, including performance, and the lack of media queries and pseudo-elements. To be sure, it does provide a method of &quot;customization&quot; through theming, but the number of possible variables is pretty limited compared to Foundation or Bootstrap.</p>
+<p>Ideally, here is how I think a framework in this space should work:</p>
+<ul>
+<li>CSS is produced by compiling SCSS (or similar) with a set of user-provided variables, just like Bootstrap or Foundation</li>
+<li>Components refer to CSS by class. The user can therefore &quot;override&quot; styles with their own CSS/SCSS.</li>
+<li>Components with programmatic behaviour are controlled with internal state, and change their own classes or other attributes depending on state. For example, a modal adds a class when it &quot;appears&quot;, or better yet, just change its <code>aria-hidden</code> attribute.</li>
+<li>Components accept props from their parents to notify them of state changes. For example, a modal would accept an <code>onClose</code> prop which is a function that fires when the modal closes. Even better, these functions could override the custom behaviour by returning false.</li>
+</ul>
+<p>There are a plethora of these libraries available, but from my research none of them work this way. Feel free to chime in in the comments if anything deserves a second look, if my philosophy is just too wrong and I should get with the inline styles!</p>
+
+		</section>
+
+
+	<hr />
+
+	<footer class="main-content__footer">
+		<p><strong>I am starting out as a freelance frontend developer and looking for projects.</strong> <a href="../contact.html">Contact me</a> and let's talk about what we can make together.</p>
+
+		<h2>Share this post</h2>
+		<div class="share-icons">
+			<a href="https://facebook.com/sharer.php?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fwhat-i-want-from-a-react-ui-framework-intentions-and-skins-in-the-presentation-layer" title="Share this page on Facebook">
+				<span class="hidden"><i class="icon-facebook"></i></span>
+			</a>
+			<a href="https://twitter.com/share?text=What%20I%20want%20from%20a%20React%20UI%20framework%3A%20Intentions%20and%20skins%20in%20the%20presentation%20layer&url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fwhat-i-want-from-a-react-ui-framework-intentions-and-skins-in-the-presentation-layer" title="Tweet this page">
+				<span class="hidden"><i class="icon-twitter"></i></span>
+			</a>
+			<a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fwhat-i-want-from-a-react-ui-framework-intentions-and-skins-in-the-presentation-layer&mini=true&title=What%20I%20want%20from%20a%20React%20UI%20framework%3A%20Intentions%20and%20skins%20in%20the%20presentation%20layer" title="Tweet this page">
+				<span class="hidden"><i class="icon-linkedin"></i></span>
+			</a>
+		</div>
+
+	</footer>
+
+</article>
+
+				</div>
+
+			</div>
+		</div>
+
+		<script src="../main.js" defer></script>
+	</body>
+</html>

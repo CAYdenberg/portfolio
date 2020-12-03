@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<title>How to keep your promises: JavaScript edition | Casey A. Ydenberg</title>
+		<meta name="description" content="Visual data and science communication on the web">
+
+		<link rel="shortcut icon" href="../favicon.png">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+		<link rel="stylesheet" href="../style.css">
+		<link rel="stylesheet" href="../print_styles.css" media="print">
+
+		<link rel="canonical" href="how-to-keep-your-promises-javascript-edition.html">
+		<link rel="alternate" type="application/rss+xml" href="../feed/index.html">
+
+		<meta name="og:title" content="How to keep your promises: JavaScript edition | Casey A. Ydenberg">
+		<meta name="og:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="og:image:alt" content="Visual data and science communication on the web">
+		<meta name="og:url" content="https://caydenberg.io/blog/how-to-keep-your-promises-javascript-edition">
+
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="@CAYdenberg">
+		<meta name="twitter:creator" content="@CAYdenberg">
+		<meta name="twitter:title" content="How to keep your promises: JavaScript edition | Casey A. Ydenberg">
+		<meta name="twitter:description" content="Visual data and science communication on the web">
+		<meta name="twitter:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="twitter:image:alt" content="Visual data and science communication on the web">
+
+
+	</head>
+
+	<body class="blog">
+		<div class="off-canvas-wrapper">
+			<div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+
+          <div class="menu-toggle-wrapper">
+            <button type="button" class="button hollow menu-toggle" data-toggle="sidebar-wrapper" aria-expanded="false" aria-controls="sidebar-wrapper">
+              <i class="icon-bars"></i>
+            </button>
+          </div>
+
+					<div class="off-canvas position-left reveal-for-large sidebar-wrapper" id="sidebar-wrapper" data-off-canvas>
+						<div class="sidebar-filter">
+							<aside class="sidebar-body">
+								<h2 class="site-title"><a href="../index.html" class="natural">Casey A. Ydenberg</a></h2>
+								<h3 class="site-description">Web Developer</h3>
+
+								<ul class="main-nav" role="menu">
+										<li class="active">
+											<a href="../blog.html">Blog</a>
+										</li>
+										<li >
+											<a href="../talks.html">Speaking</a>
+										</li>
+										<li >
+											<a href="../contact.html">Contact</a>
+										</li>
+								</ul>
+
+								<ul class="social-nav" role="menu">
+									<li><a href="https://github.com/CAYdenberg" target="_blank"><i class="icon-github" title="GitHub profile"></i></a></li>
+									<li><a href="https://twitter.com/CAYdenberg" target="_blank"><i class="icon-twitter" title="Twitter feed"></i></a></li>
+									<li><a href="https://www.linkedin.com/in/caydenberg" target="_blank"><i class="icon-linkedin" title="LinkedIn page"></i></a></li>
+								</ul>
+
+							</aside>
+						</div>
+					</div>
+
+				<div class="off-canvas-content" data-off-canvas-content>
+					<article class="main-content">
+
+		<header class="main-content__header">
+			<h1>How to keep your promises: JavaScript edition</h1>
+			<p><a href="../blog.html">&larr; back to the blog</a></p>
+		</header>
+
+		<section class="main-content__body blog-content">
+			<p>The first time I needed to access a third-party API on the web I remember doing something like the following (in PHP):</p>
+<pre><code class="lang-php">$data = file_get_contents(&#39;http://a/resource/somewhere&#39;);
+</code></pre>
+<p>This has the advantage of being really easy to read: like all other parts of my code, I assign a variable to an expression and expect that it will be filled with a value of some sort. What I never thought about at the time was how much was going on behind the scenes: unlike an basic expression that performs a math operation or comparison, a whole HTTP request and response is going on before <code>$data</code> can be filled. During this time, my program pauses and no further code is executed.</p>
+<p>Enter JavaScript. In a browser, this same operation would be unacceptable: retrieving a resource through AJAX would mean no code can be executed until the response arrives, meaning the the user interface would be  for all intents a purposes frozen. On a Node.js server (which is single-threaded), no new client requests would be processed.</p>
+<p>Instead, in JavaScript, the equivalent function would accept an additional argument which is the <strong>callback function</strong>, which would execute when the response from the third-party is received. It does not return a value at all. This asynchronous execution has the advantage that slow operation like HTTP requests don&#39;t tie up the processor, but they have the disadvantage that they can quickly get out of hand, as we will see.</p>
+<p>In a second pattern, the function does return a value, but it is not the HTTP response itself. Rather, it is an object which can be thought of as a representation of an unknown value. This object is called a promise. A promise has methods called handlers that describe what to do when the promise is either fulfilled or rejected.</p>
+<p>This post is not meant to be an exhaustive treatment of promises, but merely an introduction to why I have found them useful. It is intended for those who know some JavaScript but are not experts at writing asynchronous code.</p>
+<p>I will deal exclusively with the ES6 (Promise/A+) variety. Since they are formally <a href="http://caniuse.com/#search=promise">part of ES6</a>, you may need <a href="https://github.com/stefanpenner/es6-promise#readme">a polyfill</a> for older browsers. They are standard current version of Nodejs, however.</p>
+<h2 id="examples-wrapping-callbacks-in-a-promise">Examples: Wrapping Callbacks in a Promise</h2>
+<p>Let&#39;s look at perhaps the simplest example of a function that executes an asynchronous callback: <code>setTimeout</code>. This function accepts two parameters: a callback to execute when a time interval completes, and a number representing a length of time in milliseconds. So</p>
+<pre><code class="lang-javascript">setTimeout(function() {
+    console.log(&#39;Some time later ...&#39;);
+}, 1000);
+</code></pre>
+<p>gets the point across.</p>
+<p>Let&#39;s wrap write a new function so that we can use a promise to execute a timed event. We&#39;ll call it <code>wait</code>.</p>
+<pre><code class="lang-javascript">function wait(time) {
+    return new Promise(function(resolve, reject) {
+        setTimeout(function() {
+            resolve(&#39;You kept your Promise!&#39;);
+        }, time);
+    });
+}
+
+wait(1000).then(function(msg) {
+   console.log(msg)
+});
+</code></pre>
+<p>The key is <code>return new Promise</code>. To this you pass a function with two parameters: one is function to resolve (fulfil) the promise and the other is function to reject the promise (the reject function is not used in the example above, because there&#39;s really no way for setTimeout to go wrong, but we&#39;ll see more example below that use it). Whatever values are passed to resolve and reject will later be passed to the handlers.</p>
+<p>Note that we can&#39;t do this for <code>setInterval</code>, which executes a recurring event. A promise can be resolved or rejected: after that, it&#39;s gone.</p>
+<p>This example is pretty trivial. First of all, there&#39;s no real unknown value that we need the promise to keep track of for us and secondly, there&#39;s virtually no possibility of this promise being rejected.</p>
+<p>Let&#39;s look instead at Node&#39;s <code>http.get</code>, which is basically the equivalent of PHP <code>file_get_contents</code> mentioned above.</p>
+<pre><code class="lang-javascript">http.get(&#39;http://a/resource/somewhere/&#39;, function(response) {
+   // deal with response
+});
+</code></pre>
+<p>Let&#39;s create a smarter promise:</p>
+<pre><code class="lang-javascript">function requestResource(url) {
+    return new Promise(function(resolve, reject) {
+        http.get(address, function(response) {
+            if (response.status === 200) {
+                 return resolve(response.body);
+            else {
+                 return reject(&#39;Response not OK&#39;);
+            }
+        });
+    });
+}
+</code></pre>
+<p>We&#39;ve already made our lives easier when we need to handle the promise. For one thing, we are only passing the response body, which might be all we&#39;re going care about later. Secondly, we are rejecting the promise if the status code is not 200 (IRL we&#39;d probably want to a better job and resolve some other codes, but that&#39;s a story for later). We can handle a rejection with the <code>.catch</code> method, which works just like <code>.then</code>.</p>
+<p>Let&#39;s use the <a href="https://developer.forecast.io/docs/v2">Dark Sky weather API</a> to get the current ski conditions</p>
+<pre><code class="lang-javascript">requestResource(&#39;https://api.forecast.io/forecast/APIKEY/50.1149639,-122.9486474&#39;).then(function(res) {   
+    console.log(&#39;The current temperature is &#39; + res.body.currently.temperature);
+}).catch(function(err) {
+    console.log(err)
+});
+</code></pre>
+<p>Note: you&#39;ll have to use a real API key to make this work. The code will print out the current temperature in Whistler, BC, Canada.</p>
+<h2 id="why-would-you-want-to-do-this-">Why would you want to do this?</h2>
+<p>All well and good, but so far, our promises have required us to write a fair bit of code to achieve pretty simple results. Why would you want to use them?</p>
+<p><strong>Avoid excessive nesting.</strong> The most oft-cited advantage of promises is that they avoid the infinitely-nested callbacks that are so common in Node.js programming. In a web server-type application, the callback to respond to an HTTP request itself often contains a callback to query a database:</p>
+<pre><code class="lang-javascript">router.get(&#39;/my-page&#39;, function(req, res) {
+    getSomeDataFromDb(req.someParameter, function(data) {
+        doSomething(data);
+        res.json(data);
+    }
+});
+</code></pre>
+<p>This is two indentations deep before we even get to the meat, and it only involves one database query and no extra processing. On the other hand, we can chain promises to keep each step at the same lexical level as the step before it:</p>
+<pre><code class="lang-javascript">myPromise.then(function(data) {
+   return doSomething(data);
+}).then(function(newData) {
+    return doSomethingElse(newData) {
+}).then(function(newNewData) {
+    return doSomethingElseElse(newNewData);
+});
+</code></pre>
+<p>You get the idea. At each step, the return value is the parameter passed to the next .then&#39;s callback.</p>
+<p><strong>Returning Promises.</strong> Even more useful than chaining promises in the same function is returning a promise and doing further processing in some other part of your code. The promise is an object that can be passed between functions. This helps keep functions simple and logical. We have already seen the pattern of returning a promise above. Since the handler (<code>.then</code>) also returns a promise, we can tack on more handlers in each function the promise is passed to.</p>
+<p>Callbacks cannot be chained. A function that executes a callback that it does not itself define must accept that callback as an argument.</p>
+<pre><code class="lang-javascript">function stepOne(callback) {
+    stepTwo(callback);
+}
+
+function stepTwo(callback) {    
+    setTimeout(callback, 1000);
+}
+
+stepOne(function() {
+    console.log(&#39;I got there ... eventually&#39;);
+});
+</code></pre>
+<p><strong>Easier to keep track of multiple asynchronous events.</strong> I have found that when <em>multiple</em> asynchronous events are involved, Promises have a few advantages. First of all, thanks to JavaScript&#39;s scoping rules, the <code>resolve</code> and <code>reject</code> methods can be more than one level deep when they are executed. Imagine you need to make two database queries, and the second is dependent on the data returned by the first:</p>
+<pre><code class="lang-javascript">function queryDb(params) {
+    return new Promise(resolve, reject) {
+        getDataFromDb(params, function(data) {
+            getMoreDataFromDb(data, function(moreData) {
+                resolve(moreData);
+            });
+         });
+    });
+}
+
+queryDb.then( ... )
+</code></pre>
+<p>We&#39;ve taken something pretty hairy and wrapped it a function which lets you not worry about the details too much when you use it later.</p>
+<p>Another common pattern is returning promises in a <code>then</code> handler:</p>
+<pre><code class="lang-javascript">myPromise.then(function(dataOne) {
+    // process dataOne and create another promise
+    return myOtherPromise;
+}).then(function(dataTwo) {
+    // do something with dataTwo
+});
+</code></pre>
+<p>Somewhat surprisingly (but very usefully), <code>dataTwo</code> is <em>NOT</em> <code>myOtherPromise</code> itself, but rather the value that <code>myOtherPromise</code> resolves to. This lets us be a little bit dumb about creating promises within handlers, secure in the knowledge that the next handler won&#39;t be invoked until the value we care about it known.</p>
+<p>Finally, if you have several operations and don&#39;t care what order they complete in, <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise/all">Promise.all accepts an array of Promises</a> and creates a new Promise that resolves when all of them complete. This is useful for tying several things together and only proceeding once everything is done.</p>
+<h2 id="gotchas">Gotchas</h2>
+<p><strong>Gotcha the 1st: resolve() is not return.</strong> It&#39;s important to note that invocation of <code>resolve</code> is not the same as <code>return</code>. In other words, the initial function keeps executing until the end of the function or a return statement is reached. The <em>value</em> passed to resolve cannot be modified after calling it, so it&#39;s possible to use promises for quite a while without encountering this little quirk, but it&#39;s an important thing to keep in mind as it can lead to some unexpected behaviour.</p>
+<p>For this reason, I always use <code>return resolve()</code> unless there&#39;s a compelling reason not to.</p>
+<p><strong>Gotcha the 2nd: Errors that get swallowed.</strong> We have not yet talked about errors very much. <em>In many environments, exceptions thrown within a promise <a href="http://jamesknelson.com/are-es6-promises-swallowing-your-errors/">will silently disappear</a>, without even producing an alert in the console.</em> Obviously this can lead to real frustration.</p>
+<p>The standard way to handle errors and rejected promises is with the <code>.catch</code> method.</p>
+<pre><code class="lang-javascript">new Promise(function(resolve, reject) {
+    throw new Error(&#39;This is an error&#39;);
+}).catch(function(err) {
+  console.log(&#39;An error occurred&#39;);
+});
+</code></pre>
+<p>The output above will be &#39;An error occurred&#39;, but in most cases, there will no output at all without the <code>.catch</code>.</p>
+<p>Fortunately, <code>catch</code> catches all previous errors in the chain, so appending it to the end of a chain will ensure that any errors don&#39;t get swallowed.</p>
+<p><strong>Gotcha the 3rd: Errors that you miss</strong> There are in fact two ways to catch errors: the <code>.catch</code> we have just seen, and a form of <code>.then</code> that accepts two arguments:</p>
+<pre><code class="lang-javascript">myPromise.then(function(result) {
+    handleResult(result);
+}, function(err) {
+    handleErr(err);
+});
+</code></pre>
+<p>The important thing to know about this form is that <em>either</em> the first function or the second will be invoked, but never both. So if an error occurs <strong>inside</strong> the first function passed to <code>.then</code>, we need an error handler further down the chain. For this reason, I recommend using <code>.catch</code> unless there is a really good reason not to.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Promises are a great addition to the JavaScript toolset and make working with asynchronous code a little more fun. This has been a summary of the most important things I&#39;ve encountered: for a really thorough treatment on getting started see <a href="http://www.html5rocks.com/en/tutorials/es6/promises/">this post</a> by Jake Archibald or the <a href="http://www.html5rocks.com/en/tutorials/es6/promises/">MDN reference page on promises</a>.</p>
+<h2 id="changelog">Changelog</h2>
+<p><strong>2016-03-19</strong> Thanks to Steven Parker I&#39;ve added a couple of clarifications on <code>reject</code> and <code>catch</code>.</p>
+
+		</section>
+
+
+	<hr />
+
+	<footer class="main-content__footer">
+		<p><strong>I am starting out as a freelance frontend developer and looking for projects.</strong> <a href="../contact.html">Contact me</a> and let's talk about what we can make together.</p>
+
+		<h2>Share this post</h2>
+		<div class="share-icons">
+			<a href="https://facebook.com/sharer.php?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fhow-to-keep-your-promises-javascript-edition" title="Share this page on Facebook">
+				<span class="hidden"><i class="icon-facebook"></i></span>
+			</a>
+			<a href="https://twitter.com/share?text=How%20to%20keep%20your%20promises%3A%20JavaScript%20edition&url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fhow-to-keep-your-promises-javascript-edition" title="Tweet this page">
+				<span class="hidden"><i class="icon-twitter"></i></span>
+			</a>
+			<a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fhow-to-keep-your-promises-javascript-edition&mini=true&title=How%20to%20keep%20your%20promises%3A%20JavaScript%20edition" title="Tweet this page">
+				<span class="hidden"><i class="icon-linkedin"></i></span>
+			</a>
+		</div>
+
+	</footer>
+
+</article>
+
+				</div>
+
+			</div>
+		</div>
+
+		<script src="../main.js" defer></script>
+	</body>
+</html>

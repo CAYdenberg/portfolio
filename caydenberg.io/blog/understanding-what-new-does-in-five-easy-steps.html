@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<title>Understanding what &#x60;new&#x60; does in five easy steps | Casey A. Ydenberg</title>
+		<meta name="description" content="Visual data and science communication on the web">
+
+		<link rel="shortcut icon" href="../favicon.png">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+		<link rel="stylesheet" href="../style.css">
+		<link rel="stylesheet" href="../print_styles.css" media="print">
+
+		<link rel="canonical" href="understanding-what-new-does-in-five-easy-steps.html">
+		<link rel="alternate" type="application/rss+xml" href="../feed/index.html">
+
+		<meta name="og:title" content="Understanding what &#x60;new&#x60; does in five easy steps | Casey A. Ydenberg">
+		<meta name="og:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="og:image:alt" content="Visual data and science communication on the web">
+		<meta name="og:url" content="https://caydenberg.io/blog/understanding-what-new-does-in-five-easy-steps">
+
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="@CAYdenberg">
+		<meta name="twitter:creator" content="@CAYdenberg">
+		<meta name="twitter:title" content="Understanding what &#x60;new&#x60; does in five easy steps | Casey A. Ydenberg">
+		<meta name="twitter:description" content="Visual data and science communication on the web">
+		<meta name="twitter:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="twitter:image:alt" content="Visual data and science communication on the web">
+
+
+	</head>
+
+	<body class="blog">
+		<div class="off-canvas-wrapper">
+			<div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+
+          <div class="menu-toggle-wrapper">
+            <button type="button" class="button hollow menu-toggle" data-toggle="sidebar-wrapper" aria-expanded="false" aria-controls="sidebar-wrapper">
+              <i class="icon-bars"></i>
+            </button>
+          </div>
+
+					<div class="off-canvas position-left reveal-for-large sidebar-wrapper" id="sidebar-wrapper" data-off-canvas>
+						<div class="sidebar-filter">
+							<aside class="sidebar-body">
+								<h2 class="site-title"><a href="../index.html" class="natural">Casey A. Ydenberg</a></h2>
+								<h3 class="site-description">Web Developer</h3>
+
+								<ul class="main-nav" role="menu">
+										<li class="active">
+											<a href="../blog.html">Blog</a>
+										</li>
+										<li >
+											<a href="../talks.html">Speaking</a>
+										</li>
+										<li >
+											<a href="../contact.html">Contact</a>
+										</li>
+								</ul>
+
+								<ul class="social-nav" role="menu">
+									<li><a href="https://github.com/CAYdenberg" target="_blank"><i class="icon-github" title="GitHub profile"></i></a></li>
+									<li><a href="https://twitter.com/CAYdenberg" target="_blank"><i class="icon-twitter" title="Twitter feed"></i></a></li>
+									<li><a href="https://www.linkedin.com/in/caydenberg" target="_blank"><i class="icon-linkedin" title="LinkedIn page"></i></a></li>
+								</ul>
+
+							</aside>
+						</div>
+					</div>
+
+				<div class="off-canvas-content" data-off-canvas-content>
+					<article class="main-content">
+
+		<header class="main-content__header">
+			<h1>Understanding what &#x60;new&#x60; does in five easy steps</h1>
+			<p><a href="../blog.html">&larr; back to the blog</a></p>
+		</header>
+
+		<section class="main-content__body blog-content">
+			<p>The <code>new</code> keyword, inheritance and object creation are some of the most confusing parts of the JavaScript language, and are equally befuddling both to newcomers and to programmers experienced with other languages. The reasons for this go way back to the design of the spec, and I won&#39;t get into them.</p>
+<p>I do not believe that being a coding newbie gives you some kind of advantage in understanding prototypes: rather, trying to grasp both prototypes and the way they have been hacked to produce pseudo-classical patterns <strong>at the same time</strong> can make newcomers especially bewildered. Moreover, when Googling around on the subject, one encounters a lot of opinion and a lot of <strong>detail.</strong></p>
+<p>Drawing mainly from <a href="http://shop.oreilly.com/product/9780596517748.do">JavaScript: The Good Parts</a> and <a href="http://shop.oreilly.com/product/0636920033738.do">YDKJS</a>, I think I have distilled the details on <code>new</code> down to five simple steps, which I really wish I&#39;d had a firm grasp on when I was first starting out.</p>
+<h2 id="1-functions-are-objects">1. Functions are objects</h2>
+<p>This one is pretty straightforward. In JavaScript, functions are objects (of type Function), which basically has the upshot that they can be assigned to variables and passed around like a bag of chips.</p>
+<pre><code class="lang-javascript">function hello() {
+    alert(&#39;Hello&#39;);
+}
+
+var hello2 = hello;
+
+hello2();
+//alert box says &quot;Hello&quot;
+</code></pre>
+<p>Nothing astounding there.</p>
+<h2 id="2-declaring-a-function-actually-creates-two-objects">2. Declaring a function actually creates two objects</h2>
+<p>When you declare a function, you are actually creating two objects: the function itself (<code>MyFunction</code>), and another &quot;prototype&quot; object (<code>MyFunction.prototype</code>). You can assign properties (which can be functions) to the prototype object (for that matter, you can also assign them to the function directly).</p>
+<p>In addition, the &quot;prototype&quot; refers back the original function through a property called the &quot;constructor&quot;. So <code>MyFunction.prototype.constructor</code> is <code>MyFunction</code>.</p>
+<pre><code class="lang-javascript">function MyFunction() {}
+
+MyFunction
+// MyFunction() {}
+
+MyFunction.prototype.constructor
+// MyFunction() {}
+</code></pre>
+<p>Got that? Shit&#39;s about the get real.</p>
+<h2 id="3-__proto__-is-not-the-same-as-prototype-">3. <code>__proto__</code> is not the same as <code>prototype</code></h2>
+<p>In JavaScript, every object has a linked Prototype object. Any time a variable lookup (<code>myObject.myProp</code>) is performed on that object, <em>and the property does not exist</em>, it will look for the property on the object&#39;s prototype, then prototypes prototype, and so on.</p>
+<p>Here&#39;s the thing that&#39;s messed up though: that <code>.prototype</code> we mentioned above <em>is not the function&#39;s prototype.</em> Chrome stores the <em>actual</em> prototype in a different variable called <code>__proto__</code>. </p>
+<pre><code class="lang-javascript">function MyFunction() {}
+
+MyFunction.prototype
+// MyFunction() {}
+
+MyFunction.__proto__
+// function () {}
+</code></pre>
+<p>or even better</p>
+<pre><code class="lang-javascript">MyFunction.prototype === MyFunction.__proto__
+// false
+</code></pre>
+<p>Not the same thing at all. This also explains why we can&#39;t access the <code>prototype</code> on arbitrary object, even though newbies are pounded over the head with the factoid that all JavaScript objects have prototypes.</p>
+<pre><code class="lang-javascript">var myObject = {}
+
+myObject.prototype
+// undefined
+
+myObject.__proto__
+// Object {}
+</code></pre>
+<p>The <code>prototype</code> is not the Prototype. It is best to think of it simply as a special object that is created when a function is created. Why is this useful?</p>
+<h2 id="4-new-changes-what-happens-when-you-execute-a-function">4. <code>new</code> changes what happens when you execute a function</h2>
+<p>So far we&#39;ve only discussed declaring functions, not executing them. Importantly, much of what happens during function execution in JavaScript depends on the <em>way</em> the function is called, and is not set at declaration time at all. When a function is called with <code>new</code> (is in <code>var myObject = new MyFunction()</code>) the following things happen:</p>
+<ul>
+<li>a new object is created</li>
+<li><code>this</code> within the function body is bound to the new object</li>
+<li>the new object&#39;s <code>__proto__</code> (Prototype) is the <code>.prototype</code> of the function</li>
+<li>the function will return the new object unless there is an explicit <code>return</code> statement</li>
+</ul>
+<p>This allows you to invoke the familiar constructor pattern:</p>
+<pre><code class="lang-javascript">function Animal(sound) {
+    this.sound = sound;
+}
+Animal.prototype.speak = function() {
+    console.log(this.sound); 
+}
+
+var cat = new Animal(&quot;meow&quot;);
+cat.speak();
+// meow
+</code></pre>
+<p>This creates the appearance of classes in JavaScript, but it is an illusion. In the example above, <code>Animal</code> and <code>cat</code> are both objects, they are not classes.</p>
+<p>A final note on this point: <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Classes">ES6 adds the <code>class</code> keyword</a>. However, it merely provides syntactic sugar for the pattern above: there still are not really classes in JavaScript.</p>
+<h2 id="5-object-create-does-one-thing">5. <code>Object.create</code> does one thing</h2>
+<p>Unlike <code>new</code>, <code>Object.create</code> does exactly one thing: it creates a new object with a prototype specified by the first parameter. This means we could rewrite the example above as follows:</p>
+<pre><code class="lang-javascript">var Animal = {
+    speak: function() {
+        console.log(this.sound);
+    }
+}
+
+function createAnimal(sound) {
+    var animal = Object.create(Animal);
+    animal.sound = sound;
+    return animal;
+}
+
+var cat = createAnimal(&quot;meow&quot;);
+cat.speak();
+// meow
+</code></pre>
+<p>I find this type of code a little easier to read because the various elements in it more clearly declare their own intentions. <a href="http://shop.oreilly.com/product/9780596517748.do">Douglas Crockford</a>, <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch6.md">Kyle Simpson</a>, and <a href="https://medium.com/javascript-scene/common-misconceptions-about-inheritance-in-javascript-d5d9bab29b0a#.9160jmid5">Eric Elliot</a> have in fact argued that the pseudo-classical pattern should be done away with altogether. Note that <code>Object.create</code> is used in the classical pattern to mimic &quot;class inheritance&quot; and so understanding how it works is important.</p>
+<p><strong>One final point about prototypes:</strong> Neither <code>Object.create</code> nor <code>new</code> make copies of objects. It often appears as though the prototype is copied because the prototype and the new object have access to the same properties. <em>But those properties are actually the same things - not copies.</em> This can lead to some surprising results when trying to implement &quot;inheritance&quot;. <a href="http://shop.oreilly.com/product/0636920033738.do">It may be better to refer to inheritance as &quot;delegation&quot; instead.</a></p>
+
+		</section>
+
+
+	<hr />
+
+	<footer class="main-content__footer">
+		<p><strong>I am starting out as a freelance frontend developer and looking for projects.</strong> <a href="../contact.html">Contact me</a> and let's talk about what we can make together.</p>
+
+		<h2>Share this post</h2>
+		<div class="share-icons">
+			<a href="https://facebook.com/sharer.php?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Funderstanding-what-new-does-in-five-easy-steps" title="Share this page on Facebook">
+				<span class="hidden"><i class="icon-facebook"></i></span>
+			</a>
+			<a href="https://twitter.com/share?text=Understanding%20what%20%60new%60%20does%20in%20five%20easy%20steps&url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Funderstanding-what-new-does-in-five-easy-steps" title="Tweet this page">
+				<span class="hidden"><i class="icon-twitter"></i></span>
+			</a>
+			<a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Funderstanding-what-new-does-in-five-easy-steps&mini=true&title=Understanding%20what%20%60new%60%20does%20in%20five%20easy%20steps" title="Tweet this page">
+				<span class="hidden"><i class="icon-linkedin"></i></span>
+			</a>
+		</div>
+
+	</footer>
+
+</article>
+
+				</div>
+
+			</div>
+		</div>
+
+		<script src="../main.js" defer></script>
+	</body>
+</html>

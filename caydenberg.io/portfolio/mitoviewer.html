@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<title>MitoViewer | Casey A. Ydenberg</title>
+		<meta name="description" content="Visual data and science communication on the web">
+
+		<link rel="shortcut icon" href="../favicon.png">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+		<link rel="stylesheet" href="../style.css">
+		<link rel="stylesheet" href="../print_styles.css" media="print">
+
+		<link rel="canonical" href="mitoviewer.html">
+		<link rel="alternate" type="application/rss+xml" href="../feed/index.html">
+
+		<meta name="og:title" content="MitoViewer | Casey A. Ydenberg">
+		<meta name="og:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="og:image:alt" content="Visual data and science communication on the web">
+		<meta name="og:url" content="https://caydenberg.io/portfolio/mitoviewer">
+
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="@CAYdenberg">
+		<meta name="twitter:creator" content="@CAYdenberg">
+		<meta name="twitter:title" content="MitoViewer | Casey A. Ydenberg">
+		<meta name="twitter:description" content="Visual data and science communication on the web">
+		<meta name="twitter:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="twitter:image:alt" content="Visual data and science communication on the web">
+
+
+	</head>
+
+	<body class="portfolio">
+		<div class="off-canvas-wrapper">
+			<div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+
+          <div class="menu-toggle-wrapper">
+            <button type="button" class="button hollow menu-toggle" data-toggle="sidebar-wrapper" aria-expanded="false" aria-controls="sidebar-wrapper">
+              <i class="icon-bars"></i>
+            </button>
+          </div>
+
+					<div class="off-canvas position-left reveal-for-large sidebar-wrapper" id="sidebar-wrapper" data-off-canvas>
+						<div class="sidebar-filter">
+							<aside class="sidebar-body">
+								<h2 class="site-title"><a href="../index.html" class="natural">Casey A. Ydenberg</a></h2>
+								<h3 class="site-description">Web Developer</h3>
+
+								<ul class="main-nav" role="menu">
+										<li >
+											<a href="../blog.html">Blog</a>
+										</li>
+										<li >
+											<a href="../talks.html">Speaking</a>
+										</li>
+										<li >
+											<a href="../contact.html">Contact</a>
+										</li>
+								</ul>
+
+								<ul class="social-nav" role="menu">
+									<li><a href="https://github.com/CAYdenberg" target="_blank"><i class="icon-github" title="GitHub profile"></i></a></li>
+									<li><a href="https://twitter.com/CAYdenberg" target="_blank"><i class="icon-twitter" title="Twitter feed"></i></a></li>
+									<li><a href="https://www.linkedin.com/in/caydenberg" target="_blank"><i class="icon-linkedin" title="LinkedIn page"></i></a></li>
+								</ul>
+
+							</aside>
+						</div>
+					</div>
+
+				<div class="off-canvas-content" data-off-canvas-content>
+					
+	<article class="main-content">
+		<header class="main-content__header">
+			<h1>MitoViewer</h1>
+			<p class="lede">Girihlet Inc.</p>
+			<p><a href="../index.html">&larr; back to my portfolio</a></p>
+			<img src="https://res.cloudinary.com/dfxksdivn/image/upload/w_1059/v36o1t0qi4wjn6n2cfcw.png" srcset="https://res.cloudinary.com/dfxksdivn/image/upload/w_1059/v36o1t0qi4wjn6n2cfcw.png 1059w, https://res.cloudinary.com/dfxksdivn/image/upload/w_1000/v36o1t0qi4wjn6n2cfcw.png 1000w, https://res.cloudinary.com/dfxksdivn/image/upload/w_800/v36o1t0qi4wjn6n2cfcw.png 800w, https://res.cloudinary.com/dfxksdivn/image/upload/w_600/v36o1t0qi4wjn6n2cfcw.png 600w, https://res.cloudinary.com/dfxksdivn/image/upload/w_400/v36o1t0qi4wjn6n2cfcw.png 400w" width="1059" height="396" sizes="(max-width: 991px) 100vw, 800px" alt="Screenshot of the application" />
+			<a class="launch-link" href="http://mitoviewer.girihlet.com/" target="_blank">Launch</a>
+		</header>
+
+		<section class="main-content__body portfolio-content">
+			<h2>The Problem</h2>
+			<p>Girihlet Inc. is a biotech startup deploying deep-sequencing technology. In one initiative, they have discovered that the human mitochondrial genome contains a great deal of <em>heteroplasmy:</em> <a href="https://pubmed.app/lens/4344500">genetically distinct populations of mitochondria that are stably maintained during cell division</a>. Some of these alleles have medical implications.</p>
+<p>Girihlet required a web-based data viewer to make their work accessible to a broad audience.</p>
+
+			<h2>My Role</h2>
+			<p>Working from a SQLite database produced by Girihlet, I built an API to access the data and a JavaScript-based viewer that runs in the user&#39;s browser. The user can view alleles and can manipulate the map by zooming, scrolling and rotating. Because the map is based on SVG, it is highly interactive: the user can drag to select regions for zooming and can get additional information about map features by hovering over them with the mouse.</p>
+
+		</section>
+
+		<ul class="portfolio-links--large">
+				<li class="portfolio-links__item">
+					<a href="http://mitoviewer.girihlet.com/" title="Link to the site" target="_blank">
+						<i class="icon-demo"></i>
+					</a>
+				</li>
+		</ul>
+
+		<hr />
+
+		<footer>
+			<p><strong>I am starting out as a freelance frontend developer and looking for projects.</strong> <a href="../contact.html">Contact me</a> and let's talk about what we can make together.</p>
+		</footer>
+
+	</article>
+
+
+				</div>
+
+			</div>
+		</div>
+
+		<script src="../main.js" defer></script>
+	</body>
+</html>

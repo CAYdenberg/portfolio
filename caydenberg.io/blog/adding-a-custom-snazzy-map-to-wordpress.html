@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<title>Adding a custom Snazzy Map to WordPress | Casey A. Ydenberg</title>
+		<meta name="description" content="Visual data and science communication on the web">
+
+		<link rel="shortcut icon" href="../favicon.png">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+		<link rel="stylesheet" href="../style.css">
+		<link rel="stylesheet" href="../print_styles.css" media="print">
+
+		<link rel="canonical" href="adding-a-custom-snazzy-map-to-wordpress.html">
+		<link rel="alternate" type="application/rss+xml" href="../feed/index.html">
+
+		<meta name="og:title" content="Adding a custom Snazzy Map to WordPress | Casey A. Ydenberg">
+		<meta name="og:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="og:image:alt" content="Visual data and science communication on the web">
+		<meta name="og:url" content="https://caydenberg.io/blog/adding-a-custom-snazzy-map-to-wordpress">
+
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="@CAYdenberg">
+		<meta name="twitter:creator" content="@CAYdenberg">
+		<meta name="twitter:title" content="Adding a custom Snazzy Map to WordPress | Casey A. Ydenberg">
+		<meta name="twitter:description" content="Visual data and science communication on the web">
+		<meta name="twitter:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="twitter:image:alt" content="Visual data and science communication on the web">
+
+
+	</head>
+
+	<body class="blog">
+		<div class="off-canvas-wrapper">
+			<div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+
+          <div class="menu-toggle-wrapper">
+            <button type="button" class="button hollow menu-toggle" data-toggle="sidebar-wrapper" aria-expanded="false" aria-controls="sidebar-wrapper">
+              <i class="icon-bars"></i>
+            </button>
+          </div>
+
+					<div class="off-canvas position-left reveal-for-large sidebar-wrapper" id="sidebar-wrapper" data-off-canvas>
+						<div class="sidebar-filter">
+							<aside class="sidebar-body">
+								<h2 class="site-title"><a href="../index.html" class="natural">Casey A. Ydenberg</a></h2>
+								<h3 class="site-description">Web Developer</h3>
+
+								<ul class="main-nav" role="menu">
+										<li class="active">
+											<a href="../blog.html">Blog</a>
+										</li>
+										<li >
+											<a href="../talks.html">Speaking</a>
+										</li>
+										<li >
+											<a href="../contact.html">Contact</a>
+										</li>
+								</ul>
+
+								<ul class="social-nav" role="menu">
+									<li><a href="https://github.com/CAYdenberg" target="_blank"><i class="icon-github" title="GitHub profile"></i></a></li>
+									<li><a href="https://twitter.com/CAYdenberg" target="_blank"><i class="icon-twitter" title="Twitter feed"></i></a></li>
+									<li><a href="https://www.linkedin.com/in/caydenberg" target="_blank"><i class="icon-linkedin" title="LinkedIn page"></i></a></li>
+								</ul>
+
+							</aside>
+						</div>
+					</div>
+
+				<div class="off-canvas-content" data-off-canvas-content>
+					<article class="main-content">
+
+		<header class="main-content__header">
+			<h1>Adding a custom Snazzy Map to WordPress</h1>
+			<p><a href="../blog.html">&larr; back to the blog</a></p>
+		</header>
+
+		<section class="main-content__body blog-content">
+			<p>Designers are incurable perfectionists. They always seem to want things that push just beyond what the current tools we as developers have available.</p>
+<p>Until recently, outside widgets like Google Maps gave us a line in the sand. So that blue that Google uses for water doesn&#39;t quite match the blue in the logo? Too bad. Either use what we&#39;ve got, or scrap that map and make a JPG.</p>
+<p>Well, designers can celebrate (and developers curse) the arrival of Snazzy Maps. <a href="https://snazzymaps.com/editor">SnazzyMaps</a> (an Edmonton company!) allows you to build your own styles using a WYSIWYG editor, then export the style information as JSON code. This can be interpreted by the Google Maps JavaScript API to apply the same styling to any map.</p>
+<p>Here I will go over how to integrate a Google Map with custom styling into a WordPress site, but much of what I include will apply to any website. There are also a couple of premium plugins that work with SnazzyMaps, but I prefer the home-baked solution below.</p>
+<p>Here are a <a href="http://www.k-brolinen.com/contact-us/">couple</a> <a href="http://www.ascensionchiro.ca/">different</a> <a href="http://www.seventhstreetdental.ca/">examples</a>.</p>
+<h2 id="le-html">Le HTML</h2>
+<p>First off, we need to create a container for our Google Map. Generally, this is just a div with an explicit width and height (because it will be empty to start) and an ID (or class) to act as a JavaScript hook.</p>
+<pre><code class="lang-markup">&lt;div id=&quot;the-map&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>Note that you usually need to add an explicit height for this element in CSS, since it&#39;s empty when the page loads.</p>
+<h2 id="le-javascript">Le JavaScript</h2>
+<p>First we need to include both the Google Javascript file and a custom Javascript file to fire the API. The best way to do this in WordPress is to use <code>wp_enqueue_script</code>. </p>
+<p>In <code>functions.php</code>:</p>
+<pre><code class="lang-php">&lt;?php
+    add_action(&#39;wp_enqueue_scripts&#39;, &#39;my_enqueue_scripts&#39;);
+    function my_enqueue_scripts() {
+        wp_enqueue_script(&#39;google-maps&#39;, &#39;https://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false&#39;, array(), null, true);
+        wp_enqueue_script(&#39;script&#39;, get_stylesheet_directory_uri() . &#39;/js/script.js&#39;, array(&#39;google-maps&#39;), null, true);
+    }
+?&gt;
+</code></pre>
+<p>The second enqueued script will be our main javascript file used for setting up Google maps. Calling the Google Maps API is extremely simple, depending on the level of customization. The biggest thing to decide at this stage is where the map will be centered and how &quot;zoomed-in&quot; it will be. The full documentation for including a Google map can be found at <a href="https://developers.google.com/maps/documentation/javascript/tutorial">developers.google.com</a>.</p>
+<p>In <code>script.js</code>:</p>
+<pre><code class="lang-javascript">function makeMap() {
+  var map = new google.maps.Map(document.getElementById(&#39;the-map&#39;), {
+      center : new google.maps.LatLng(49.278094, -122.919883),
+      zoom : 13,
+      mapTypeId : google.maps.MapTypeId.ROADMAP,
+      disableDefaultUI: true
+  });
+  var marker = new google.maps.Marker({
+      position : new google.maps.LatLng(49.278094, -122.919883)
+  });
+  marker.setMap(map);
+}
+google.maps.event.addDomListener(window, &#39;load&#39;, makeMap);
+</code></pre>
+<h2 id="adding-snazzymaps-styling">Adding SnazzyMaps Styling</h2>
+<p>Custom styles can be passed directly into the Google maps object. Snazzy maps outputs these styles as JSON code which can be parsed in JavaScript and passed in. But where should the JSON code go? Javascript generally doesn&#39;t like multi-line strings, and the compressed JSON is going to be ugly. Adding it directly to a JS file combines style and functionality, something that developers should try to avoid.</p>
+<p>There are probably several good ways of accomplishing this, but I want to share one method that achieves very clean seperation of information. It uses the little known WordPress function <code>wp_localize_script</code>. This is an extremely useful function which allows us to pass data from PHP to JavaScript without awkwardly storing it in HTML (for example, in a hidden element).</p>
+<p>Lets copy and paste the JSON from SnazzyMaps into a file called <code>map_style.json</code> and save it in the same directory as <code>functions.php</code>. Then, lets add to our <code>my_enqueue_scripts</code> function:</p>
+<pre><code class="lang-php">&lt;?php
+    add_action(&#39;wp_enqueue_scripts&#39;, &#39;my_enqueue_scripts&#39;);
+    function my_enqueue_scripts() {
+        wp_enqueue_script(&#39;google-maps&#39;, &#39;https://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false&#39;, array(), null, true);
+        wp_enqueue_script(&#39;script&#39;, get_stylesheet_directory_uri() . &#39;/js/script.js&#39;, array(&#39;google-maps&#39;), null, true);
+        wp_localize_script( &#39;script&#39;, &#39;wpGlobals&#39;, array(
+            &#39;mapOptions&#39; =&gt; file_get_contents( dirname(__FILE__) . &#39;/map_style.json&#39; )
+          ) );
+    }
+?&gt;
+</code></pre>
+<p>Load the relevant page, then open up a console and type <code>wpGlobals</code>. The console should return <code>{ mapOptions :</code> and then a long string representing the map styles we created. Finally, let&#39;s modify the Javascript code from above:</p>
+<p>In <code>script.js</code>:</p>
+<pre><code class="lang-javascript">function makeMap() {
+  var snazzyMap = JSON.parse(wpGlobals.mapOptions);
+  var map = new google.maps.Map(document.getElementById(&#39;the-map&#39;), {
+      center : new google.maps.LatLng(49.278094, -122.919883),
+      zoom : 13,
+      mapTypeId : google.maps.MapTypeId.ROADMAP,
+      disableDefaultUI: true,
+      styles : snazzyMap
+  });
+  var marker = new google.maps.Marker({
+      position : new google.maps.LatLng(49.278094, -122.919883)
+  });
+  marker.setMap(map);
+}
+google.maps.event.addDomListener(window, &#39;load&#39;, makeMap);
+</code></pre>
+<p><strong>UPDATE FEB 26th: Big thanks to David Rizzuto (<a href="https://twitter.com/davidrizzuto">@davidrizutto</a>) for his comments below. I&#39;ve fixed a couple of mistakes and clarified some other things.</strong></p>
+<p><strong>UPDATE SEPT 8th: Additional thanks to @teejK who noticed I was using the experimental version of Google Maps.</strong></p>
+
+		</section>
+
+
+	<hr />
+
+	<footer class="main-content__footer">
+		<p><strong>I am starting out as a freelance frontend developer and looking for projects.</strong> <a href="../contact.html">Contact me</a> and let's talk about what we can make together.</p>
+
+		<h2>Share this post</h2>
+		<div class="share-icons">
+			<a href="https://facebook.com/sharer.php?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fadding-a-custom-snazzy-map-to-wordpress" title="Share this page on Facebook">
+				<span class="hidden"><i class="icon-facebook"></i></span>
+			</a>
+			<a href="https://twitter.com/share?text=Adding%20a%20custom%20Snazzy%20Map%20to%20WordPress&url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fadding-a-custom-snazzy-map-to-wordpress" title="Tweet this page">
+				<span class="hidden"><i class="icon-twitter"></i></span>
+			</a>
+			<a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fadding-a-custom-snazzy-map-to-wordpress&mini=true&title=Adding%20a%20custom%20Snazzy%20Map%20to%20WordPress" title="Tweet this page">
+				<span class="hidden"><i class="icon-linkedin"></i></span>
+			</a>
+		</div>
+
+	</footer>
+
+</article>
+
+				</div>
+
+			</div>
+		</div>
+
+		<script src="../main.js" defer></script>
+	</body>
+</html>

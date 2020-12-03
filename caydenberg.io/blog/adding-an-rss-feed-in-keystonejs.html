@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<title>Adding an RSS feed in Keystone.js | Casey A. Ydenberg</title>
+		<meta name="description" content="Visual data and science communication on the web">
+
+		<link rel="shortcut icon" href="../favicon.png">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+		<link rel="stylesheet" href="../style.css">
+		<link rel="stylesheet" href="../print_styles.css" media="print">
+
+		<link rel="canonical" href="adding-an-rss-feed-in-keystonejs.html">
+		<link rel="alternate" type="application/rss+xml" href="../feed/index.html">
+
+		<meta name="og:title" content="Adding an RSS feed in Keystone.js | Casey A. Ydenberg">
+		<meta name="og:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="og:image:alt" content="Visual data and science communication on the web">
+		<meta name="og:url" content="https://caydenberg.io/blog/adding-an-rss-feed-in-keystonejs">
+
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="@CAYdenberg">
+		<meta name="twitter:creator" content="@CAYdenberg">
+		<meta name="twitter:title" content="Adding an RSS feed in Keystone.js | Casey A. Ydenberg">
+		<meta name="twitter:description" content="Visual data and science communication on the web">
+		<meta name="twitter:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="twitter:image:alt" content="Visual data and science communication on the web">
+
+
+	</head>
+
+	<body class="blog">
+		<div class="off-canvas-wrapper">
+			<div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+
+          <div class="menu-toggle-wrapper">
+            <button type="button" class="button hollow menu-toggle" data-toggle="sidebar-wrapper" aria-expanded="false" aria-controls="sidebar-wrapper">
+              <i class="icon-bars"></i>
+            </button>
+          </div>
+
+					<div class="off-canvas position-left reveal-for-large sidebar-wrapper" id="sidebar-wrapper" data-off-canvas>
+						<div class="sidebar-filter">
+							<aside class="sidebar-body">
+								<h2 class="site-title"><a href="../index.html" class="natural">Casey A. Ydenberg</a></h2>
+								<h3 class="site-description">Web Developer</h3>
+
+								<ul class="main-nav" role="menu">
+										<li class="active">
+											<a href="../blog.html">Blog</a>
+										</li>
+										<li >
+											<a href="../talks.html">Speaking</a>
+										</li>
+										<li >
+											<a href="../contact.html">Contact</a>
+										</li>
+								</ul>
+
+								<ul class="social-nav" role="menu">
+									<li><a href="https://github.com/CAYdenberg" target="_blank"><i class="icon-github" title="GitHub profile"></i></a></li>
+									<li><a href="https://twitter.com/CAYdenberg" target="_blank"><i class="icon-twitter" title="Twitter feed"></i></a></li>
+									<li><a href="https://www.linkedin.com/in/caydenberg" target="_blank"><i class="icon-linkedin" title="LinkedIn page"></i></a></li>
+								</ul>
+
+							</aside>
+						</div>
+					</div>
+
+				<div class="off-canvas-content" data-off-canvas-content>
+					<article class="main-content">
+
+		<header class="main-content__header">
+			<h1>Adding an RSS feed in Keystone.js</h1>
+			<p><a href="../blog.html">&larr; back to the blog</a></p>
+		</header>
+
+		<section class="main-content__body blog-content">
+			<p>I recently rebuilt my personal website on KeystoneJS and immediately fell in love with it. I think it&#39;s for the following reason: Keystone has successfully married NoSQL with the basic concept of the CMS. This means that any document type which can be envisioned (blog post, recipe, event, product) can just be defined as a schema from the very beginning, without the need to &quot;override&quot; any pre-existing assumptions about what that data might be. </p>
+<p>At the same time, data models go way beyond defining field keys and their data-type. You can get a full-functioning CMS in minutes by setting field properties that control their appearance on the &quot;back end&quot; (by which I mean the administration panel).</p>
+<p>Beyond that, the framework is just a slightly souped-up version of Express. You define your own routes, rendering engine, and <strong>all the front-end code</strong>. Nothing appears in the markup sent to the user unless you want it to be there.</p>
+<p>Frankly, all things considered, it&#39;s a huge relief to go from WordPress to a lightweight, unopinionated system. I have control of the HTML my site emits, and we can <strong>Make the Web Great Again</strong>. Of course is a double-edged sword, and you might start missing things like RSS feeds, sitemaps, and the SEO features that come with a plugin like Yoast.</p>
+<p>These things are not hard add, though. For RSS feeds, I found <a href="https://www.npmjs.com/package/rss">an npm module</a> that worked with almost no setup. I simply set it up as one of my routes:</p>
+<pre><code class="lang-javascript">module.exports = function(req, res) {
+  // define global features of the feed
+  var feed = new RSS({
+    title: &#39;Casey A. Ydenberg\&#39;s blog feed&#39;,
+    description: &#39;Web development and JavaScript&#39;,
+    author: &#39;@CAYdenberg&#39;
+  });
+
+  // similar to the blog index page, we pull the most
+  // recent 10 blog posts
+  keystone.list(&#39;Post&#39;).model
+    .where(&#39;state&#39;, &#39;published&#39;)
+    .sort(&#39;-publishedDate&#39;)
+    .limit(10)
+    .exec()
+
+    // define features for each blog post
+    .then(posts =&gt; {
+      posts.forEach(post =&gt; {
+        feed.item({
+          title: post.title,
+          description: post.content.brief.html,
+          url: post.canonicalUrl(),
+          date: post.publishedDate
+        });
+      });
+
+      // alter the HTTP header and send XML
+      res.set(&#39;Content-Type&#39;, &#39;text/xml&#39;);
+      res.send(feed.xml());
+    });
+}
+</code></pre>
+<p>You&#39;ll notice the function <code>post.canonicalUrl()</code> to get the URL of a post. Keystone does not have an obvious way to do this. In WordPress, this is easier because data models (&quot;posts&quot;) automatically have a canonical URL (permalink) that they are associated with. MVC frameworks don&#39;t usually work this way: URLs (or routes) map to a controller or action, but that action could call up all kinds of different data to render the display. </p>
+<p>(Of course, this is also a weakness of WordPress - when you try rendering &quot;related posts&quot; in the sidebar and end up writing batshit code like <code>wp_rewind_posts</code> ... ugh).</p>
+<p>I decided to give my blog post model an extra function to generate the link. </p>
+<pre><code class="lang-javascript">Post.schema.methods.canonicalUrl = () =&gt; keystone.get(&#39;url&#39;) + &#39;/blog/&#39; + this.slug;
+</code></pre>
+<p>This is sort-of duplicating logic found in the router, but only sort-of. In fact, Keystone&#39;s standard set of templating &quot;helpers&quot; comes with just this sort of function for use in the HTML; I&#39;ve just replaced it with a function associated with the data model (which makes more sense).</p>
+<p>As a bonus, I used this function on the blog index page (instead of the helper):</p>
+<pre><code class="lang-html">&lt;article class=&quot;blog-post&quot;&gt;
+  &lt;h2 class=&quot;blog-post__title&quot;&gt;&lt;a href=&quot;{{canonicalUrl}}&quot;&gt;{{{title}}}&lt;/a&gt;&lt;/h2&gt;
+  &lt;div class=&quot;blog-post__content&quot;&gt;{{{content.brief.html}}}&lt;/div&gt;
+  &lt;p class=&quot;blog-post__read-more&quot;&gt;&lt;a href=&quot;{{canonicalUrl}}&quot;&gt;Read more &amp;gt;&amp;gt;&lt;/a&gt;&lt;/p&gt;
+  &lt;hr /&gt;
+&lt;/article&gt;
+</code></pre>
+
+		</section>
+
+
+	<hr />
+
+	<footer class="main-content__footer">
+		<p><strong>I am starting out as a freelance frontend developer and looking for projects.</strong> <a href="../contact.html">Contact me</a> and let's talk about what we can make together.</p>
+
+		<h2>Share this post</h2>
+		<div class="share-icons">
+			<a href="https://facebook.com/sharer.php?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fadding-an-rss-feed-in-keystonejs" title="Share this page on Facebook">
+				<span class="hidden"><i class="icon-facebook"></i></span>
+			</a>
+			<a href="https://twitter.com/share?text=Adding%20an%20RSS%20feed%20in%20Keystone.js&url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fadding-an-rss-feed-in-keystonejs" title="Tweet this page">
+				<span class="hidden"><i class="icon-twitter"></i></span>
+			</a>
+			<a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fadding-an-rss-feed-in-keystonejs&mini=true&title=Adding%20an%20RSS%20feed%20in%20Keystone.js" title="Tweet this page">
+				<span class="hidden"><i class="icon-linkedin"></i></span>
+			</a>
+		</div>
+
+	</footer>
+
+</article>
+
+				</div>
+
+			</div>
+		</div>
+
+		<script src="../main.js" defer></script>
+	</body>
+</html>

@@ -1,0 +1,13 @@
+.off-canvas,
+.menu-toggle-wrapper {
+  display: none;
+}
+
+.off-canvas-content {
+  margin-left: 0 !important;
+}
+
+h1::before {
+  content: 'Casey A. Ydenberg';
+  display: block;
+}

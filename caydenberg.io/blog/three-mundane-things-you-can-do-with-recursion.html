@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<title>Three mundane things you can do with recursion | Casey A. Ydenberg</title>
+		<meta name="description" content="Visual data and science communication on the web">
+
+		<link rel="shortcut icon" href="../favicon.png">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+		<link rel="stylesheet" href="../style.css">
+		<link rel="stylesheet" href="../print_styles.css" media="print">
+
+		<link rel="canonical" href="three-mundane-things-you-can-do-with-recursion.html">
+		<link rel="alternate" type="application/rss+xml" href="../feed/index.html">
+
+		<meta name="og:title" content="Three mundane things you can do with recursion | Casey A. Ydenberg">
+		<meta name="og:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="og:image:alt" content="Visual data and science communication on the web">
+		<meta name="og:url" content="https://caydenberg.io/blog/three-mundane-things-you-can-do-with-recursion">
+
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="@CAYdenberg">
+		<meta name="twitter:creator" content="@CAYdenberg">
+		<meta name="twitter:title" content="Three mundane things you can do with recursion | Casey A. Ydenberg">
+		<meta name="twitter:description" content="Visual data and science communication on the web">
+		<meta name="twitter:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="twitter:image:alt" content="Visual data and science communication on the web">
+
+
+	</head>
+
+	<body class="blog">
+		<div class="off-canvas-wrapper">
+			<div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+
+          <div class="menu-toggle-wrapper">
+            <button type="button" class="button hollow menu-toggle" data-toggle="sidebar-wrapper" aria-expanded="false" aria-controls="sidebar-wrapper">
+              <i class="icon-bars"></i>
+            </button>
+          </div>
+
+					<div class="off-canvas position-left reveal-for-large sidebar-wrapper" id="sidebar-wrapper" data-off-canvas>
+						<div class="sidebar-filter">
+							<aside class="sidebar-body">
+								<h2 class="site-title"><a href="../index.html" class="natural">Casey A. Ydenberg</a></h2>
+								<h3 class="site-description">Web Developer</h3>
+
+								<ul class="main-nav" role="menu">
+										<li class="active">
+											<a href="../blog.html">Blog</a>
+										</li>
+										<li >
+											<a href="../talks.html">Speaking</a>
+										</li>
+										<li >
+											<a href="../contact.html">Contact</a>
+										</li>
+								</ul>
+
+								<ul class="social-nav" role="menu">
+									<li><a href="https://github.com/CAYdenberg" target="_blank"><i class="icon-github" title="GitHub profile"></i></a></li>
+									<li><a href="https://twitter.com/CAYdenberg" target="_blank"><i class="icon-twitter" title="Twitter feed"></i></a></li>
+									<li><a href="https://www.linkedin.com/in/caydenberg" target="_blank"><i class="icon-linkedin" title="LinkedIn page"></i></a></li>
+								</ul>
+
+							</aside>
+						</div>
+					</div>
+
+				<div class="off-canvas-content" data-off-canvas-content>
+					<article class="main-content">
+
+		<header class="main-content__header">
+			<h1>Three mundane things you can do with recursion</h1>
+			<p><a href="../blog.html">&larr; back to the blog</a></p>
+		</header>
+
+		<section class="main-content__body blog-content">
+			<p>I have been spending some quality time with <a href="http://www.braveclojure.com/">Clojure</a>, not because I think I&#39;m likely to use it for a real project any time soon, but because both the syntax and behaviour of the language are so different from what I&#39;m used to that I feel like a total n00b again. This is uncomfortable, but it&#39;s a good thing: I&#39;m looking at my even my production code in a whole new way.</p>
+<p><strong>Recursion</strong> is a tricky concept, but it&#39;s so ubiquitous in Clojure that you have to get used to it really, really fast. Clojure does not have formal loop structures, and people who are used to functional languages in fact argue that loops are really a <a href="http://clojure.org/about/functional_programming">tacky add-on to imperative languages</a>.</p>
+<p>While recursion often feels like it&#39;s performing some sort of magic (see <a href="https://en.wikipedia.org/wiki/Merge_sort">merge sort</a>, or any algorithm that walks through tree-like data) it can also have some mundane uses. Sometime practising with the mundane is more illustrative.</p>
+<p>This post is intended for those who have some experience with programming but who are unfamiliar or somewhat familiar with recursion. It is mostly conceptual but will include some example in JavaScript. I will also include one example in Clojure as it was the place I got started in thinking about all this. Strict familiarity with either language is not a requirement.</p>
+<h2 id="1-basic-looping">1. Basic looping</h2>
+<p>One personal <a href="http://codekata.com/">kata</a> of mine is writing a function that prints out the Fibonacci series. Here&#39;s how it works:</p>
+<p>The first two numbers in the series are 1 and 1. After that, each number is the sum of the two numbers that came before it. So the third Fibonacci number is 2 (1 + 1), then 3 (1 + 2), then 5 (2 + 3) and we get:</p>
+<p><code>1, 1, 2, 3, 5, 8, 13, 21</code></p>
+<p>and so on.</p>
+<p>The Fibonacci series is the basis of such diverse concepts as the <a href="https://en.wikipedia.org/wiki/Golden_ratio">golden mean</a> and the rhythmic structure of <a href="https://www.fibonicci.com/fibonacci/tool-lateralus/">progressive metal band <em>Tool</em>&#39;s masterpiece &quot;Lateralus&quot;</a>. It&#39;s simple enough to code with a loop, but in Clojure, we can&#39;t use a loop. Here&#39;s what I came up with:</p>
+<pre><code class="lang-clojure">(defn fibonacci
+    ([max sofar]
+        (def nextnum (+ (first (rseq sofar)) (second (rseq sofar))))
+        (if (&lt; nextnum max)
+            (fibonacci max (conj sofar nextnum))
+                sofar))
+        ([max]
+                (fibonacci max [1, 1])))
+</code></pre>
+<p>The same thing in JavaScript:</p>
+<pre><code class="lang-javascript">function makeFibonacci(soFar) {
+    var next;
+    if (!soFar || soFar.length &lt; 2) {
+        soFar = [1, 1];
+    }
+    next = soFar[soFar.length - 2] + soFar[soFar.length - 1];
+    if (next &gt; 1000) {
+        return soFar;
+    } else {
+        soFar.push(next);
+        return makeFibonacci(soFar);
+    }
+}
+</code></pre>
+<p>In both cases, we&#39;re starting by defining a default (1, 1) in case that hasn&#39;t been done yet. We generate the next number in the series by adding the last two, then pop it on the end of the array. Then we recur (<code>recur</code> in Clojure and calling the function itself in JavaScript) and continue the cycle.</p>
+<p>One final, really important point: we have an exit strategy. Once the next number is over 1000, we cop out. The real Fibonacci series continues forever, but of course we can&#39;t do this in a computer program. Unlike an ordinary loop, however, a recursive loop has to keep track of all of the whole list of calling functions (the call stack), and will eventually just run out of memory. This is the dreaded &quot;stack overflow&quot; error.</p>
+<h2 id="looping-through-a-list">Looping through a list</h2>
+<p>Libraries such as Underscore.js contain powerful methods that allow you to transform arrays and objects according to arbitrary functions. Suppose you have an array of numbers, and you want a new array containing the square of each one. You could do this with a loop, but this is prone to errors-of-one and mushes the looping logic together with the transforming logic. An alternative is to use Underscore&#39;s <code>.map</code>:</p>
+<pre><code class="lang-javascript">_.map([1, 2, 3, 4], function(item) {
+    return item * item;
+});
+// returns [1, 4, 9, 16]
+</code></pre>
+<p>While the actual Underscore function just uses a loop, let&#39;s implement our own version of using recursion.</p>
+<pre><code class="lang-javascript">function myArrayMap(inputArray, f) {
+    var outputArray = [];
+    function recur(inputArray) {
+        if (inputArray.length === 0) {
+            return outputArray;
+        }
+        var head = inputArray[0];
+        var tail = inputArray.slice(1);
+        outputArray.push(f(head));
+        return recur(tail);
+    }
+    return recur(inputArray);
+}
+</code></pre>
+<p>This shows a useful pattern: wrapping the recurring function in an outer function which sets standard arguments and defines the things the recurring function will need. </p>
+<p>Ignoring the first <code>if</code> block for now, the inner recurring function splits the input array into a head (one item) and a tail (the rest) and performs the user-defined function <code>f</code> on the head. It pushes the new value onto the output array, then calls itself with the tail (now one item shorter than the input array). As before, there is a bottom-out point: when the input array is empty (zero items in length) we just return the output array.</p>
+<h2 id="setting-default-arguments">Setting default arguments</h2>
+<p>Suppose you are creating a function to initialize a jQuery carousel on the element of your choice. You can pass a selector string as an argument, or you can call the function without arguments and will use the default <code>.carousel</code> selector. There are a number of ways to set a default argument, but one that isn&#39;t obvious is the simply call the function itself with the default argument in place.</p>
+<pre><code class="lang-javascript">function initCarousel(selector) {
+    if (!selector) {
+        initCarousel(&#39;.carousel&#39;);
+    }
+    $(selector).carousel();
+}
+</code></pre>
+<p>This pattern is especially mundane and not common in JavaScript, but one place something similar <em>is</em> done is in ensuring that constructor functions are called correctly. In JavaScript, calling a function that is intended to be used as a constructor without <code>new</code> does not cause a fatal error, but can cause really confusing and unexpected results. This can be guarded against like so:</p>
+<pre><code class="lang-javascript">function MyConstructor(args) {
+    if (!(this instanceof MyConstructor)) {
+         return new MyConstructor(args);
+    }
+    // create object here
+}
+</code></pre>
+<p>If we ever forget to call <code>MyConstructor</code> with <code>new</code> (setting <code>this</code> to the function that is currently executing), the function will simply check itself and fix our mistake. Pretty neat!</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Recursion is usually trotted out a solution to complicated problems, but there are also simple cases where it can be useful. I hope this tutorial has let you see it in a new way!</p>
+
+		</section>
+
+
+	<hr />
+
+	<footer class="main-content__footer">
+		<p><strong>I am starting out as a freelance frontend developer and looking for projects.</strong> <a href="../contact.html">Contact me</a> and let's talk about what we can make together.</p>
+
+		<h2>Share this post</h2>
+		<div class="share-icons">
+			<a href="https://facebook.com/sharer.php?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fthree-mundane-things-you-can-do-with-recursion" title="Share this page on Facebook">
+				<span class="hidden"><i class="icon-facebook"></i></span>
+			</a>
+			<a href="https://twitter.com/share?text=Three%20mundane%20things%20you%20can%20do%20with%20recursion&url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fthree-mundane-things-you-can-do-with-recursion" title="Tweet this page">
+				<span class="hidden"><i class="icon-twitter"></i></span>
+			</a>
+			<a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fthree-mundane-things-you-can-do-with-recursion&mini=true&title=Three%20mundane%20things%20you%20can%20do%20with%20recursion" title="Tweet this page">
+				<span class="hidden"><i class="icon-linkedin"></i></span>
+			</a>
+		</div>
+
+	</footer>
+
+</article>
+
+				</div>
+
+			</div>
+		</div>
+
+		<script src="../main.js" defer></script>
+	</body>
+</html>

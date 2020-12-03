@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<title>The Web Covenant: Ad Blockers are here to stay | Casey A. Ydenberg</title>
+		<meta name="description" content="Visual data and science communication on the web">
+
+		<link rel="shortcut icon" href="../favicon.png">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+		<link rel="stylesheet" href="../style.css">
+		<link rel="stylesheet" href="../print_styles.css" media="print">
+
+		<link rel="canonical" href="the-web-covenant-ad-blockers-are-here-to-stay.html">
+		<link rel="alternate" type="application/rss+xml" href="../feed/index.html">
+
+		<meta name="og:title" content="The Web Covenant: Ad Blockers are here to stay | Casey A. Ydenberg">
+		<meta name="og:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="og:image:alt" content="Visual data and science communication on the web">
+		<meta name="og:url" content="https://caydenberg.io/blog/the-web-covenant-ad-blockers-are-here-to-stay">
+
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="@CAYdenberg">
+		<meta name="twitter:creator" content="@CAYdenberg">
+		<meta name="twitter:title" content="The Web Covenant: Ad Blockers are here to stay | Casey A. Ydenberg">
+		<meta name="twitter:description" content="Visual data and science communication on the web">
+		<meta name="twitter:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="twitter:image:alt" content="Visual data and science communication on the web">
+
+
+	</head>
+
+	<body class="blog">
+		<div class="off-canvas-wrapper">
+			<div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+
+          <div class="menu-toggle-wrapper">
+            <button type="button" class="button hollow menu-toggle" data-toggle="sidebar-wrapper" aria-expanded="false" aria-controls="sidebar-wrapper">
+              <i class="icon-bars"></i>
+            </button>
+          </div>
+
+					<div class="off-canvas position-left reveal-for-large sidebar-wrapper" id="sidebar-wrapper" data-off-canvas>
+						<div class="sidebar-filter">
+							<aside class="sidebar-body">
+								<h2 class="site-title"><a href="../index.html" class="natural">Casey A. Ydenberg</a></h2>
+								<h3 class="site-description">Web Developer</h3>
+
+								<ul class="main-nav" role="menu">
+										<li class="active">
+											<a href="../blog.html">Blog</a>
+										</li>
+										<li >
+											<a href="../talks.html">Speaking</a>
+										</li>
+										<li >
+											<a href="../contact.html">Contact</a>
+										</li>
+								</ul>
+
+								<ul class="social-nav" role="menu">
+									<li><a href="https://github.com/CAYdenberg" target="_blank"><i class="icon-github" title="GitHub profile"></i></a></li>
+									<li><a href="https://twitter.com/CAYdenberg" target="_blank"><i class="icon-twitter" title="Twitter feed"></i></a></li>
+									<li><a href="https://www.linkedin.com/in/caydenberg" target="_blank"><i class="icon-linkedin" title="LinkedIn page"></i></a></li>
+								</ul>
+
+							</aside>
+						</div>
+					</div>
+
+				<div class="off-canvas-content" data-off-canvas-content>
+					<article class="main-content">
+
+		<header class="main-content__header">
+			<h1>The Web Covenant: Ad Blockers are here to stay</h1>
+			<p><a href="../blog.html">&larr; back to the blog</a></p>
+		</header>
+
+		<section class="main-content__body blog-content">
+			<p>Since I blogged <a href="http://www.caseyy.org/questions-i-have-about-facebooks-instant-articles/">a month ago</a> on the topic of content and page performance, the discussion around ad-blockers has really heated up.</p>
+<p>James Avery: CEO of Adzerk, using the same comparison to the Napster revolution that I used in my previous post, <a href="http://adexchanger.com/data-driven-thinking/ad-blocking-will-keep-growing-until-we-make-ads-better-2/">offers his prediction that ad blocking will keep growing until ads become less creepy and less detrimental to web page performance.</a></p>
+<p>Sam Snelling takes a <a href="http://snelling.io/on-ad-blocking">more hard-line approach:</a></p>
+<blockquote>
+There is no implied contract that you can dictate what I do and do not load. If I want to enable no script, or block cookies, or use a vpn with a rotating ip address, I will. All these things will change your ad revenue.
+</blockquote>
+
+<p>Seth Godin, one of the founders of &quot;inbound marketing&quot;, <a href="http://sethgodin.typepad.com/seths_blog/2015/09/ad-blocking.html">argues that</a></p>
+<blockquote>
+advertisers have had fifteen years to show self restraint. They&#39;ve had the chance to not secretly track people, set cookies for their own benefit, insert popunders and popovers and poparounds, and mostly, deliver us ads we actually want to see.
+</blockquote>
+
+<p>And that their failure to show &quot;self-restraint&quot; is to blame for the rise in ad blocking popularity.</p>
+<p>On the other side of the isle, the Interactive Advertising Bureau is <a href="http://adage.com/article/digital/iab-surveys-options-fight-ad-blockers-including-lawsuits/300228/">exploring it&#39;s options:</a></p>
+<blockquote>
+The ad blockers &quot;are interfering with websites&#39; ability to display all the pixels that are part of that website, arguably there&#39;s some sort of law that prohibits that,&quot; Mr. Moore said. &quot;I&#39;m not by any means a lawyer, but there is work being done to explore whether in fact that may be the case.&quot;
+</blockquote>
+
+<p>I am also not a lawyer, but I do know a bit about technology, and my professional opinion is that Mr. Moore&#39;s professional opinion is stupid.</p>
+<p>The way that the web works, the covenant at the heart of every HTTP request, is that a program on one computer requests some data from a another computer and then uses some algorithms to do something with that data. That program could be a browser that uses the data to create a visual representation of the returned code, but no one ever said it had to be. It could be a screen reader, or the curl function running in a terminal window. Is the IAB going to sue everyone who uses screen readers, who turn JavaScript off, who use non-standard or proxy browsers that get some things wrong, who view their sites on devices with screens that are too small or too large to show the ads properly, or too slow to load all of the content in a timely manner?</p>
+<p>There&#39;s a techno-ethical argument in here that users and user agents have the right to do with their HTML and CSS what they wish, and that using an ad blocker isn&#39;t any more immoral than going to the bathroom during the commercials. But even leaving that aside, it makes it glaringly obvious why ad blockers are here to stay: <strong>once a web server has dispatched the requested data, it has no say, from a technical standpoint, in what&#39;s done with it.</strong> Even if ad blockers are immoral, it still isn&#39;t practical to try to stop them.</p>
+<p>Remember real popup ads, the ones that would open a new browser window when you tried to close them? They are pretty hard to find these days, and not because advertisers began showing restraint. Browser vendors realized that popups created a terrible experience for their users, and began blocking them (and <em>then</em> the advertisers began showing restraint). This type of &quot;ad blocking&quot; has been the default in all browsers for years. This next round is really just history repeating itself - with the added urgency that the rise of mobile browsing has made good page performance an even greater concern.</p>
+
+		</section>
+
+
+	<hr />
+
+	<footer class="main-content__footer">
+		<p><strong>I am starting out as a freelance frontend developer and looking for projects.</strong> <a href="../contact.html">Contact me</a> and let's talk about what we can make together.</p>
+
+		<h2>Share this post</h2>
+		<div class="share-icons">
+			<a href="https://facebook.com/sharer.php?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fthe-web-covenant-ad-blockers-are-here-to-stay" title="Share this page on Facebook">
+				<span class="hidden"><i class="icon-facebook"></i></span>
+			</a>
+			<a href="https://twitter.com/share?text=The%20Web%20Covenant%3A%20Ad%20Blockers%20are%20here%20to%20stay&url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fthe-web-covenant-ad-blockers-are-here-to-stay" title="Tweet this page">
+				<span class="hidden"><i class="icon-twitter"></i></span>
+			</a>
+			<a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fthe-web-covenant-ad-blockers-are-here-to-stay&mini=true&title=The%20Web%20Covenant%3A%20Ad%20Blockers%20are%20here%20to%20stay" title="Tweet this page">
+				<span class="hidden"><i class="icon-linkedin"></i></span>
+			</a>
+		</div>
+
+	</footer>
+
+</article>
+
+				</div>
+
+			</div>
+		</div>
+
+		<script src="../main.js" defer></script>
+	</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<title>On React&#x27;s barriers to entry | Casey A. Ydenberg</title>
+		<meta name="description" content="Visual data and science communication on the web">
+
+		<link rel="shortcut icon" href="../favicon.png">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+		<link rel="stylesheet" href="../style.css">
+		<link rel="stylesheet" href="../print_styles.css" media="print">
+
+		<link rel="canonical" href="on-react-s-barriers-to-entry.html">
+		<link rel="alternate" type="application/rss+xml" href="../feed/index.html">
+
+		<meta name="og:title" content="On React&#x27;s barriers to entry | Casey A. Ydenberg">
+		<meta name="og:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="og:image:alt" content="Visual data and science communication on the web">
+		<meta name="og:url" content="https://caydenberg.io/blog/on-react-s-barriers-to-entry">
+
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="@CAYdenberg">
+		<meta name="twitter:creator" content="@CAYdenberg">
+		<meta name="twitter:title" content="On React&#x27;s barriers to entry | Casey A. Ydenberg">
+		<meta name="twitter:description" content="Visual data and science communication on the web">
+		<meta name="twitter:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="twitter:image:alt" content="Visual data and science communication on the web">
+
+
+	</head>
+
+	<body class="blog">
+		<div class="off-canvas-wrapper">
+			<div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+
+          <div class="menu-toggle-wrapper">
+            <button type="button" class="button hollow menu-toggle" data-toggle="sidebar-wrapper" aria-expanded="false" aria-controls="sidebar-wrapper">
+              <i class="icon-bars"></i>
+            </button>
+          </div>
+
+					<div class="off-canvas position-left reveal-for-large sidebar-wrapper" id="sidebar-wrapper" data-off-canvas>
+						<div class="sidebar-filter">
+							<aside class="sidebar-body">
+								<h2 class="site-title"><a href="../index.html" class="natural">Casey A. Ydenberg</a></h2>
+								<h3 class="site-description">Web Developer</h3>
+
+								<ul class="main-nav" role="menu">
+										<li class="active">
+											<a href="../blog.html">Blog</a>
+										</li>
+										<li >
+											<a href="../talks.html">Speaking</a>
+										</li>
+										<li >
+											<a href="../contact.html">Contact</a>
+										</li>
+								</ul>
+
+								<ul class="social-nav" role="menu">
+									<li><a href="https://github.com/CAYdenberg" target="_blank"><i class="icon-github" title="GitHub profile"></i></a></li>
+									<li><a href="https://twitter.com/CAYdenberg" target="_blank"><i class="icon-twitter" title="Twitter feed"></i></a></li>
+									<li><a href="https://www.linkedin.com/in/caydenberg" target="_blank"><i class="icon-linkedin" title="LinkedIn page"></i></a></li>
+								</ul>
+
+							</aside>
+						</div>
+					</div>
+
+				<div class="off-canvas-content" data-off-canvas-content>
+					<article class="main-content">
+
+		<header class="main-content__header">
+			<h1>On React&#x27;s barriers to entry</h1>
+			<p><a href="../blog.html">&larr; back to the blog</a></p>
+		</header>
+
+		<section class="main-content__body blog-content">
+			<p>In <a href="https://medium.com/@mikeal/react-is-the-new-dojo-18bd9059378f">React is the new Dojo</a>, Alex Russell argues that React&#39;s days as king among front-end frameworks are limited if it doesn&#39;t increase its circle of appeal outside of specialists who have the patience to learn all of the tooling that comes with it.</p>
+<p>As he puts it:</p>
+<blockquote>The Web didn’t win because it was the favorite among enterprises and “real developers.” It won because it scaled down better than it scaled up. It won because it amateurized software development and unlocked the creativity of an entire generation of programmers that couldn’t participate in software until The Web.</blockquote>
+
+<p>Of all the holy wars in the web community, this has been one of the hardest for me. On the one hand, I was attracted to coding for the web in the first place because of the openness of the platform, and tools like WordPress and jQuery were invaluable to me in getting literally dozens of sites up and running in those early days. In otherwords, I&#39;m exactly the type of developer Alex is talking about.</p>
+<p>On the other hand, my mindset has involved as I&#39;ve become a more confident programmer. Once I became familiar with MVC patterns, WordPress felt ... awful to work with. So many of the &quot;tricks&quot; that I&#39;d accepted as a normal part of WordPress development revealed themselves as clear anti-patterns. Similarly, once I learned to program the DOM with declarative rather than procedural code, doing anything in jQuery felt like rolling a stone up a hill. With these transitions came the realization that plugins aren&#39;t always necessary. WordPress plugins are opinionated and tie down your entire stack from database to design with a particular way of doing things. In my experience, clients and stakeholders and never happy with a plugin solution: it gets the job done, but not in quite the way they expect.</p>
+<p>The question becomes: how much of the still-widespread use of WordPress and jQuery is due to developers being comfortable in those environments, versus the widespread plugin ecosystem that surrounds each one already. And if the chore of building plugins the old way is arduous enough, the community will simply move on. </p>
+<p>In other words, one of the ways that jQuery &quot;amateurized&quot; software development was by standing on the shoulders of giants. How much longer will the giants be around for?</p>
+<p>Nevertheless, Alex is right about one thing: React requires a barrier to entry to get started with, that dropping a script tag on a page does not. Or does it? As Dan Abromov points out, compiling JSX need not be any harder running a CSS preprocessor (a barrier to entry that most frontend developers are already employing). <a href="https://twitter.com/dan_abramov/status/1011995700748521477">React itself can be included on a page via a simple script tag, just like jQuery</a></p>
+<p>I tried these two steps together and was able to get a React live on a page without using Webpack, Parceljs or anything else. In the example below, the &quot;Today&quot; button is rendered with JavaScript and activates an event when clicked, that fills the date input with the current date. 
+Here is the code:</p>
+<script src="https://gist.github.com//CAYdenberg/46a0d23c1afbb3e910f30b6dd0290006.js"></script>
+
+
+
+<p>  <input type="date" id="date-input" />
+  <div id="date-picker"></div>
+  <script type="text/javascript" src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
+  <script type="text/javascript" src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+  <script type="text/javascript" src="https://momentjs.com/downloads/moment.js"></script>
+  <script type="text/javascript" src="../today.js"></script></p>
+<p>One definite plus to using jQuery is that the plugin interface is much more precisely defined. While React&#39;s componentized system would seem to lend itself well to creating &quot;plugins&quot;, the details are surprisingly complicated because there is currently no consensus on how React components should be bundled. For example, which type of JavaScript should they be transpiled to and how should they handle styles?</p>
+<p>Nevertheless, I have to conclude that the difference in activation energy between jQuery and React is not as great an many people seem to believe it is.</p>
+
+		</section>
+
+
+	<hr />
+
+	<footer class="main-content__footer">
+		<p><strong>I am starting out as a freelance frontend developer and looking for projects.</strong> <a href="../contact.html">Contact me</a> and let's talk about what we can make together.</p>
+
+		<h2>Share this post</h2>
+		<div class="share-icons">
+			<a href="https://facebook.com/sharer.php?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fon-react-s-barriers-to-entry" title="Share this page on Facebook">
+				<span class="hidden"><i class="icon-facebook"></i></span>
+			</a>
+			<a href="https://twitter.com/share?text=On%20React&#x27;s%20barriers%20to%20entry&url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fon-react-s-barriers-to-entry" title="Tweet this page">
+				<span class="hidden"><i class="icon-twitter"></i></span>
+			</a>
+			<a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fon-react-s-barriers-to-entry&mini=true&title=On%20React&#x27;s%20barriers%20to%20entry" title="Tweet this page">
+				<span class="hidden"><i class="icon-linkedin"></i></span>
+			</a>
+		</div>
+
+	</footer>
+
+</article>
+
+				</div>
+
+			</div>
+		</div>
+
+		<script src="../main.js" defer></script>
+	</body>
+</html>

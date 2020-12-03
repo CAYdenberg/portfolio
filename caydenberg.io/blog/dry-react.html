@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<title>DRY React | Casey A. Ydenberg</title>
+		<meta name="description" content="Visual data and science communication on the web">
+
+		<link rel="shortcut icon" href="../favicon.png">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+		<link rel="stylesheet" href="../style.css">
+		<link rel="stylesheet" href="../print_styles.css" media="print">
+
+		<link rel="canonical" href="dry-react.html">
+		<link rel="alternate" type="application/rss+xml" href="../feed/index.html">
+
+		<meta name="og:title" content="DRY React | Casey A. Ydenberg">
+		<meta name="og:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="og:image:alt" content="Visual data and science communication on the web">
+		<meta name="og:url" content="https://caydenberg.io/blog/dry-react">
+
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="@CAYdenberg">
+		<meta name="twitter:creator" content="@CAYdenberg">
+		<meta name="twitter:title" content="DRY React | Casey A. Ydenberg">
+		<meta name="twitter:description" content="Visual data and science communication on the web">
+		<meta name="twitter:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="twitter:image:alt" content="Visual data and science communication on the web">
+
+
+	</head>
+
+	<body class="blog">
+		<div class="off-canvas-wrapper">
+			<div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+
+          <div class="menu-toggle-wrapper">
+            <button type="button" class="button hollow menu-toggle" data-toggle="sidebar-wrapper" aria-expanded="false" aria-controls="sidebar-wrapper">
+              <i class="icon-bars"></i>
+            </button>
+          </div>
+
+					<div class="off-canvas position-left reveal-for-large sidebar-wrapper" id="sidebar-wrapper" data-off-canvas>
+						<div class="sidebar-filter">
+							<aside class="sidebar-body">
+								<h2 class="site-title"><a href="../index.html" class="natural">Casey A. Ydenberg</a></h2>
+								<h3 class="site-description">Web Developer</h3>
+
+								<ul class="main-nav" role="menu">
+										<li class="active">
+											<a href="../blog.html">Blog</a>
+										</li>
+										<li >
+											<a href="../talks.html">Speaking</a>
+										</li>
+										<li >
+											<a href="../contact.html">Contact</a>
+										</li>
+								</ul>
+
+								<ul class="social-nav" role="menu">
+									<li><a href="https://github.com/CAYdenberg" target="_blank"><i class="icon-github" title="GitHub profile"></i></a></li>
+									<li><a href="https://twitter.com/CAYdenberg" target="_blank"><i class="icon-twitter" title="Twitter feed"></i></a></li>
+									<li><a href="https://www.linkedin.com/in/caydenberg" target="_blank"><i class="icon-linkedin" title="LinkedIn page"></i></a></li>
+								</ul>
+
+							</aside>
+						</div>
+					</div>
+
+				<div class="off-canvas-content" data-off-canvas-content>
+					<article class="main-content">
+
+		<header class="main-content__header">
+			<h1>DRY React</h1>
+			<p><a href="../blog.html">&larr; back to the blog</a></p>
+		</header>
+
+		<section class="main-content__body blog-content">
+			<p>HTML is a declarative language that offers no opportunity for code reuse. When a page contains several elements that are identical or almost identical, the HTML needed to create those elements is simply repeated. Programming languages - whether they be Turing-complete languages like PHP or &quot;templating&quot; languages like Handlebars - provide a way to write a component once and reuse it: but the challenge is knowing how to abstract it. The ways in which a &quot;partial&quot; can be reused are generally limited to whatever arguments are defined by the partial.</p>
+<p>React is much more than a templating language, and the breadth of ways in which components can be reused greatly exceeds languages like Handlebars. Some of these patterns are more useful than others, however. In this post I&#39;ll provide a quick summary of the ways in which React components can be reused and the situations in which the pattern should be employed (if any).</p>
+<h2 id="mixins">Mixins</h2>
+<p>Mixins were originally a way of reusing the same function between React components. The pattern is simple: the component importing mixins at definition that can subscribe to a data store, provide inline styles or really do anything that a React component method can do. This pattern has been deprecated since React 0.13 and <a href="https://facebook.github.io/react/blog/2016/07/13/mixins-considered-harmful.html#why-mixins-are-broken">you can read about the reason&#39;s on Facebook&#39;s blog</a>. The tl;dr is that changes in the mixin always have consequences for the components that use it, including name clashes and side-effects. For the reasons given there, I don&#39;t recommend it.</p>
+<h2 id="inheritance">Inheritance</h2>
+<p>Inheritance is a classical object-oriented pattern of code reuse, and because React components are &quot;classes&quot; (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes">kind of</a>) you are free to use this. Suppose you are creating a set of form elements:</p>
+<pre><code class="lang-js">import React, {Component} from &#39;react&#39;
+
+class TextInput extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+           value: &#39;&#39;
+        }
+    }
+
+    _updateValue(e) {
+        this.setState({value: e.target.value})
+    }
+
+    render() {
+        return &lt;input type=&quot;text&quot; value={this.state.value} /&gt;
+    }
+}
+
+class EmailInput extends TextInput {
+    render() {
+        return &lt;input type=&quot;email&quot; value={{this.state.email}} /&gt;
+    }
+}
+</code></pre>
+<p>The EmailInput component gains some benefits: it doesn&#39;t have to repeat the annoying code to update the state on when text is entered in the form. The downsides of this approach are even worse than they are for mixins, however. You might say that inheritance has all the same problems that mixins do, but on steroids, since several methods can be inherited at once. Worse yet, the parent component may be directly used to create elements, increasing its responsibility and the number of things that can go wrong in a refactor. In short, inheritance and class introduce a host of problems in general, and like mixins, are <a href="https://facebook.github.io/react/docs/composition-vs-inheritance.html">not recommended by the creators of React</a>.</p>
+<h2 id="subcomponents">Subcomponents</h2>
+<p>React components pass props from parents to children, and this can be exploited to do simple remixing. Taking the example above, we could make the Input component agnostic as to it&#39;s type:</p>
+<pre><code class="lang-js">import React, {Component} from &#39;react&#39;
+
+class Input extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+           value: &#39;&#39;
+        }
+        this._updateValue = this._updateValue.bind(this)
+    }
+
+    _updateValue(e) {
+        this.setState({value: e.target.value})
+    }
+
+    render() {
+        return &lt;input type={this.props.type || &#39;text&#39;} value={this.state.value} /&gt;
+    }
+}
+
+const EmailInput = props =&gt; {
+    return &lt;Input type=&quot;email&quot; {...props} /&gt;
+}
+</code></pre>
+<p>Even with this simple example, we can see the advantages of subcomponents. EmailInput can change from being class-based to functional, making it easier to understand. Everything EmailInput provides to Input is clearly laid out in its prop declarations. Since EmailInput doesn&#39;t have any methods, there isn&#39;t any confusion about responsibility: EmailInput is just a special case of Input.</p>
+<p>It can become tempting to overuse this and create special cases of special cases. There are two downsides to this approach. One is that it has the potential to create an awful lot of nesting. This nesting increases the complexity of the DOM, the component hierarchy in the debug tools, and in the prop chains. Name conflicts will eventually occur in the prop chains. All of these create headaches when debugging. Another disadvantage is that every single special case is indeed a new component - even if it contains much less code. In this simplified example, you&#39;d need a new component (probably a new file) for EmailInput, PasswordInput, NumberInput, etc.. </p>
+<h2 id="subcomponents-with-children">Subcomponents with children</h2>
+<p>One thing I love about React components over &quot;partials&quot; in templating languages is the special <code>children</code> property. In a recent PHP project, I wanted to create a reusable modal and ended up having to split to necessary code between two files: one to open the modal&#39;s DOM elements and another to close them. This is ugly and I didn&#39;t like doing it (but I did it anyway). In React you can actually make this beautiful:</p>
+<pre><code class="lang-js">const Modal = props =&gt; {
+    const display: props.isOpen ? &#39;block&#39; : &#39;none&#39;
+    return (
+        &lt;div className=&quot;modal-wrapper&quot; onClick={props.onRequestClose} style={{display}}&gt;
+            &lt;div className=&quot;modal&quot;&gt;
+                {props.children}
+            &lt;/div&gt;
+        &lt;/div&gt;
+    )
+}
+</code></pre>
+<p>(I&#39;ll leave out all of the CSS you need to make the modal behave properly).</p>
+<p>We can put literally anything inside it as long we remember to pass the <code>isOpen</code> and <code>onRequestClose</code> methods (which we would always carefully document with PropTypes, right?). </p>
+<h2 id="subcomponents-with-functions-as-children">Subcomponents with functions as children</h2>
+<p>We have to remember to pass those props because React is like a boy band: One Direction (of information flow). Since a modal can&#39;t open itself, there must be some controller component sitting at a level above both the modal and the thing opening it. That controller (or a redux store) keeps track of whether the modal is open and passes that information down as props. Is there a way that we can abstract state control, instead of markup?</p>
+<pre><code class="lang-js">class ModalController extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            open: false
+        }
+        this._toggleOpen = this._toggleOpen.bind(this)
+    }
+
+    _toggleOpen() {
+        this.setState({open: !this.state.open})
+    }
+}
+</code></pre>
+<p>But what should the render method be? The child pattern on its own isn&#39;t useful because ModalController has no opporunity to send props to its children.</p>
+<pre><code class="lang-js">// This won&#39;t work:
+&lt;div&gt;
+    {this.props.children // but no way to give it _toggleOpen}
+    &lt;Modal open={this.state.open} /&gt;
+&lt;/div&gt;
+</code></pre>
+<p>The solution is the <strong>function-as-child pattern</strong>. Somewhat unexpectedly, you can pass a function instead of an component as the child of another component. Our ModalController render method is:</p>
+<pre><code class="lang-js">render() {
+    return this.props.children(this.state.open, this._toggleOpen)
+}
+</code></pre>
+<p>and we use it like this:</p>
+<pre><code class="lang-js">&lt;ModalController&gt;
+    {(open, toggle) =&gt; {
+        const display: props.isOpen ? &#39;block&#39; : &#39;none&#39;
+        return (
+            &lt;div&gt;    
+                &lt;button type=&quot;button&quot; onClick={toggle}&gt;Open Modal&lt;/button&gt;
+                &lt;Modal open={open}&gt;
+                    {// modal interior}
+                &lt;/Modal&gt;
+             &lt;/div&gt;
+        )
+    }}
+&lt;/ModalController&gt;
+</code></pre>
+<p>Of course, we now need two different components to make our Modal work properly.</p>
+<h2 id="higher-order-components">Higher-order components</h2>
+<p>A <strong>higher-order function</strong> is simply a function that returns another function, a powerful abstraction pattern that is the heart of functional programming. In React, a component is a function that returns an element (or a class with a render function that returns an element), but there is no reason the chain has to stop there. We can have functions returning components.</p>
+<p>Here is what it looks like:</p>
+<pre><code class="lang-js">const HOC = (args) =&gt; props =&gt; {
+    // regular functional component
+}
+
+const HOC = (args) =&gt; class extends Component {
+    // regular class component
+}
+</code></pre>
+<p>In each case, the inner components have access to all the normal props and state, as well as the arguments, which are provided at the time the component is created rather than the time the element is created. The React-Redux <code>connect</code> function is a higher order component - it produces a React component but the user of connect doesn&#39;t write any JSX at all to do it.</p>
+<p>Any of the earlier examples in this tutorial could be reworked as HOCs. But let&#39;s take our Modal example again to illustrate the concept. It would be really great to combine ModalController and Modal into a single reusable component, while leaving both the button and the modal content up to the consuming code. Here is one solution using HOCs:</p>
+<pre><code class="lang-js">const HOC = (Button) =&gt; class extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            open: false
+        }
+        this._toggleOpen = this._toggleOpen.bind(this)
+    }
+
+    _toggleOpen() {
+        this.setState({open: !this.state.open})
+    }
+
+    render() {
+        const display: props.isOpen ? &#39;block&#39; : &#39;none&#39;
+        return (
+            &lt;div&gt;
+                &lt;Button type=&quot;button&quot; onClick={this._toggleOpen} {...this.props} /&gt;
+                &lt;div className=&quot;modal-wrapper&quot; onClick={props.onRequestClose} style={{display}}&gt;
+                    &lt;div className=&quot;modal&quot;&gt;
+                        {props.children}
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        )
+    }
+}
+</code></pre>
+<p>We can use it like this:</p>
+<pre><code class="lang-js">const ButtonWithModal = HOC(&lt;AnyButtonComponent&gt;)
+&lt;ButtonWithModal&gt;
+    &lt;ModalContent /&gt;
+&lt;/ButtonWithModal&gt;
+</code></pre>
+<p>which gives us the best of both worlds.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>HOCs are probably the most powerful pattern you can employ to reuse code, but they can often be overkill. The function-as-child pattern is quite underutilised in the React community, and the choice of whether to use a function-as-child or a HOC pattern can be a difficult one. And of course, subcomponents are simple to grasp and simple to use, and may often be the best choice for a particular problem.</p>
+
+		</section>
+
+
+	<hr />
+
+	<footer class="main-content__footer">
+		<p><strong>I am starting out as a freelance frontend developer and looking for projects.</strong> <a href="../contact.html">Contact me</a> and let's talk about what we can make together.</p>
+
+		<h2>Share this post</h2>
+		<div class="share-icons">
+			<a href="https://facebook.com/sharer.php?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fdry-react" title="Share this page on Facebook">
+				<span class="hidden"><i class="icon-facebook"></i></span>
+			</a>
+			<a href="https://twitter.com/share?text=DRY%20React&url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fdry-react" title="Tweet this page">
+				<span class="hidden"><i class="icon-twitter"></i></span>
+			</a>
+			<a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fdry-react&mini=true&title=DRY%20React" title="Tweet this page">
+				<span class="hidden"><i class="icon-linkedin"></i></span>
+			</a>
+		</div>
+
+	</footer>
+
+</article>
+
+				</div>
+
+			</div>
+		</div>
+
+		<script src="../main.js" defer></script>
+	</body>
+</html>

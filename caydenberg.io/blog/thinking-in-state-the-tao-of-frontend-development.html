@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<title>Thinking in state: The tao of frontend development | Casey A. Ydenberg</title>
+		<meta name="description" content="Visual data and science communication on the web">
+
+		<link rel="shortcut icon" href="../favicon.png">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+		<link rel="stylesheet" href="../style.css">
+		<link rel="stylesheet" href="../print_styles.css" media="print">
+
+		<link rel="canonical" href="thinking-in-state-the-tao-of-frontend-development.html">
+		<link rel="alternate" type="application/rss+xml" href="../feed/index.html">
+
+		<meta name="og:title" content="Thinking in state: The tao of frontend development | Casey A. Ydenberg">
+		<meta name="og:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="og:image:alt" content="Visual data and science communication on the web">
+		<meta name="og:url" content="https://caydenberg.io/blog/thinking-in-state-the-tao-of-frontend-development">
+
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="@CAYdenberg">
+		<meta name="twitter:creator" content="@CAYdenberg">
+		<meta name="twitter:title" content="Thinking in state: The tao of frontend development | Casey A. Ydenberg">
+		<meta name="twitter:description" content="Visual data and science communication on the web">
+		<meta name="twitter:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="twitter:image:alt" content="Visual data and science communication on the web">
+
+
+	</head>
+
+	<body class="blog">
+		<div class="off-canvas-wrapper">
+			<div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+
+          <div class="menu-toggle-wrapper">
+            <button type="button" class="button hollow menu-toggle" data-toggle="sidebar-wrapper" aria-expanded="false" aria-controls="sidebar-wrapper">
+              <i class="icon-bars"></i>
+            </button>
+          </div>
+
+					<div class="off-canvas position-left reveal-for-large sidebar-wrapper" id="sidebar-wrapper" data-off-canvas>
+						<div class="sidebar-filter">
+							<aside class="sidebar-body">
+								<h2 class="site-title"><a href="../index.html" class="natural">Casey A. Ydenberg</a></h2>
+								<h3 class="site-description">Web Developer</h3>
+
+								<ul class="main-nav" role="menu">
+										<li class="active">
+											<a href="../blog.html">Blog</a>
+										</li>
+										<li >
+											<a href="../talks.html">Speaking</a>
+										</li>
+										<li >
+											<a href="../contact.html">Contact</a>
+										</li>
+								</ul>
+
+								<ul class="social-nav" role="menu">
+									<li><a href="https://github.com/CAYdenberg" target="_blank"><i class="icon-github" title="GitHub profile"></i></a></li>
+									<li><a href="https://twitter.com/CAYdenberg" target="_blank"><i class="icon-twitter" title="Twitter feed"></i></a></li>
+									<li><a href="https://www.linkedin.com/in/caydenberg" target="_blank"><i class="icon-linkedin" title="LinkedIn page"></i></a></li>
+								</ul>
+
+							</aside>
+						</div>
+					</div>
+
+				<div class="off-canvas-content" data-off-canvas-content>
+					<article class="main-content">
+
+		<header class="main-content__header">
+			<h1>Thinking in state: The tao of frontend development</h1>
+			<p><a href="../blog.html">&larr; back to the blog</a></p>
+		</header>
+
+		<section class="main-content__body blog-content">
+			<p>One of the side effects of working with redux is that it forces you to think about your application in terms of state instead of thinking in terms of user workflow. While state might seem like an implementation detail, with experience it becomes more a part of the design process, allowing us to accurately predict &quot;sad path&quot; situations that may arise when the app is in a particular state.</p>
+<p>For example, I once worked on an app that allowed users to perform real-estate searches and then favourite properties. If the user was not logged in at the time they clicked the favourite button/heart, they would be prompted to log in (and then the property would be favourited).</p>
+<p>The description of this feature, phrased as user stories, might look like this:</p>
+<blockquote>As a user, I need a favourite button, so that I can keep track of properties that are interesting to me.</blockquote>
+
+<blockquote>As a visitor (user without an account or not logged in), I need to be prompted to create an account when trying to perform actions that require one, so that I can gain all the benefits of being a user.</blockquote>
+
+<p>This seems simple at first glance. Maybe it would only take a couple of hours to implement, at most. But up until we&#39;ve neglected to account for the state of the app at the time the favourite is clicked. Obviously, if the property has already been favourited, it can&#39;t be favourited again, and (probably) clicking the same button should unfavourite it.</p>
+<p>Given-when-thens get us little closer to describing state:</p>
+<blockquote>Given a user is logged in and a property is not favourited, when the user clicks the favourite button, the property should be favourited.</blockquote>
+
+<blockquote>Given a user is logged in a property is favourited, when the user clicks the favourite button, the property should be unfavourited.</blockquote>
+
+<blockquote>Given a user is not logged in, when the user clicks the favourite button, the user should be prompted to log in and the property favourited.</blockquote>
+
+<p>Put differently, there are two pieces of information we need to take action: whether the user is logged in, and whether the current property is favourited.</p>
+<p>There&#39;s also one other cardinal rule of frontend development we should take into account:</p>
+<p><strong>TRUST NO ONE.</strong></p>
+<p>For example, a user might click the favourite button, be prompted to log in and then get annoyed and click away from the modal or whatever we&#39;ve used to interrupt them. Worse, they might log in to an existing account, and then we might find that they&#39;ve <em>already</em> favourited the property in question. You can&#39;t trust the user.</p>
+<p>You also can&#39;t trust the network. Knowing whether the user is logged in, whether they&#39;ve favourited any properties, the act of favouriting/unfavouriting the property, and the act of creating an account/logging in, all require network requests, which take time and can fail. What do we do if the user attempts to favourite a property and completes the registration form only to have the network fail at that point?</p>
+<p>Procedurally it might be nightmare to describe all the different paths, but in terms of state it actually becomes manageable. For a task like this I would start by designing the state, which should contain the following items:</p>
+<pre><code class="lang-js">userLoadState: 0,
+userId: null,
+loginModal: false,
+properties: [{
+  id: &#39;&#39;,
+  favourite: false,
+  favouriteLoadState: 0,
+  // ... other data ...
+}]
+</code></pre>
+<p><strong>Note</strong> I use <code>loadState</code> fairly ubiquitously with the following convention: 0 - not requested, 1 - loading, 2 - loaded, -1 - error. Representing these values numerically has the advantage that we test things with a simple comparison - ie if we need to know if already have a particular piece of information we test <code>loadState === 2</code> if we want to know if we should try to get something we can do <code>loadState &amp;lt; 1</code>.</p>
+<p>From the description of the state, our &quot;sad-path&quot; cases and their solutions become apparent:</p>
+<ul>
+<li>If <code>userId === false</code>, we&#39;ll transition <code>loginModal</code> to true <em>instead of</em> making any change to the <code>favourite</code> of a particular property. We can store the property id somewhere else and dispatch a new action to favourite the property once the login is successful. In fact, using redux, we can store the entire action (since actions are plain objects) to make it flexible enough to handle other types of events that might prompt a login.</li>
+<li>If either <code>userLoadState</code> or <code>favouriteLoadState</code> is 1 or -1, we probably want to disable the button entirely (since the user doesn&#39;t know what action they are really taking). We&#39;d want to show a loading icon or an error message somewhere if that&#39;s the case.</li>
+<li>If everything is happy and the user can take action on the particular property, we can go ahead and reverse the value of <code>favourite</code> for that property. We&#39;ll also set <code>favouriteLoadState</code> back to 1, and represent this difference in the UI, say by making the button slightly smaller. This small cue will give reassurance to the user when the button returns to its normal size that the network request was successful.</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>By &quot;thinking in state&quot; we&#39;ve anticipated a number of &quot;sad path&quot; cases and hopefully saved ourselves some headaches down the road. If we sketch out the state needed to handle a particular feature we can do a better job of estimating the time required to implement something - and sometimes even realized that we may need to send things back to design. This insight comes from realizing that all possible states need to be accounted for.</p>
+
+		</section>
+
+
+	<hr />
+
+	<footer class="main-content__footer">
+		<p><strong>I am starting out as a freelance frontend developer and looking for projects.</strong> <a href="../contact.html">Contact me</a> and let's talk about what we can make together.</p>
+
+		<h2>Share this post</h2>
+		<div class="share-icons">
+			<a href="https://facebook.com/sharer.php?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fthinking-in-state-the-tao-of-frontend-development" title="Share this page on Facebook">
+				<span class="hidden"><i class="icon-facebook"></i></span>
+			</a>
+			<a href="https://twitter.com/share?text=Thinking%20in%20state%3A%20The%20tao%20of%20frontend%20development&url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fthinking-in-state-the-tao-of-frontend-development" title="Tweet this page">
+				<span class="hidden"><i class="icon-twitter"></i></span>
+			</a>
+			<a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fthinking-in-state-the-tao-of-frontend-development&mini=true&title=Thinking%20in%20state%3A%20The%20tao%20of%20frontend%20development" title="Tweet this page">
+				<span class="hidden"><i class="icon-linkedin"></i></span>
+			</a>
+		</div>
+
+	</footer>
+
+</article>
+
+				</div>
+
+			</div>
+		</div>
+
+		<script src="../main.js" defer></script>
+	</body>
+</html>

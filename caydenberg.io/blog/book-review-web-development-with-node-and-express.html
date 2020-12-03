@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<title>Book Review: Web Development  with Node and Express | Casey A. Ydenberg</title>
+		<meta name="description" content="Visual data and science communication on the web">
+
+		<link rel="shortcut icon" href="../favicon.png">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+		<link rel="stylesheet" href="../style.css">
+		<link rel="stylesheet" href="../print_styles.css" media="print">
+
+		<link rel="canonical" href="book-review-web-development-with-node-and-express.html">
+		<link rel="alternate" type="application/rss+xml" href="../feed/index.html">
+
+		<meta name="og:title" content="Book Review: Web Development  with Node and Express | Casey A. Ydenberg">
+		<meta name="og:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="og:image:alt" content="Visual data and science communication on the web">
+		<meta name="og:url" content="https://caydenberg.io/blog/book-review-web-development-with-node-and-express">
+
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="@CAYdenberg">
+		<meta name="twitter:creator" content="@CAYdenberg">
+		<meta name="twitter:title" content="Book Review: Web Development  with Node and Express | Casey A. Ydenberg">
+		<meta name="twitter:description" content="Visual data and science communication on the web">
+		<meta name="twitter:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="twitter:image:alt" content="Visual data and science communication on the web">
+
+
+	</head>
+
+	<body class="blog">
+		<div class="off-canvas-wrapper">
+			<div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+
+          <div class="menu-toggle-wrapper">
+            <button type="button" class="button hollow menu-toggle" data-toggle="sidebar-wrapper" aria-expanded="false" aria-controls="sidebar-wrapper">
+              <i class="icon-bars"></i>
+            </button>
+          </div>
+
+					<div class="off-canvas position-left reveal-for-large sidebar-wrapper" id="sidebar-wrapper" data-off-canvas>
+						<div class="sidebar-filter">
+							<aside class="sidebar-body">
+								<h2 class="site-title"><a href="../index.html" class="natural">Casey A. Ydenberg</a></h2>
+								<h3 class="site-description">Web Developer</h3>
+
+								<ul class="main-nav" role="menu">
+										<li class="active">
+											<a href="../blog.html">Blog</a>
+										</li>
+										<li >
+											<a href="../talks.html">Speaking</a>
+										</li>
+										<li >
+											<a href="../contact.html">Contact</a>
+										</li>
+								</ul>
+
+								<ul class="social-nav" role="menu">
+									<li><a href="https://github.com/CAYdenberg" target="_blank"><i class="icon-github" title="GitHub profile"></i></a></li>
+									<li><a href="https://twitter.com/CAYdenberg" target="_blank"><i class="icon-twitter" title="Twitter feed"></i></a></li>
+									<li><a href="https://www.linkedin.com/in/caydenberg" target="_blank"><i class="icon-linkedin" title="LinkedIn page"></i></a></li>
+								</ul>
+
+							</aside>
+						</div>
+					</div>
+
+				<div class="off-canvas-content" data-off-canvas-content>
+					<article class="main-content">
+
+		<header class="main-content__header">
+			<h1>Book Review: Web Development  with Node and Express</h1>
+			<p><a href="../blog.html">&larr; back to the blog</a></p>
+		</header>
+
+		<section class="main-content__body blog-content">
+			<p>Even among the bewilidering array of backend web languages and frameworks, Node.js stands alone. It isn&#39;t a language - it&#39;s just an implementation of Javascript, and is it isn&#39;t really a framework, either. At it&#39;s most basic level, it feels more like a Javascript API for configuring a server. </p>
+<p>Express is integral to most Node applications in that it  sits on top and enforces a more familiar MVC-like structure. At the heart of Express are routes - functions that take an HTTP request and turn it into a response. They are (almost) equivalent to Views in Django and felt much more familiar to me. Add in database interaction on one side and HTML templating on the other and you have everything you need.</p>
+<p>Chris Bucheler (<a href="https://twitter.com/cwbuecheler">@cwbucheler</a>) has a <a href="http://cwbuecheler.com/web/tutorials/2013/node-express-mongo/">beautiful tutorial</a> putting the whole stack togther into a functioning website. If he could have written a 306 page book, I&#39;m sure it would have told me all I need to know to get started with Node.</p>
+<p>But he didn&#39;t. Instead, &quot;Node and Express&quot; is meandering, and  frustratingly thin where it counts. For example, a chapter on &quot;Security&quot; devotes 18 pages to HTTPS, the basics of authentication, problems with the overabundance of passwords on the Internet (and introduces OAuth as a strategic alternative), before getting into how to set up basic authentication (using the npm module passport). These are no doubt important issues, but they aren&#39;t critical reading for people who have experience with other platforms and/or who just need to get a prototype up and running. </p>
+<p>Another chapter is called Persistence and covers that topic in a somewhat academic way, which would be fine if it wasn&#39;t the <em>only</em> information on interacting with MongoDB in the whole book. Mongo peculiarities like atomic queries and upserts are glossed over so fast that you can&#39;t do much apart from reproduce the examples in the book.</p>
+<p>Part of this isn&#39;t so much a flaw in the book as it is the challenge of the source material. By design, Node (and Express) don&#39;t have many particular dependencies. So Mongo, passport and similar resources that tend to get used with Express are not really part of Express itself. This means that, strictly speaking, they might be &quot;out of scope&quot; as far as a book on Express is concerned.</p>
+<p>Still, while the modularity of Node is wise (I don&#39;t like Jade, and am glad Express doesn&#39;t force it on you), there has to some concession for those of us just starting out. I could use a bit more on Mongo to build even a really simple Express app, and I suspect most beginning Node developers are in the same boat.</p>
+<p>&quot;Web Development with Node and Express: Leveraging the Javascipt Stack&quot; is written by Ethan Brown, published by O&#39;Rielly, and available at <a href="http://www.amazon.com/Web-Development-Node-Express-Leveraging/dp/1491949309/">Amazon</a>.</p>
+
+		</section>
+
+
+	<hr />
+
+	<footer class="main-content__footer">
+		<p><strong>I am starting out as a freelance frontend developer and looking for projects.</strong> <a href="../contact.html">Contact me</a> and let's talk about what we can make together.</p>
+
+		<h2>Share this post</h2>
+		<div class="share-icons">
+			<a href="https://facebook.com/sharer.php?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fbook-review-web-development-with-node-and-express" title="Share this page on Facebook">
+				<span class="hidden"><i class="icon-facebook"></i></span>
+			</a>
+			<a href="https://twitter.com/share?text=Book%20Review%3A%20Web%20Development%20%20with%20Node%20and%20Express&url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fbook-review-web-development-with-node-and-express" title="Tweet this page">
+				<span class="hidden"><i class="icon-twitter"></i></span>
+			</a>
+			<a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2Fbook-review-web-development-with-node-and-express&mini=true&title=Book%20Review%3A%20Web%20Development%20%20with%20Node%20and%20Express" title="Tweet this page">
+				<span class="hidden"><i class="icon-linkedin"></i></span>
+			</a>
+		</div>
+
+	</footer>
+
+</article>
+
+				</div>
+
+			</div>
+		</div>
+
+		<script src="../main.js" defer></script>
+	</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<title>5 things I learned building a React and Node app | Casey A. Ydenberg</title>
+		<meta name="description" content="Visual data and science communication on the web">
+
+		<link rel="shortcut icon" href="../favicon.png">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+		<link rel="stylesheet" href="../style.css">
+		<link rel="stylesheet" href="../print_styles.css" media="print">
+
+		<link rel="canonical" href="5-things-i-learned-building-a-react-and-node-app.html">
+		<link rel="alternate" type="application/rss+xml" href="../feed/index.html">
+
+		<meta name="og:title" content="5 things I learned building a React and Node app | Casey A. Ydenberg">
+		<meta name="og:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="og:image:alt" content="Visual data and science communication on the web">
+		<meta name="og:url" content="https://caydenberg.io/blog/5-things-i-learned-building-a-react-and-node-app">
+
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="@CAYdenberg">
+		<meta name="twitter:creator" content="@CAYdenberg">
+		<meta name="twitter:title" content="5 things I learned building a React and Node app | Casey A. Ydenberg">
+		<meta name="twitter:description" content="Visual data and science communication on the web">
+		<meta name="twitter:image" content="https://res.cloudinary.com/dfxksdivn/image/upload/w_800/isqgg3q1ushpdqjodap0.png">
+		<meta name="twitter:image:alt" content="Visual data and science communication on the web">
+
+
+	</head>
+
+	<body class="blog">
+		<div class="off-canvas-wrapper">
+			<div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+
+          <div class="menu-toggle-wrapper">
+            <button type="button" class="button hollow menu-toggle" data-toggle="sidebar-wrapper" aria-expanded="false" aria-controls="sidebar-wrapper">
+              <i class="icon-bars"></i>
+            </button>
+          </div>
+
+					<div class="off-canvas position-left reveal-for-large sidebar-wrapper" id="sidebar-wrapper" data-off-canvas>
+						<div class="sidebar-filter">
+							<aside class="sidebar-body">
+								<h2 class="site-title"><a href="../index.html" class="natural">Casey A. Ydenberg</a></h2>
+								<h3 class="site-description">Web Developer</h3>
+
+								<ul class="main-nav" role="menu">
+										<li class="active">
+											<a href="../blog.html">Blog</a>
+										</li>
+										<li >
+											<a href="../talks.html">Speaking</a>
+										</li>
+										<li >
+											<a href="../contact.html">Contact</a>
+										</li>
+								</ul>
+
+								<ul class="social-nav" role="menu">
+									<li><a href="https://github.com/CAYdenberg" target="_blank"><i class="icon-github" title="GitHub profile"></i></a></li>
+									<li><a href="https://twitter.com/CAYdenberg" target="_blank"><i class="icon-twitter" title="Twitter feed"></i></a></li>
+									<li><a href="https://www.linkedin.com/in/caydenberg" target="_blank"><i class="icon-linkedin" title="LinkedIn page"></i></a></li>
+								</ul>
+
+							</aside>
+						</div>
+					</div>
+
+				<div class="off-canvas-content" data-off-canvas-content>
+					<article class="main-content">
+
+		<header class="main-content__header">
+			<h1>5 things I learned building a React and Node app</h1>
+			<p><a href="../blog.html">&larr; back to the blog</a></p>
+		</header>
+
+		<section class="main-content__body blog-content">
+			<p>A blog post over at <a href="http://blog.teamtreehouse.com/7-web-development-trends-for-2015">Treehouse</a> listed seven web development trends for 2015. At least five of them touched on React, so perhaps the article could be summarized as:</p>
+<blockquote>React, React, React, React, baked beans, React, and React.</blockquote>
+
+<p>JavaScript is hot right now. I am far from an expert on building big stuff with JavaScript, but I thought with the recent release of <a href="http://ncbi.site/">Monocle</a> that I could give a little perspective on what I learned from a early release of my first fully-JS project.</p>
+<p>For in-depth tutorials on getting a Node or React app running, I would point you to <a href="http://cwbuecheler.com/web/tutorials/2013/node-express-mongo/">Chris Buecheler</a>, <a href="https://scotch.io/tutorials/learning-react-getting-started-and-concepts">Scotch.io</a>, or <a href="https://www.codementor.io/reactjs/tutorial/react-js-flux-architecture-tutorial">CodeMentor</a>.</p>
+<ol>
+<li><p><strong>Build tools should be a time saver, not a time sink.</strong> Monocle is a hobby project, and I quickly found that I was spending more time tweaking my gulpfile than writing actual code that would end up in the app. Not everything has to be perfect at the early stages. Get something that works and move forward. When you get annoyed enough by typing <code>npm start</code> and refreshing the browser, then figure out the next steps.</p>
+</li>
+<li><p><strong>There a lot of ways to organize JavaScript code.</strong> Firstly, JS has a lot of ways to create objects and a lot of different ways to implement inheritance. <a href="http://stackoverflow.com/questions/5224295/javascript-the-good-parts-how-to-not-use-new-at-all">This is largely because the language has a classical syntax masking a distinctly non-classical mechanism</a>. You can go read about this elsewhere, I won&#39;t get into it. Later, Node introduced <code>require</code> (and we have browserify on the front-end) so you can have as many or as few files as you like to organize all those non-classical class declarations. The choices on how to organize code can be overwhelming, especially for inexperienced developers. Again, this was something I just had to decide I had a &quot;good enough&quot; handle on at a certain point and move on with.</p>
+</li>
+<li><p><strong>Getting user accounts working with Express is hard.</strong> This is probably why so many Node tutorials revolve around building things like real-time Twitter streams where sign-in wouldn&#39;t be a requirement. In the really world, most everything on the web that a) has a back-end and b) needs something like Node as opposed to something like WordPress, is going to require accounts. Express leaves the choice of session management and login management tools up to the developer. While I loved the freedom express gives you in most instances, this was one thing that I wished worked out of the box. For a hobby project, I strongly recommend getting familiar with the database tools early before trying to tackle this.</p>
+</li>
+<li><p><strong>Embrace JSX</strong>. Like every developer before me who has encountered this bizarre mix of HTML and JavaScript, I had my reservations. But trust me: it does work, and it lets you envision front-end components as a unified whole where form fits function. (As a onetime biologist, this didn&#39;t take long to feel natural.)<br /><br /> <img src="http://i.imgur.com/01ofIfU.gif" alt="The first time you see JSX code" />
+The first time you see JSX code.</p>
+</li>
+<li><p><strong>NPM Installs can go horribly wrong</strong>. Monocle is running on a tiny Digital Ocean droplet also hosting this blog and powered by a hamster running on a little wheel (I assume). When I went to deploy it, I could not for the life of me figure out why <code>npm install</code> kept terminating without completing. Eventually I figured out that, considering the piddly amount of traffic I was expecting, this was probably the most memory intensive operation that would ever be run here. Eventually I found a tutorial on using swap files and the rest of install went smoothly.</p>
+</li>
+</ol>
+<p>The best thing about being a developer is getting try out new things. This is also its biggest challenge. Even this tiny app uses Express, gulp, React, flux, browserify. It was the most fun I&#39;ve had building for a while.</p>
+
+		</section>
+
+
+	<hr />
+
+	<footer class="main-content__footer">
+		<p><strong>I am starting out as a freelance frontend developer and looking for projects.</strong> <a href="../contact.html">Contact me</a> and let's talk about what we can make together.</p>
+
+		<h2>Share this post</h2>
+		<div class="share-icons">
+			<a href="https://facebook.com/sharer.php?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2F5-things-i-learned-building-a-react-and-node-app" title="Share this page on Facebook">
+				<span class="hidden"><i class="icon-facebook"></i></span>
+			</a>
+			<a href="https://twitter.com/share?text=5%20things%20I%20learned%20building%20a%20React%20and%20Node%20app&url=https%3A%2F%2Fcaydenberg.io%2Fblog%2F5-things-i-learned-building-a-react-and-node-app" title="Tweet this page">
+				<span class="hidden"><i class="icon-twitter"></i></span>
+			</a>
+			<a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fcaydenberg.io%2Fblog%2F5-things-i-learned-building-a-react-and-node-app&mini=true&title=5%20things%20I%20learned%20building%20a%20React%20and%20Node%20app" title="Tweet this page">
+				<span class="hidden"><i class="icon-linkedin"></i></span>
+			</a>
+		</div>
+
+	</footer>
+
+</article>
+
+				</div>
+
+			</div>
+		</div>
+
+		<script src="../main.js" defer></script>
+	</body>
+</html>
